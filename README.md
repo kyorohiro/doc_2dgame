@@ -5,8 +5,9 @@
 
 
 * 2D Physics
- * verocity
- * collision
- * rotate
-
-* CellerAutomate
+ * circle primitive
+   * verocity
+   * collision
+   * rotate
+   * grouping
+* Cellular Automata
