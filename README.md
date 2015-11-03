@@ -1,6 +1,6 @@
 # doc_2dgame
 
-* Math & Stage System
+* Math & Sprite 
  * Velocity
  * Matrix 
 * 2D Physics
