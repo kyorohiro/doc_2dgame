@@ -10,5 +10,5 @@
    * collision
    * rotate
    * grouping
-  * ga,e
+  * other primitve
 * Cellular Automata
