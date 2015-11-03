@@ -1,8 +1,8 @@
 # doc_2dgame
 
-
-* Matrix 
-
+* Math
+ * Velocity
+ * Matrix 
 
 * 2D Physics
  * circle primitive
