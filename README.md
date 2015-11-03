@@ -1,6 +1,6 @@
 # doc_2dgame
 
-* Math
+* Math & 
  * Velocity
  * Matrix 
 * 2D Physics
