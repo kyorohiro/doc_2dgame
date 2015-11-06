@@ -13,6 +13,9 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
     return new TinyFlutterImage(await ImageLoader.load("${resourceRoot}${path}"));
   }
 
+  Future<TinyAudioSource> loadAudio(String path) async {
+    return null;
+  }
 }
 
 class TinyFlutterImage implements TinyImage {

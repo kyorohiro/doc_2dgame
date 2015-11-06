@@ -6,6 +6,7 @@ import 'package:vector_math/vector_math_64.dart';
 import 'tinygame.dart';
 import 'dart:html';
 import 'dart:web_gl';
+import 'dart:web_audio';
 import 'dart:typed_data';
 
 part 'tinygame/webgl/stage.dart';

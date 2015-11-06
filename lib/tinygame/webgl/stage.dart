@@ -11,6 +11,50 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
     ImageElement elm = await TinyWebglLoader.loadImage(path);
     return new TinyWebglImage(elm);
   }
+
+  Future<TinyAudioSource> loadAudio(String path) async {
+    Completer<TinyAudioSource> c = new Completer();
+    AudioContext context = new AudioContext();
+    HttpRequest request = new HttpRequest();
+    request.open("GET", path);
+    request.responseType = "arraybuffer";
+    print("---d-1--");
+    request.onLoad.listen((ProgressEvent e) async {
+      print("---d-2-");
+      AudioBuffer buffer = await context.decodeAudioData(request.response);
+      c.complete(new TinyWebglAudioSource(context, buffer));
+    });
+    request.onError.listen((ProgressEvent e) {
+      c.completeError(e);
+    });
+    request.send();
+    return c.future;
+  }
+}
+
+class TinyWebglAudioSource extends TinyAudioSource {
+  AudioContext context;
+  AudioBuffer buffer;
+  AudioBufferSourceNode s = null;
+  TinyWebglAudioSource(this.context, this.buffer) {
+    
+  }
+
+  Future prepare() async {}
+  Future start() async {
+    await pause();
+    s = context.createBufferSource();
+    s.buffer = buffer;
+    s.connectNode(context.destination);
+    s.start();
+  }
+
+  Future pause() async {
+    if (s != null) {
+      s.stop();
+      s = null;
+    }
+  }
 }
 
 class TinyWebglImage extends TinyImage {
@@ -442,7 +486,6 @@ class TinyWebglCanvas extends TinyCanvas {
         RenderingContext.TEXTURE_MIN_FILTER, RenderingContext.NEAREST);
     GL.texParameteri(RenderingContext.TEXTURE_2D,
         RenderingContext.TEXTURE_MAG_FILTER, RenderingContext.NEAREST);
-    
 
     //0 a = true;
     //}
