@@ -11,3 +11,5 @@ import 'dart:typed_data';
 
 part 'tinygame/webgl/stage.dart';
 part 'tinygame/webgl/util.dart';
+part 'tinygame/webgl/audio.dart';
+
