@@ -42,7 +42,6 @@ class Keyboard extends TinyDisplayObject {
   bool isIn(double x, double y) {
     if (0 < y && y < 200) {
       if (0 < x && x < 100) {
-       // print("-t-isIn");
         return true;
       }
     }
@@ -55,9 +54,7 @@ class Keyboard extends TinyDisplayObject {
       double globalX, globalY) {
     if ((type == "pointerdown" || type == "pointermove") && isIn(x, y)) {
       if (isTouch == false && source != null) {
-        print("--surce[1] ${source}");
         source.start();
-        print("--surce[2]");
       }
       isTouch = true;
     } else {
