@@ -96,7 +96,7 @@ class TinyWebglStage extends Object with TinyStage {
         isPaint = false;
       }
 
-      if (count > 60) {
+      if (count > 300) {
         print("###fps  ${sum~/count}");
         sum = 0.0;
         count = 0;
@@ -115,12 +115,10 @@ class TinyWebglStage extends Object with TinyStage {
         int x = t.page.x-glContext._canvasElement.offsetLeft;
         int y = t.page.y-glContext._canvasElement.offsetTop;
           if (touchs.containsKey(t.identifier)) {
-            print("move");
             root.touch(this, t.identifier+1, "pointermove", 
                 x.toDouble(),
                 y.toDouble());
           } else {
-            print("down");
             touchs[t.identifier] = t;
             root.touch(this, t.identifier+1, "pointerdown", 
                 x.toDouble(),
@@ -131,7 +129,6 @@ class TinyWebglStage extends Object with TinyStage {
     oEnd(TouchEvent e) {
       for (Touch t in e.changedTouches) {
           if (touchs.containsKey(t.identifier)) {
-            print("up");
             int x = t.page.x-glContext._canvasElement.offsetLeft;
             int y = t.page.y-glContext._canvasElement.offsetTop;
             touchs.remove(t.identifier);
@@ -152,7 +149,7 @@ class TinyWebglStage extends Object with TinyStage {
   void mouseTest() {
     bool isTap = false;
     glContext.canvasElement.onMouseDown.listen((MouseEvent e) {
-      // print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+       //print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       isTap = true;
       root.touch(
           this, 0, "pointerdown", e.offset.x.toDouble(), e.offset.y.toDouble());
@@ -172,7 +169,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
     });
     glContext.canvasElement.onMouseLeave.listen((MouseEvent e) {
-      // print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+     //  print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         root.touch(this, 0, "pointercancel", e.offset.x.toDouble(),
             e.offset.y.toDouble());
@@ -188,16 +185,16 @@ class TinyWebglStage extends Object with TinyStage {
     });
 
     glContext.canvasElement.onMouseOut.listen((MouseEvent e) {
-      // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+     // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
-        root.touch(this, 0, "pointercancel", e.offset.x.toDouble(),
-            e.offset.y.toDouble());
-        isTap = false;
+      //  root.touch(this, 0, "pointercancel", e.offset.x.toDouble(),
+      //      e.offset.y.toDouble());
+      //  isTap = false;
       }
     });
 
     glContext.canvasElement.onMouseOver.listen((MouseEvent e) {
-      // print("over offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+       print("over offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         // root.touch(this, 0, event.type, e.offsetX.toDouble(), e.offsetY.toDouble());
       }
