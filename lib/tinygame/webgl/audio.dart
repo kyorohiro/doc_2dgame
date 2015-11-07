@@ -14,12 +14,12 @@ class TinyWebglAudioSource extends TinyAudioSource {
     s = context.createBufferSource();
     s.buffer = buffer;
     s.connectNode(context.destination);
-    s.start();
+    s.start(0);
   }
 
   Future pause() async {
     if (s != null) {
-      s.stop();
+      s.stop(0);
       s = null;
     }
   }
