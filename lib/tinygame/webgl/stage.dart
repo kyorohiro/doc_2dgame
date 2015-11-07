@@ -54,7 +54,8 @@ class TinyWebglStage extends Object with TinyStage {
       {width: 600.0, height: 400.0}) {
     glContext = new TinyWebglContext(width: width, height: height);
     this.root = root;
-    ttest();
+    mouseTest();
+    touchTtest();
   }
 
   bool isPaint = false;
@@ -107,7 +108,48 @@ class TinyWebglStage extends Object with TinyStage {
     animeIsStart = false;
   }
 
-  void ttest() {
+  void touchTtest() {
+    Map touchs = {};
+    oStu(TouchEvent e) { 
+      for (Touch t in e.changedTouches) {
+        int x = t.page.x-glContext._canvasElement.offsetLeft;
+        int y = t.page.y-glContext._canvasElement.offsetTop;
+          if (touchs.containsKey(t.identifier)) {
+            print("move");
+            root.touch(this, t.identifier+1, "pointermove", 
+                x.toDouble(),
+                y.toDouble());
+          } else {
+            print("down");
+            touchs[t.identifier] = t;
+            root.touch(this, t.identifier+1, "pointerdown", 
+                x.toDouble(),
+                y.toDouble());          
+          }
+      }
+    }
+    oEnd(TouchEvent e) {
+      for (Touch t in e.changedTouches) {
+          if (touchs.containsKey(t.identifier)) {
+            print("up");
+            int x = t.page.x-glContext._canvasElement.offsetLeft;
+            int y = t.page.y-glContext._canvasElement.offsetTop;
+            touchs.remove(t.identifier);
+            root.touch(this, t.identifier+1, "pointerup", 
+                x.toDouble(),
+                y.toDouble());         
+          }
+      }
+    }
+    glContext._canvasElement.onTouchCancel.listen(oEnd);
+    glContext._canvasElement.onTouchEnd.listen(oEnd);
+    glContext._canvasElement.onTouchEnter.listen(oStu);
+    glContext._canvasElement.onTouchLeave.listen(oStu);
+    glContext._canvasElement.onTouchMove.listen(oStu);
+    glContext._canvasElement.onTouchStart.listen(oStu);
+  }
+
+  void mouseTest() {
     bool isTap = false;
     glContext.canvasElement.onMouseDown.listen((MouseEvent e) {
       // print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
@@ -162,4 +204,3 @@ class TinyWebglStage extends Object with TinyStage {
     });
   }
 }
-
