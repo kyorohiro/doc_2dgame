@@ -5,19 +5,15 @@ import 'dart:html';
 import 'dart:web_audio';
 import 'dart:async';
 
+//
+// http://kyorohiro.github.io/umiuni2d/sound_test/web/main.html
+//
 main() async {
   TinyGameBuilderForWebgl builder = new TinyGameBuilderForWebgl();
   print("--n--");
   TinyStage stage = builder.createStage(new TinyGameRoot(600.0, 400.0));
   stage.root.addChild(new Piano(builder));
   stage.start();
-
-  /*TinyAudioSource source = await builder.loadAudio("assets/se_maoudamashii_instruments_piano1_1do.ogg");
-  print("open");
-  await source.start();
-  print("start");
-
-   */
 }
 
 class Keyboard extends TinyDisplayObject {
@@ -46,11 +42,11 @@ class Keyboard extends TinyDisplayObject {
   bool isIn(double x, double y) {
     if (0 < y && y < 200) {
       if (0 < x && x < 100) {
-        print("-t-isIn");
+       // print("-t-isIn");
         return true;
       }
     }
-    print("--isIn ${x} ${y}");
+    //print("--isIn ${x} ${y}");
     return false;
   }
 
@@ -59,12 +55,16 @@ class Keyboard extends TinyDisplayObject {
       double globalX, globalY) {
     if ((type == "pointerdown" || type == "pointermove") && isIn(x, y)) {
       if (isTouch == false && source != null) {
+        print("--surce[1] ${source}");
         source.start();
+        print("--surce[2]");
       }
       isTouch = true;
     } else {
       isTouch = false;
-      source.pause();
+      if(source != null) {
+        source.pause();
+      }
     }
     return false;
   }
@@ -78,7 +78,6 @@ class Piano extends TinyDisplayObject {
   }
   initA() async {
     for (int i = 0; i < 6; i++) {
-      int index = i;
       Keyboard keyboard = new Keyboard(builder, "assets/se_maoudamashii_retro0${i+1}.ogg");
       addChild(keyboard);
       keyboard.mat.translate(i*100.0,150.0, 0.0);

@@ -91,7 +91,7 @@ class ProgramScree extends TinyDisplayObject {
 
     if (x == selectTipX && y == selectTipY) {
       p.style = TinyPaintStyle.stroke;
-      p.strokeWidth = 10.5;
+      p.strokeWidth = 20.5;
     } else {
       p.style = TinyPaintStyle.stroke;
       p.strokeWidth = 2.5;

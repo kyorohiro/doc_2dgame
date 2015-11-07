@@ -102,6 +102,12 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   }
 
   @override
+  bool hitTest(HitTestResult result, {Point position}) {
+    result.add(new BoxHitTestEntry(this, position));
+    return true;
+  }
+
+  @override
   void paint(PaintingContext context, Offset offset) {
     root.paint(this, new TinyFlutterCanvas(context.canvas));
   }

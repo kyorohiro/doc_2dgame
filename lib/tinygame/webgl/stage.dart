@@ -42,16 +42,23 @@ class TinyWebglAudioSource extends TinyAudioSource {
 
   Future prepare() async {}
   Future start() async {
-    await pause();
+    //await pause();
+    print("--start --1");
     s = context.createBufferSource();
+    print("--start --2");
     s.buffer = buffer;
+    print("--start --3");
     s.connectNode(context.destination);
-    s.start();
+    print("--start --4");
+    s.start(0);
+    print("--start --5");
   }
 
   Future pause() async {
     if (s != null) {
-      s.stop();
+      print("-- pause --1");
+      s.stop(0);
+      print("-- pause --2");
       s = null;
     }
   }
