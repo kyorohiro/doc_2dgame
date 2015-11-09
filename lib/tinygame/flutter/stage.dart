@@ -17,7 +17,9 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
     return null;
   }
   Future<String> loadString(String path) async {
-    return null;
+    String a = await ImageLoader.loadString("${resourceRoot}${path}");
+    //print("--${path} -- ${a}");
+    return a;
   }
 }
 
@@ -41,6 +43,13 @@ class ImageLoader {
     AssetBundle bundle = getAssetBundle();
     ImageResource resource = bundle.loadImage(url);
     return resource.first;
+  }
+
+  static Future<String> loadString(String url) async {
+    AssetBundle bundle = getAssetBundle();
+    String b =  await bundle.loadString(url);
+    //print("-a-${url} -- ${b}");
+    return b;
   }
 }
 

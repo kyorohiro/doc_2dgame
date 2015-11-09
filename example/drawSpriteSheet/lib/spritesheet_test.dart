@@ -6,10 +6,10 @@ class SpriteSheetTest extends TinyDisplayObject {
   TinyImage image = null;
 
   SpriteSheetTest(TinyGameBuilder builder) {
-    builder.loadImage("./assets/nono.png").then((TinyImage i) {
+    builder.loadImage("assets/nono.png").then((TinyImage i) {
       image = i;
     });
-    builder.loadString("./assets/nono.json").then((String x) {
+    builder.loadString("assets/nono.json").then((String x) {
       spriteInfo = new SpriteSheetInfo.fronmJson(x);
       for (SpriteSheetInfoFrame f in spriteInfo.frames) {
         print("### fname: ${f.fileName} ###");

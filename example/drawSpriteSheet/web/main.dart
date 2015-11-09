@@ -1,6 +1,6 @@
 import 'package:umiuni2d/tinygame.dart';
 import 'package:umiuni2d/tinygame_webgl.dart';
-import 'package:vector_math/vector_math_64.dart';
+//import 'package:vector_math/vector_math_64.dart';
 import 'package:spritesheet/spritesheet_test.dart';
 
 main() async {
@@ -10,4 +10,3 @@ main() async {
   stage.start();
   root.addChild(new SpriteSheetTest(builder));
 }
-
