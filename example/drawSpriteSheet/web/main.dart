@@ -30,14 +30,28 @@ class Test extends TinyDisplayObject {
     });
   }
 
+  int i = 0;
+  int d = 0;
   void onPaint(TinyStage stage, TinyCanvas canvas) {
+    if(spriteInfo == null) {
+      return;
+    }
+    d++;
+    if(d<4) {
+      
+    } else {
+    d=0;
+    i++;
+    }
+    int index = i%spriteInfo.frames.length;
+
     TinyPaint paint =
         new TinyPaint(color: new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa));
 //    canvas.drawRect(stage, new TinyRect(100.0, 100.0, 150.0, 50.0), paint);
     if(image != null) {
     canvas.drawImageRect(stage, image, 
-        spriteInfo.frames[0].srcRect, 
-        spriteInfo.frames[0].dstRect,
+        spriteInfo.frames[index].srcRect, 
+        spriteInfo.frames[index].dstRect,
         paint);
     }
     //canvas.drawRect(stage, new TinyRect(100.0, 100.0, 150.0, 50.0), paint);

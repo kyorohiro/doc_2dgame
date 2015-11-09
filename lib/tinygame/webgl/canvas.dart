@@ -258,7 +258,7 @@ class TinyWebglCanvas extends TinyCanvas {
     double xs = src.x/img.w;
     double ys = src.y/img.h;
     double xe = (src.x+src.w)/img.w;
-    double ye = (src.y+src.h)/img.w;
+    double ye = (src.y+src.h)/img.h;
 
     GL.bufferData(
         RenderingContext.ARRAY_BUFFER,
