@@ -12,7 +12,7 @@ abstract class TinyGameBuilder {
     return cach[path];
   }
 
-  Future<TinyAudioSource> loadAudio(String path); 
+  Future<TinyAudioSource> loadAudio(String path);
   TinyImage getImage(String path) {
     if (cach.containsKey(path)) {
       return cach[path];
@@ -39,12 +39,30 @@ class TinyRect {
   double w;
   double h;
   TinyRect(this.x, this.y, this.w, this.h) {}
+  bool operator ==(o) => o is TinyRect && o.x == x && o.y == y && o.w == w && o.h == h;
+
+  int get hashCode => JenkinsHash.calc([x.hashCode, y.hashCode, w.hashCode, h.hashCode]);
+  
 }
 
 class TinyPoint {
   double x;
   double y;
   TinyPoint(this.x, this.y) {}
+  
+  bool operator ==(o) => o is TinyPoint && o.x == x && o.y == y;
+
+  int get hashCode => JenkinsHash.calc([x.hashCode, y.hashCode]);
+}
+
+class TinySize {
+  double w;
+  double h;
+  TinySize(this.w, this.h) {}
+  
+  bool operator ==(o) => o is TinySize && o.w == w && o.h == h;
+
+  int get hashCode => JenkinsHash.calc([w.hashCode, h.hashCode]);
 }
 
 enum TinyPaintStyle { fill, stroke }
@@ -63,14 +81,14 @@ class TinyPaint {
 class TinyColor {
   int value = 0;
   TinyColor(this.value) {}
-  int get a => (value>>24) & 0xff;
-  int get r => (value>>16) & 0xff;
-  int get g => (value>>8)  & 0xff;
-  int get b => (value>>0)  & 0xff;
-  double get af => a/255.0;
-  double get rf => r/255.0;
-  double get gf => g/255.0;
-  double get bf => b/255.0;
+  int get a => (value >> 24) & 0xff;
+  int get r => (value >> 16) & 0xff;
+  int get g => (value >> 8) & 0xff;
+  int get b => (value >> 0) & 0xff;
+  double get af => a / 255.0;
+  double get rf => r / 255.0;
+  double get gf => g / 255.0;
+  double get bf => b / 255.0;
 
   TinyColor.argb(int a, int r, int g, int b) {
     value |= (a & 0xff) << 24;
@@ -79,6 +97,10 @@ class TinyColor {
     value |= (b & 0xff) << 0;
     value &= 0xFFFFFFFF;
   }
+  
+  bool operator ==(o) => o is TinyColor && o.value == value;
+
+  int get hashCode => JenkinsHash.calc([value.hashCode]);
 }
 
 abstract class TinyImage {
