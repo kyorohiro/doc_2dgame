@@ -18,17 +18,21 @@ class TinyFlutterAudioSource extends TinyAudioSource {
   Future prepare() async {}
 
   Future start() async {
-    print("-start");
-    await pause();
+    //print("-start");
+    //await pause();
+   // await player.ptr.prepare(data);
+    new Future.delayed(new Duration(milliseconds:10));
     await player.ptr.seekTo(0);
+    new Future.delayed(new Duration(milliseconds:10));
     await player.ptr.start();
-    print("/start");
+
+    //print("/start");
   }
 
   Future pause() async {
-    print("-pause");
+    //print("-pause");
     await player.ptr.pause();
-    print("/pause");
+    //print("/pause");
   }
 }
 

@@ -41,7 +41,7 @@ class Keyboard extends TinyDisplayObject {
         source.start();
         isTouch = true;
       }
-    } else {
+    } else if(isTouch == true){
       isTouch = false;
       if(source != null) {
         source.pause();
