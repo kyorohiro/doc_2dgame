@@ -1,4 +1,4 @@
-name: playSound
+name: play_sound
 version: 0.0.1
 description: A starting point for Dart libraries or applications.
 environment:
