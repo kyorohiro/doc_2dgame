@@ -30,6 +30,22 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
     request.send();
     return c.future;
   }
+  
+  Future<String> loadString(String path) async {
+    Completer<String> c = new Completer();
+    HttpRequest request = new HttpRequest();
+    request.open("GET", path);
+    request.responseType = "arraybuffer";
+    request.onLoad.listen((ProgressEvent e) async {
+      ByteBuffer buffer = request.response;
+      c.complete(conv.UTF8.decode(buffer.asUint8List(),allowMalformed: true));
+    });
+    request.onError.listen((ProgressEvent e) {
+      c.completeError(e);
+    });
+    request.send();
+    return c.future;
+  }
 }
 
 

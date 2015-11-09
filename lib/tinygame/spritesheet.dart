@@ -3,6 +3,16 @@ part of tinygame;
 class SpriteSheetInfo {
   String json;
   List<SpriteSheetInfoFrame> frames = [];
+
+  SpriteSheetInfoFrame frameFromFileName(String fileName) {
+    for(SpriteSheetInfoFrame f in frames) {
+      if(f.fileName == fileName) {
+        return f;
+      }
+    }
+    return null;
+  }
+
   SpriteSheetInfo.fronmJson(this.json) {
     parserFrames(this.json);
   }

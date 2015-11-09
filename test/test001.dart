@@ -40,6 +40,8 @@ void main() {
     test.expect(new TinySize(300.0, 300.0), sheet.frames[0].sourceSize);
     
     //
+    //
+    //
     test.expect(2, sheet.frames.length);
     test.expect("C-001-0001_00001.png", sheet.frames[1].fileName);
     test.expect(new TinyRect(0.0, 300.0, 300.0, 300.0), sheet.frames[1].frame);

@@ -13,6 +13,7 @@ abstract class TinyGameBuilder {
   }
 
   Future<TinyAudioSource> loadAudio(String path);
+  Future<String> loadString(String path);
   TinyImage getImage(String path) {
     if (cach.containsKey(path)) {
       return cach[path];

@@ -1,7 +1,7 @@
 {"frames": [
 
 {
-	"filename": "C-001-0001_00000.png",
+	"filename": "C00000.png",
 	"frame": {"x":0,"y":0,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -10,7 +10,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00001.png",
+	"filename": "C00001.png",
 	"frame": {"x":0,"y":300,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -19,7 +19,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00002.png",
+	"filename": "C00002.png",
 	"frame": {"x":0,"y":600,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -28,7 +28,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00003.png",
+	"filename": "C00003.png",
 	"frame": {"x":300,"y":0,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -37,7 +37,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00004.png",
+	"filename": "C00004.png",
 	"frame": {"x":300,"y":300,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -46,7 +46,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00005.png",
+	"filename": "C00005.png",
 	"frame": {"x":300,"y":600,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -55,7 +55,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00006.png",
+	"filename": "C00006.png",
 	"frame": {"x":600,"y":0,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -64,7 +64,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00007.png",
+	"filename": "C00007.png",
 	"frame": {"x":900,"y":0,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -73,7 +73,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00008.png",
+	"filename": "C00008.png",
 	"frame": {"x":600,"y":300,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -82,7 +82,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00009.png",
+	"filename": "C00009.png",
 	"frame": {"x":600,"y":600,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -91,7 +91,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00010.png",
+	"filename": "C00010.png",
 	"frame": {"x":900,"y":300,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -100,7 +100,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00011.png",
+	"filename": "C00011.png",
 	"frame": {"x":900,"y":600,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -109,7 +109,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00012.png",
+	"filename": "C00012.png",
 	"frame": {"x":900,"y":600,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -118,7 +118,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00013.png",
+	"filename": "C00013.png",
 	"frame": {"x":900,"y":600,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,
@@ -127,7 +127,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "C-001-0001_00014.png",
+	"filename": "C00014.png",
 	"frame": {"x":900,"y":600,"w":300,"h":300},
 	"rotated": false,
 	"trimmed": false,

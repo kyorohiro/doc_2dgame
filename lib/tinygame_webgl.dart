@@ -8,6 +8,7 @@ import 'dart:html';
 import 'dart:web_gl';
 import 'dart:web_audio';
 import 'dart:typed_data';
+import 'dart:convert' as conv;
 
 part 'tinygame/webgl/stage.dart';
 part 'tinygame/webgl/util.dart';
