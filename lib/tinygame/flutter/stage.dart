@@ -2,23 +2,23 @@ part of tinygame_flutter;
 
 class TinyGameBuilderForFlutter extends TinyGameBuilder {
   String resourceRoot;
-  TinyGameBuilderForFlutter(this.resourceRoot) {
-
-  }
+  TinyFlutterAudioManager audioManager = new TinyFlutterAudioManager();
+  TinyGameBuilderForFlutter(this.resourceRoot) {}
   TinyStage createStage(TinyDisplayObject root) {
     return new TinyFlutterStage(this, root);
   }
 
   Future<TinyImage> loadImageBase(String path) async {
-    return new TinyFlutterImage(await ImageLoader.load("${resourceRoot}${path}"));
+    return new TinyFlutterImage(
+        await ResourceLoader.loadImage("${resourceRoot}${path}"));
   }
 
   Future<TinyAudioSource> loadAudio(String path) async {
-    return null;
+    return await audioManager.loadAudioSource(path);
   }
+
   Future<String> loadString(String path) async {
-    String a = await ImageLoader.loadString("${resourceRoot}${path}");
-    //print("--${path} -- ${a}");
+    String a = await ResourceLoader.loadString("${resourceRoot}${path}");
     return a;
   }
 }
@@ -30,7 +30,7 @@ class TinyFlutterImage implements TinyImage {
   int get h => rawImage.height;
 }
 
-class ImageLoader {
+class ResourceLoader {
   static AssetBundle getAssetBundle() {
     if (rootBundle != null) {
       return rootBundle;
@@ -39,7 +39,7 @@ class ImageLoader {
     }
   }
 
-  static Future<sky.Image> load(String url) async {
+  static Future<sky.Image> loadImage(String url) async {
     AssetBundle bundle = getAssetBundle();
     ImageResource resource = bundle.loadImage(url);
     return resource.first;
@@ -47,9 +47,14 @@ class ImageLoader {
 
   static Future<String> loadString(String url) async {
     AssetBundle bundle = getAssetBundle();
-    String b =  await bundle.loadString(url);
+    String b = await bundle.loadString(url);
     //print("-a-${url} -- ${b}");
     return b;
+  }
+
+  static Future<MojoDataPipeConsumer> loadMojoData(String url) async {
+    AssetBundle bundle = getAssetBundle();
+    return await bundle.load(url);
   }
 }
 
@@ -79,8 +84,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     init();
   }
 
-  void init() {
-  }
+  void init() {}
 
   void start() {
     if (animeIsStart == true) {
@@ -181,13 +185,12 @@ class TinyFlutterCanvas extends TinyCanvas {
 
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {
     canvas.drawLine(
-        new Point(p1.x, p1.y), new Point(p2.x, p2.y),
-        toPaint(paint));
+        new Point(p1.x, p1.y), new Point(p2.x, p2.y), toPaint(paint));
   }
 
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
-    canvas.drawRect(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h),
-    toPaint(paint));
+    canvas.drawRect(
+        new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h), toPaint(paint));
   }
 
   void clipRect(TinyStage stage, TinyRect rect) {
@@ -199,9 +202,12 @@ class TinyFlutterCanvas extends TinyCanvas {
     Rect s = new Rect.fromLTWH(src.x, src.y, src.w, src.h);
     Rect d = new Rect.fromLTWH(dst.x, dst.y, dst.w, dst.h);
     sky.Image i = (image as TinyFlutterImage).rawImage;
-    canvas.drawImageRect(i, s, d,
+    canvas.drawImageRect(
+        i,
+        s,
+        d,
 //      new Paint());
-    toPaint(paint));
+        toPaint(paint));
   }
 
   void updateMatrix() {
