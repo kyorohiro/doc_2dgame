@@ -23,7 +23,7 @@ class SpriteSheetTest extends TinyDisplayObject {
   int i = 0;
   int d = 0;
   void onPaint(TinyStage stage, TinyCanvas canvas) {
-    if (spriteInfo == null) {
+    if (spriteInfo == null|| image == null) {
       return;
     }
     d++;
