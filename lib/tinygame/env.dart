@@ -40,10 +40,17 @@ class TinyRect {
   double w;
   double h;
   TinyRect(this.x, this.y, this.w, this.h) {}
+  
+  @override
   bool operator ==(o) => o is TinyRect && o.x == x && o.y == y && o.w == w && o.h == h;
 
+  @override
   int get hashCode => JenkinsHash.calc([x.hashCode, y.hashCode, w.hashCode, h.hashCode]);
-  
+ 
+  @override
+  String toString() {
+    return "x:${x}, y:${y}, w:${w}, h:${h}";
+  }
 }
 
 class TinyPoint {
@@ -51,9 +58,16 @@ class TinyPoint {
   double y;
   TinyPoint(this.x, this.y) {}
   
+  @override
   bool operator ==(o) => o is TinyPoint && o.x == x && o.y == y;
 
+  @override
   int get hashCode => JenkinsHash.calc([x.hashCode, y.hashCode]);
+  
+  @override
+  String toString() {
+    return "x:${x}, y:${y}";
+  }
 }
 
 class TinySize {
@@ -61,9 +75,16 @@ class TinySize {
   double h;
   TinySize(this.w, this.h) {}
   
+  @override
   bool operator ==(o) => o is TinySize && o.w == w && o.h == h;
 
+  @override
   int get hashCode => JenkinsHash.calc([w.hashCode, h.hashCode]);
+
+  @override
+  String toString() {
+    return "w:${w}, h:${h}";
+  }
 }
 
 enum TinyPaintStyle { fill, stroke }
@@ -99,9 +120,16 @@ class TinyColor {
     value &= 0xFFFFFFFF;
   }
   
+  @override
   bool operator ==(o) => o is TinyColor && o.value == value;
 
+  @override
   int get hashCode => JenkinsHash.calc([value.hashCode]);
+  
+  @override
+  String toString() {
+    return "a:${a}, r:${r}, g:${g}, b:${b}";
+  }
 }
 
 abstract class TinyImage {
