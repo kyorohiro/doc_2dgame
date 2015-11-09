@@ -4,7 +4,7 @@ class SpriteSheetInfo {
   String json;
   List<SpriteSheetInfoFrame> frames = [];
   SpriteSheetInfo.fronmJson(this.json) {
-    parserFrames(this.json); 
+    parserFrames(this.json);
   }
 
   parserFrames(String input) {
@@ -12,6 +12,14 @@ class SpriteSheetInfo {
     Map root = d.convert(input);
     for (Map frame in (root["frames"] as List<Map>)) {
       frames.add(new SpriteSheetInfoFrame.fromMap(frame));
+    }
+  }
+
+  draw(double x, double y, SpriteSheetInfoFrame f) {
+    TinyRect srcRect = f.frame;
+    if (f.rotated) {} else {
+      TinyRect dstRect = new TinyRect(x + f.spriteSourceSize.x,
+          y + f.spriteSourceSize.y, f.spriteSourceSize.w, f.spriteSourceSize.h);
     }
   }
 }
@@ -24,6 +32,35 @@ class SpriteSheetInfoFrame {
   TinySize sourceSize;
   TinyPoint pivot;
   TinyRect frame;
+
+  TinyRect get dstRect {
+    if (rotated) {
+      double x = -1.0 * spriteSourceSize.y - (spriteSourceSize.h);
+      double y = 1.0 * spriteSourceSize.x;
+      double w = spriteSourceSize.h;
+      double h = spriteSourceSize.w;
+      return new TinyRect(x, y, w, h);
+    } else {
+      return new TinyRect(spriteSourceSize.x, spriteSourceSize.y,
+          spriteSourceSize.w, spriteSourceSize.h);
+    }
+  }
+
+  TinyRect get srcRect {
+    if (rotated) {
+      return new TinyRect(frame.x, frame.y, frame.h, frame.w);
+    } else {
+      return new TinyRect(frame.x, frame.y, frame.w, frame.h);
+    }
+  }
+
+  double get angle {
+    if(rotated) {
+      return -1 + math.PI / 2.0;
+    } else {
+      return 0.0;
+    }
+  }
 
   SpriteSheetInfoFrame(this.fileName, this.frame, this.rotated, this.trimmed,
       this.spriteSourceSize, this.sourceSize, this.pivot) {}
