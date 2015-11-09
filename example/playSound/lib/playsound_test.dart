@@ -39,12 +39,12 @@ class Keyboard extends TinyDisplayObject {
     if ((type == "pointerdown" || type == "pointermove") && isIn(x, y)) {
       if (isTouch == false && source != null) {
         source.start();
+        isTouch = true;
       }
-      isTouch = true;
     } else {
       isTouch = false;
       if(source != null) {
-        source.pause();
+        //source.pause();
       }
     }
     return false;
