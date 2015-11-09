@@ -5,7 +5,7 @@ class TinyWebglAudioSource extends TinyAudioSource {
   AudioBuffer buffer;
   AudioBufferSourceNode s = null;
   TinyWebglAudioSource(this.context, this.buffer) {
-    
+
   }
 
   Future prepare() async {}
@@ -45,4 +45,3 @@ class TinyWebglImage extends TinyImage {
     ;
   }
 }
-

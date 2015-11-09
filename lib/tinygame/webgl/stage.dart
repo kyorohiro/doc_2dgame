@@ -30,7 +30,7 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
     request.send();
     return c.future;
   }
-  
+
   Future<String> loadString(String path) async {
     Completer<String> c = new Completer();
     HttpRequest request = new HttpRequest();
@@ -127,19 +127,19 @@ class TinyWebglStage extends Object with TinyStage {
 
   void touchTtest() {
     Map touchs = {};
-    oStu(TouchEvent e) { 
+    oStu(TouchEvent e) {
       for (Touch t in e.changedTouches) {
         int x = t.page.x-glContext._canvasElement.offsetLeft;
         int y = t.page.y-glContext._canvasElement.offsetTop;
           if (touchs.containsKey(t.identifier)) {
-            root.touch(this, t.identifier+1, "pointermove", 
+            root.touch(this, t.identifier+1, "pointermove",
                 x.toDouble(),
                 y.toDouble());
           } else {
             touchs[t.identifier] = t;
-            root.touch(this, t.identifier+1, "pointerdown", 
+            root.touch(this, t.identifier+1, "pointerdown",
                 x.toDouble(),
-                y.toDouble());          
+                y.toDouble());
           }
       }
     }
@@ -149,9 +149,9 @@ class TinyWebglStage extends Object with TinyStage {
             int x = t.page.x-glContext._canvasElement.offsetLeft;
             int y = t.page.y-glContext._canvasElement.offsetTop;
             touchs.remove(t.identifier);
-            root.touch(this, t.identifier+1, "pointerup", 
+            root.touch(this, t.identifier+1, "pointerup",
                 x.toDouble(),
-                y.toDouble());         
+                y.toDouble());
           }
       }
     }

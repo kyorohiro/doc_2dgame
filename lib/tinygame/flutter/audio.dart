@@ -4,25 +4,31 @@ class TinyFlutterAudioSource extends TinyAudioSource {
   MediaPlayerProxy player;
   MojoDataPipeConsumer data;
   TinyFlutterAudioSource(this.player, this.data) {
-    ;
+
   }
 
   static Future<TinyFlutterAudioSource> create(
       MediaServiceProxy service, MojoDataPipeConsumer data) async {
     MediaPlayerProxy player = new MediaPlayerProxy.unbound();
+    service.ptr.createPlayer(player);
+    await player.ptr.prepare(data);
     return new TinyFlutterAudioSource(player, data);
   }
 
   Future prepare() async {}
 
   Future start() async {
+   // print("-start");
     await pause();
-    player.ptr.seekTo(0);
-    player.ptr.start();
+    await player.ptr.seekTo(0);
+    await player.ptr.start();
+   // print("/start");
   }
 
   Future pause() async {
-    player.ptr.pause();
+    //print("-pause");
+    //player.ptr.pause();
+    //print("/pause");
   }
 }
 

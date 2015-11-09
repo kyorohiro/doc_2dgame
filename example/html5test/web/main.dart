@@ -33,7 +33,7 @@ test() async {
     p.strokeWidth = 2.5;
 //    canvas.drawRect(null, new TinyRect(0.0, 0.0, 100.0, 100.0), p);
    canvas.drawRect(null, new TinyRect(150.0, 150.0, 100.0, 100.0), p);
-   
+
    p.style = TinyPaintStyle.fill;
    canvas.drawOval(null, new TinyRect(150.0, 150.0, 100.0, 100.0), p);
   }
@@ -50,7 +50,7 @@ test() async {
             250.0, 250.0, image.w.toDouble() / 2, image.h.toDouble() / 2),
         p);
   }
-  
+
   {
     TinyPaint p = new TinyPaint();
     p.color = new TinyColor.argb(0xff, 0xff, 0xff, 0x00);

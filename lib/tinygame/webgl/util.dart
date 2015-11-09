@@ -51,12 +51,12 @@ class TinyWebglProgram {
   static Buffer createArrayBuffer(RenderingContext context, List data) {
     Buffer ret = context.createBuffer();
     context.bindBuffer(RenderingContext.ARRAY_BUFFER, ret);
-    context.bufferData(RenderingContext.ARRAY_BUFFER, 
+    context.bufferData(RenderingContext.ARRAY_BUFFER,
         new Float32List.fromList(data), RenderingContext.STATIC_DRAW);
     context.bindBuffer(RenderingContext.ARRAY_BUFFER, null);
     return ret;
   }
-  
+
   static Buffer createElementArrayBuffer(RenderingContext context, List data) {
     Buffer ret = context.createBuffer();
     context.bindBuffer(RenderingContext.ELEMENT_ARRAY_BUFFER, ret);
@@ -65,7 +65,7 @@ class TinyWebglProgram {
     context.bindBuffer(RenderingContext.ELEMENT_ARRAY_BUFFER, null);
     return ret;
   }
-  
+
   static setUniformF(RenderingContext context, Program program, String name, double v) {
     var location = context.getUniformLocation(program, name);
     context.uniform1f(location, v);
@@ -75,10 +75,10 @@ class TinyWebglProgram {
     var location = context.getUniformLocation(program, name);
     context.uniform4fv(location, new Float32List.fromList(v));
   }
-  
+
   static setUniformMat4(RenderingContext context, Program program, String name, Matrix4 v) {
     var location = context.getUniformLocation(program, name);
     context.uniformMatrix4fv(location, false, new Float32List.fromList(v.storage));
   }
-  
+
 }

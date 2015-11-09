@@ -11,14 +11,14 @@ class Keyboard extends TinyDisplayObject {
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     TinyPaint p = new TinyPaint();
     if(source != null) {
-      p.color = new TinyColor.argb(0x99, 0x00, 0x00, 0x00);      
+      p.color = new TinyColor.argb(0x99, 0x00, 0x00, 0x00);
     } else {
-      p.color = new TinyColor.argb(0x99, 0xff, 0xaa, 0xaa);      
+      p.color = new TinyColor.argb(0x99, 0xff, 0xaa, 0xaa);
     }
     if(isTouch || source == null) {
       p.style = TinyPaintStyle.fill;
     } else {
-      p.style = TinyPaintStyle.stroke;   
+      p.style = TinyPaintStyle.stroke;
     }
     canvas.drawRect(stage, new TinyRect(0.0, 0.0, 100.0, 200.0), p);
   }

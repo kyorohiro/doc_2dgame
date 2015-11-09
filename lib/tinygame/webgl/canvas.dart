@@ -263,7 +263,7 @@ class TinyWebglCanvas extends TinyCanvas {
     GL.bufferData(
         RenderingContext.ARRAY_BUFFER,
         new Float32List.fromList([
-          xs, ys, 
+          xs, ys,
           xs, ye,
           xe, ys,
           xe, ye]),
@@ -275,7 +275,7 @@ class TinyWebglCanvas extends TinyCanvas {
     Texture tex = img.getTex(GL);
     GL.bindTexture(RenderingContext.TEXTURE_2D, tex);
     /*GL.createTexture();
-    
+
     GL.texImage2D(RenderingContext.TEXTURE_2D, 0, RenderingContext.RGBA,
         RenderingContext.RGBA, RenderingContext.UNSIGNED_BYTE, img.elm);
     */
