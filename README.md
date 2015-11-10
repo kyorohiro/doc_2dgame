@@ -11,7 +11,6 @@
 
 
 ## Index
-
 * Math & Sprite 
  * Velocity
  * Matrix 
