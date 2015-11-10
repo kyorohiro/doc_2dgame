@@ -17,7 +17,7 @@ PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを
 
 
 ## Umiuni2D
-
+Umiuni2D is 2D Gmae Library to make this book.
 
 ## Index
 * Math & Sprite 
