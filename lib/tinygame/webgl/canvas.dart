@@ -74,7 +74,9 @@ class TinyWebglCanvas extends TinyCanvas {
     }
   }
 
+  int stencilV = 1;
   void clear() {
+    stencilV = 1;
     double r = 0.0;
     double g = 0.0;
     double b = 0.0;
@@ -226,7 +228,7 @@ class TinyWebglCanvas extends TinyCanvas {
     GL.depthMask(false);
     GL.stencilOp(RenderingContext.KEEP, RenderingContext.REPLACE,
         RenderingContext.REPLACE);
-    GL.stencilFunc(RenderingContext.ALWAYS, 1, 0xff);
+    GL.stencilFunc(RenderingContext.ALWAYS, stencilV, 0xff);
 
     //
 
@@ -241,7 +243,9 @@ class TinyWebglCanvas extends TinyCanvas {
     GL.depthMask(true);
     GL.stencilOp(
         RenderingContext.KEEP, RenderingContext.KEEP, RenderingContext.KEEP);
-    GL.stencilFunc(RenderingContext.EQUAL, 1, 0xff);
+    // todo
+    GL.stencilFunc(RenderingContext.LEQUAL, stencilV, 0xff);
+    stencilV++;
   }
 
   //bool a = false;
