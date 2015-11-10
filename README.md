@@ -17,7 +17,6 @@ PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを
 
 
 
-
 ## Index
 * Math & Sprite 
  * Velocity
