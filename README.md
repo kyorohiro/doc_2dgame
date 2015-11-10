@@ -9,7 +9,12 @@
 ## 開発環境
 開発環境として、"Flutter x Dart" or "WebGL x Dart" を選択しました。
 
-PCのブラウザーでも動作するものが作成でき、Browserでも同人
+PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを作成することができます。　
+
+モバイル端末上でも、DartVMを使うことで、モバイルブラウザー上で動作するよりも高速に動作することができます。
+
+
+
 
 ## Index
 * Math & Sprite 
