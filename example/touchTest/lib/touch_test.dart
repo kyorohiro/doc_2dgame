@@ -1,8 +1,12 @@
 import 'package:umiuni2d/tinygame.dart';
+import 'dart:math' as math;
 
 class PrimitiveTest extends TinyDisplayObject {
   TinyGameBuilder builder;
-  PrimitiveTest(this.builder) {}
+  PrimitiveTest(this.builder) {
+    // for container test
+    mat.rotateZ(math.PI/10);
+  }
 
   Map<int, List<double>> touches = {};
 
