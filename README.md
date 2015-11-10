@@ -23,7 +23,7 @@ PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを
  * Velocity
  * Matrix 
  * move
- * 
+ * rotate
 * 2D Physics
  * circle primitive
    * verocity
