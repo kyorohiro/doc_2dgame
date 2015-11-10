@@ -25,6 +25,7 @@ PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを
  * move
  * rotate
  * scale
+ * inverse matrix
 * 2D Physics
  * circle primitive
    * verocity
