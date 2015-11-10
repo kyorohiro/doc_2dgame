@@ -6,7 +6,7 @@
 
 
 
-## 開発環境
+## 開発環境はDart 
 開発環境として、"Flutter x Dart" or "WebGL x Dart" を選択しました。
 
 PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを作成することができます。　
