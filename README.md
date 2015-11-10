@@ -33,5 +33,6 @@ PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを
    * rotate
    * grouping
   * other primitve
-*  
-* Cellular Automata
+  * Cellular Automata
+* Tech
+ * texture atlass
