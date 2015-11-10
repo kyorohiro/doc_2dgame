@@ -6,7 +6,7 @@
 
 
 
-## 開発環境はDart
+## 開発環境はDartにした
 #### Dartを使う
 開発環境として、"Flutter x Dart" or "WebGL x Dart" を選択しました。
 
