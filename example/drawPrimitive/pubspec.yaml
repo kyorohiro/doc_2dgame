@@ -10,6 +10,9 @@ dependencies:
   umiuni2d:
     path: ../../
   vector_math: any
+  flutter: any
+  sky: any
+  sky_tools: any
 dev_dependencies:
   test: '>=0.12.0 <0.13.0'
 transformers:
