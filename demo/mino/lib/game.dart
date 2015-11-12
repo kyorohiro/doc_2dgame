@@ -6,23 +6,35 @@ import 'package:umiuni2d/tinygame.dart';
 
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
-  MinoTable table = new MinoTable();
-
   MinoRoot(this.builder) {
+    addChild(new MinoTableUI(builder));
+  }
+}
+
+class MinoTableUI extends TinyDisplayObject {
+  TinyGameBuilder builder;
+  MinoTable table = new MinoTable();
+  TinyColor colorEmpty = new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa);
+  TinyColor colorFrame = new TinyColor.argb(0xaa, 0x55, 0x33, 0x33);
+  MinoTableUI(this.builder) {
     ;
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
-    TinyRect rect = new TinyRect(0.0, 0.0, 7.0,7.0);
+    TinyRect rect = new TinyRect(0.0, 0.0, 7.0, 7.0);
     TinyPaint p = new TinyPaint();
-    p.color = new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa);
     p.style = TinyPaintStyle.stroke;
     p.strokeWidth = 1.0;
 
-    for (int x = 0; x < table.fieldWWithFrame + 2; x++) {
-      for (int y = 0; y < table.fieldHWithFrame + 1; y++) {
-        rect.x = x*8.0;
-        rect.y = y*8.0;
+    for (int y = 0; y < table.fieldHWithFrame; y++) {
+      for (int x = 0; x < table.fieldWWithFrame; x++) {
+        rect.x = x * 8.0;
+        rect.y = y * 8.0;
+        if (table.getMino(x, y).type == MinoTyoe.frame) {
+          p.color = colorFrame;
+        } else if (table.getMino(x, y).type == MinoTyoe.empty) {
+          p.color = colorEmpty;
+        }
         canvas.drawRect(stage, rect, p);
       }
     }
@@ -38,10 +50,10 @@ class MinoTable {
   int get fieldHWithFrame => fieldH + 1;
 
   MinoTable({this.fieldW: 12, this.fieldH: 22}) {
-    for (int x = 0; x < fieldW + 2; x++) {
-      for (int y = 0; y < fieldH + 1; y++) {
-        if (x == 0 || x == this.fieldW + 1 || y == fieldH) {
-          minos.add(new Mino(MinoTyoe.block));
+    for (int y = 0; y < fieldHWithFrame; y++) {
+      for (int x = 0; x < fieldWWithFrame; x++) {
+        if (x == 0 || x == fieldWWithFrame-1 || y == fieldH) {
+          minos.add(new Mino(MinoTyoe.frame));
         } else {
           minos.add(new Mino(MinoTyoe.empty));
         }
@@ -50,11 +62,11 @@ class MinoTable {
   }
 
   Mino getMino(int x, int y) {
-    return minos[x+y*fieldWWithFrame];
+    return minos[x + y * fieldWWithFrame];
   }
 }
 
-enum MinoTyoe { empty, block, l, o, s, z, j, t }
+enum MinoTyoe { empty, frame, l, o, s, z, j, t }
 
 class Mino {
   MinoTyoe type;
