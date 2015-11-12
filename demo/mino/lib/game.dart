@@ -38,6 +38,8 @@ class MinoGame {
     minon = new Minon.l();
     minon.x = table.fieldWWithFrame ~/ 2;
   }
+
+  
   down() {
     setMinon(minon, false);
     minon.y++;
@@ -50,16 +52,41 @@ class MinoGame {
       setMinon(minon, true);      
     }
   }
-  
+
+  left() {
+    setMinon(minon, false);
+    minon.x--;
+    if(collision(minon)) {
+      minon.x++;
+      setMinon(minon, true);
+      nextMinon();
+      setMinon(minon, true);
+    } else {
+      setMinon(minon, true);      
+    }
+  }
+
+  right() {
+    setMinon(minon, false);
+    minon.x++;
+    if(collision(minon)) {
+      minon.x--;
+      setMinon(minon, true);
+      nextMinon();
+      setMinon(minon, true);
+    } else {
+      setMinon(minon, true);      
+    }
+  }
+
   bool collision(Minon minon) {
     for (MinonElm e in minon.minos) {
       Mino m = table.getMino(minon.x + e.x, minon.y + e.y);
       if(!(m.type == MinoTyoe.empty || m.type == MinoTyoe.out)) {
         return true;
-      } else {
-        return false;
       }
     }
+    return false;
   }
 
   setMinon(Minon minon, bool on) {
