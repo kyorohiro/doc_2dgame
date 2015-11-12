@@ -89,12 +89,18 @@ class TinyWebglStage extends Object with TinyStage {
     }
   }
 
+  bool isTMode = false;
   Future _anime() async {
     double sum = 0.0;
     int count = 0;
 
     num prevTime = new DateTime.now().millisecond;
-    TinyWebglCanvas c = new TinyWebglCanvas(glContext);
+    TinyCanvas c = null;
+    if(isTMode) {
+      c = new TinyWebglCanvas(glContext);
+    } else {
+      c = new TinyWebglCanvasTS(glContext);
+    }
     while (animeIsStart) {
       await new Future.delayed(new Duration(milliseconds: 30));
       num currentTime = new DateTime.now().millisecondsSinceEpoch;

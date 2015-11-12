@@ -11,6 +11,12 @@ abstract class TinyCanvas {
   List<Matrix4> mats = [new Matrix4.identity()];
   List<TinyRect> clip = [];
 
+  clear(){
+    ;
+  }
+  flush() {
+    ;
+  }
   pushMulMatrix(Matrix4 mat) {
     mats.add(mats.last*mat);
     updateMatrix();

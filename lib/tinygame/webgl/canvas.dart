@@ -17,6 +17,194 @@ class TinyWebglContext {
   }
 }
 
+class TinyWebglCanvasTS extends TinyCanvas {
+  RenderingContext GL;
+  TinyWebglContext glContext;
+  TinyWebglCanvasTS(TinyWebglContext c) {
+    GL = c.GL;
+    glContext = c;
+    init();
+    clear();
+  }
+  Program programShape;
+  
+
+  void init() {
+    {
+      String vs = [
+        "attribute vec3 vp;",
+        "uniform mat4 u_mat;",
+        "uniform float u_point_size;",
+        "varying float v_mode;",
+        "void main() {",
+        "  gl_Position = u_mat*vec4(vp.x,vp.y,vp.z,1.0);",
+        "  gl_PointSize = 1.0;//u_point_size;",
+        "}"
+      ].join("\n");
+      String fs = [
+        "precision mediump float;",
+        "uniform vec4 color;",
+        //"varying vec4 v_mode;",
+        "void main() {",
+        " gl_FragColor = color;",
+        "}"
+      ].join("\n");
+      programShape = TinyWebglProgram.compile(GL, vs, fs);
+    }
+  }
+
+  int stencilV = 1;
+  void clear() {
+    stencilV = 1;
+    double r = 0.0;
+    double g = 0.0;
+    double b = 0.0;
+    double a = 1.0;
+    // GL.enable(RenderingContext.DEPTH_TEST);
+    GL.enable(RenderingContext.STENCIL_TEST);
+    GL.depthFunc(RenderingContext.LEQUAL);
+    GL.clearColor(r, g, b, a);
+    GL.clearDepth(1.0);
+    GL.clearStencil(0);
+    GL.enable(RenderingContext.BLEND);
+    blendMode(-1);
+    GL.clear(RenderingContext.COLOR_BUFFER_BIT |
+        RenderingContext.STENCIL_BUFFER_BIT |
+        RenderingContext.DEPTH_BUFFER_BIT);
+  }
+
+  void flush() {
+    
+  }
+  void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    double sx = rect.x;
+    double sy = rect.y;
+    double ex = rect.x + rect.w;
+    double ey = rect.y + rect.h;
+    drawVertex(stage, [sx, sy, 0.0, sx, ey, 0.0, ex, sy, 0.0, ex, ey, 0.0],
+        [0, 1, 3, 2], paint.color, paint.style, paint.strokeWidth);
+  }
+
+
+
+  void drawVertex(TinyStage stage, List<double> svertex, List<int> index,
+      TinyColor color, TinyPaintStyle style, double strokeWidth) {
+    //print("---drawRect");
+    //
+    //
+    GL.useProgram(programShape);
+
+    //
+    // vertex
+    //
+
+    Buffer rectBuffer = TinyWebglProgram.createArrayBuffer(GL, svertex);
+    GL.bindBuffer(RenderingContext.ARRAY_BUFFER, rectBuffer);
+
+    Buffer rectIndexBuffer =
+        TinyWebglProgram.createElementArrayBuffer(GL, index);
+    GL.bindBuffer(RenderingContext.ELEMENT_ARRAY_BUFFER, rectIndexBuffer);
+
+    //
+    // draw
+    {
+      //print("${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
+
+      TinyWebglProgram.setUniformMat4(GL, programShape, "u_mat", calcMat());
+      TinyWebglProgram.setUniformVec4(
+          GL, programShape, "color", [color.rf, color.gf, color.bf, color.af]);
+      TinyWebglProgram.setUniformF(
+          GL, programShape, "u_point_size", strokeWidth);
+
+      int locationVertexPosition = GL.getAttribLocation(programShape, "vp");
+      GL.vertexAttribPointer(
+          locationVertexPosition, 3, RenderingContext.FLOAT, false, 0, 0);
+      GL.enableVertexAttribArray(locationVertexPosition);
+
+      int mode = RenderingContext.TRIANGLE_FAN;
+      if (style == TinyPaintStyle.fill) {
+        mode = RenderingContext.TRIANGLE_FAN;
+      } else {
+        GL.lineWidth(strokeWidth);
+        mode = RenderingContext.LINE_LOOP;
+      }
+      GL.drawElements(
+          mode, svertex.length ~/ 3, RenderingContext.UNSIGNED_SHORT, 0);
+    }
+    GL.useProgram(null);
+  }
+
+  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {
+  }
+
+  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+  }
+
+  void clipRect(TinyStage stage, TinyRect rect) {
+    
+  }
+
+  //bool a = false;
+  void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
+      TinyRect dst, TinyPaint paint) {
+ 
+  }
+
+  void updateMatrix() {}
+  
+  
+  blendMode(int type) {
+    // http://masuqat.net/programming/csharp/OpenTK01-09.php
+    switch (type) {
+      case -1:
+        GL.blendEquation(RenderingContext.FUNC_ADD);
+        GL.blendFuncSeparate(
+            RenderingContext.SRC_ALPHA,
+            RenderingContext.ONE_MINUS_SRC_ALPHA,
+            RenderingContext.SRC_ALPHA,
+            RenderingContext.ONE_MINUS_CONSTANT_ALPHA);
+        break;
+      case 0: //none
+        GL.blendEquation(RenderingContext.FUNC_ADD);
+        GL.blendFunc(RenderingContext.ONE, RenderingContext.ZERO);
+        break;
+      case 1: // semi transparent
+        GL.blendEquation(RenderingContext.FUNC_ADD);
+        GL.blendFunc(
+            RenderingContext.SRC_ALPHA, RenderingContext.ONE_MINUS_SRC_ALPHA);
+        break;
+      case 2: //add
+        GL.blendEquation(RenderingContext.FUNC_ADD);
+        GL.blendFunc(RenderingContext.SRC_ALPHA, RenderingContext.ONE);
+        break;
+      case 3: //sub
+        GL.blendEquation(RenderingContext.FUNC_REVERSE_SUBTRACT);
+        GL.blendFunc(RenderingContext.SRC_ALPHA, RenderingContext.ONE);
+        break;
+      case 4: //product
+        GL.blendEquation(RenderingContext.FUNC_ADD);
+        GL.blendFunc(RenderingContext.ZERO, RenderingContext.SRC_COLOR);
+        break;
+      case 5: //reverse
+        GL.blendEquation(RenderingContext.FUNC_ADD);
+        GL.blendFunc(
+            RenderingContext.ONE_MINUS_DST_COLOR, RenderingContext.ZERO);
+        break;
+    }
+  }
+
+  Matrix4 cacheMatrix = new Matrix4.identity();
+  Matrix4 calcMat() {
+    cacheMatrix.setIdentity();
+    cacheMatrix = cacheMatrix.translate(-1.0, 1.0, 0.0);
+    cacheMatrix =
+        cacheMatrix.scale(2.0 / glContext.widht, -2.0 / glContext.height, 1.0);
+    cacheMatrix = cacheMatrix * getMatrix();
+    return cacheMatrix;
+  }
+}
+
+
 class TinyWebglCanvas extends TinyCanvas {
   RenderingContext GL;
   TinyWebglContext glContext;
