@@ -20,37 +20,26 @@ class MinoGame {
   }
 
   down() {
-    setMinon(minon, false);
-    minon.y++;
-    if (collision(minon)) {
-      minon.y--;
-      setMinon(minon, true);
+    if(false == move(0, 1)){
       nextMinon();
-      setMinon(minon, true);
-    } else {
-      setMinon(minon, true);
     }
   }
 
-  left() {
-    setMinon(minon, false);
-    minon.x--;
-    if (collision(minon)) {
-      minon.x++;
-      setMinon(minon, true);
-    } else {
-      setMinon(minon, true);
-    }
-  }
+  left() => move(-1, 0);
+  right() => move(1, 0);
 
-  right() {
+  bool move(int dx, int dy) {
     setMinon(minon, false);
-    minon.x++;
+    minon.x += dx;
+    minon.y += dy;
     if (collision(minon)) {
-      minon.x--;
+      minon.x-=dx;
+      minon.y-=dy;
       setMinon(minon, true);
+      return false;
     } else {
       setMinon(minon, true);
+      return true;
     }
   }
 
