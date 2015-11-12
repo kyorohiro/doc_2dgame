@@ -7,18 +7,23 @@ import 'package:umiuni2d/tinygame.dart';
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
+  Joystick joystick = new Joystick();
   MinoRoot(this.builder) {
     addChild(new MinoTableUI(builder, game.table));
+    addChild(joystick);
+    joystick.mat.translate(200.0,200.0,0.0);
   }
 
   int time = 0;
   void onTick(TinyStage stage, int timeStamp) {
     if(time > 2) {
-      game.loop();      
+      game.loop();
       time=0;
     }
     time++;
   }
+  
+
 }
 
 class MinoGame {
@@ -39,7 +44,7 @@ class MinoGame {
     minon.x = table.fieldWWithFrame ~/ 2;
   }
 
-  
+
   down() {
     setMinon(minon, false);
     minon.y++;
@@ -49,7 +54,7 @@ class MinoGame {
       nextMinon();
       setMinon(minon, true);
     } else {
-      setMinon(minon, true);      
+      setMinon(minon, true);
     }
   }
 
@@ -62,7 +67,7 @@ class MinoGame {
       nextMinon();
       setMinon(minon, true);
     } else {
-      setMinon(minon, true);      
+      setMinon(minon, true);
     }
   }
 
@@ -75,7 +80,7 @@ class MinoGame {
       nextMinon();
       setMinon(minon, true);
     } else {
-      setMinon(minon, true);      
+      setMinon(minon, true);
     }
   }
 

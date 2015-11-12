@@ -18,3 +18,4 @@ part 'tinygame/circledirection.dart';
 part 'tinygame/seekbar.dart';
 part 'tinygame/sprite.dart';
 part 'tinygame/spritesheet.dart';
+part 'tinygame/joystick.dart';
