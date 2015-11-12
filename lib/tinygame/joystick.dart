@@ -13,6 +13,8 @@ class TinyJoystick extends TinyDisplayObject {
   double get directionMax => size/2;
   double get directionX => minX/minWidth;
   double get directionY => - minY/minWidth;
+  double get directionXAbs => abs(directionX);
+  double get directionYAbs =>  abs(directionY);
 
   TinyJoystick({this.size:50.0,this.minWidth:25.0}) {
     
@@ -50,7 +52,6 @@ class TinyJoystick extends TinyDisplayObject {
           this.minX = 0.0;
           this.minY = 0.0;
         } else {
-
           this.minX = x;
           this.minY = y;
           double d = distance(0.0, 0.0, this.minX, this.minY);
