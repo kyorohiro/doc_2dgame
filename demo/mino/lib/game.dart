@@ -11,7 +11,7 @@ class MinoRoot extends TinyDisplayObject {
   MinoRoot(this.builder) {
     addChild(new MinoTableUI(builder, game.table));
     addChild(joystick);
-    joystick.mat.translate(200.0,200.0,0.0);
+    joystick.mat.translate(100.0,250.0,0.0);
   }
 
   int time = 0;
