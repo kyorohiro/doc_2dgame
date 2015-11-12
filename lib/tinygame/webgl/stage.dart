@@ -110,6 +110,7 @@ class TinyWebglStage extends Object with TinyStage {
       if (isPaint && sum > 40.0) {
         c.clear();
         root.paint(this, c);
+        c.flush();
         isPaint = false;
       }
 

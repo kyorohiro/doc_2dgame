@@ -28,6 +28,10 @@ class TinyWebglCanvas extends TinyCanvas {
   }
   Program programShape;
   Program programImage;
+  
+  void flush() {
+    
+  }
   void init() {
     {
       String vs = [
