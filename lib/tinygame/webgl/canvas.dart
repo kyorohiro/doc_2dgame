@@ -71,10 +71,14 @@ class TinyWebglCanvasTS extends TinyCanvas {
     GL.clear(RenderingContext.COLOR_BUFFER_BIT |
         RenderingContext.STENCIL_BUFFER_BIT |
         RenderingContext.DEPTH_BUFFER_BIT);
+    flVert.clear();
+    flInde.clear();
   }
 
   void flush() {
+    if(flVert.length != 0) {
     drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa), TinyPaintStyle.stroke, 1.0);
+    }
   }
   List<double> flVert = [];
   List<int> flInde = [];
@@ -83,8 +87,9 @@ class TinyWebglCanvasTS extends TinyCanvas {
     double sy = rect.y;
     double ex = rect.x + rect.w;
     double ey = rect.y + rect.h;
+    int b = flVert.length~/3;
     flVert.addAll([sx, sy, 0.0, sx, ey, 0.0, ex, sy, 0.0, ex, ey, 0.0]);
-    flInde.addAll([0, 1, 3, 2]);
+    flInde.addAll([b+0, b+1, b+3, b+2]);
   }
 
 
