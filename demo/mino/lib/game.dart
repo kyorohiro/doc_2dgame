@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:umiuni2d/tinygame.dart';
 
 part 'glogic/glogic.dart';
+part 'glogic/minon.dart';
 
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
