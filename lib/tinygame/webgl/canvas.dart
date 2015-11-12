@@ -77,23 +77,27 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   void flush() {
     if(flVert.length != 0) {
-    drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa), TinyPaintStyle.stroke, 1.0);
+      drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa), TinyPaintStyle.stroke, 1.0);
     }
   }
   List<double> flVert = [];
   List<int> flInde = [];
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    Matrix4 m = calcMat();
     double sx = rect.x;
     double sy = rect.y;
+    Vector3 s = m * new Vector3(sx, sy, 0.0);
     double ex = rect.x + rect.w;
     double ey = rect.y + rect.h;
+    Vector3 e = m * new Vector3(ex, ey, 0.0);
     int b = flVert.length~/3;
-    flVert.addAll([sx, sy, 0.0, sx, ey, 0.0, ex, sy, 0.0, ex, ey, 0.0]);
+    flVert.addAll([s.x, s.y, 0.0, s.x, e.y, 0.0, e.x, s.y, 0.0, e.x, e.y, 0.0]);
     flInde.addAll([b+0, b+1, b+3, b+2]);
   }
 
 
 
+  Matrix4 baseMat = new Matrix4.identity();
   void drawVertex(List<double> svertex, List<int> index,
       TinyColor color, TinyPaintStyle style, double strokeWidth) {
     //print("---drawRect");
@@ -117,7 +121,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
     {
       //print("${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
 
-      TinyWebglProgram.setUniformMat4(GL, programShape, "u_mat", calcMat());
+      TinyWebglProgram.setUniformMat4(GL, programShape, "u_mat", baseMat);
       TinyWebglProgram.setUniformVec4(
           GL, programShape, "color", [color.rf, color.gf, color.bf, color.af]);
       TinyWebglProgram.setUniformF(
