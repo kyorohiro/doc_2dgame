@@ -22,11 +22,13 @@ class MinoRoot extends TinyDisplayObject {
   }
 
   int time = 0;
+  int turnTime = 0;
   void onTick(TinyStage stage, int timeStamp) {
     if(time > 10) {
       game.loop();
       time=0;
     }
+    turnTime--;
     time++;
     if(joystick.directionX > 0.5) {
       game.right();
@@ -36,6 +38,10 @@ class MinoRoot extends TinyDisplayObject {
     }
     else if(joystick.directionY < -0.5) {
       game.down();
+    }
+    else if(rotateR.isTouch && turnTime <= 0) {
+      turnTime = 10;
+      game.rotateR();
     }
     print("## ${(joystick.directionX*10).toInt()}:${(joystick.directionY*10).toInt()}");
   }
@@ -93,6 +99,17 @@ class MinoGame {
     minon.x++;
     if(collision(minon)) {
       minon.x--;
+      setMinon(minon, true);
+    } else {
+      setMinon(minon, true);
+    }
+  }
+  
+  rotateR() {
+    setMinon(minon, false);
+    minon.rotateRight();
+    if(collision(minon)) {
+      minon.rotateLeft();
       setMinon(minon, true);
     } else {
       setMinon(minon, true);
@@ -197,6 +214,22 @@ class Minon {
     minos.add(new MinonElm(MinoTyoe.l, -1, 0));
     minos.add(new MinonElm(MinoTyoe.l, 1, 0));
     minos.add(new MinonElm(MinoTyoe.l, 2, 0));
+  }
+  
+  rotateRight() {
+    for(MinonElm e in minos) {
+      int t = e.x;
+      e.x = -1*e.y;
+      e.y = t;
+    }
+  }
+  
+  rotateLeft() {
+    for(MinonElm e in minos) {
+      int t = e.x;
+      e.x = e.y;
+      e.y = -1*t;
+    }
   }
 }
 
