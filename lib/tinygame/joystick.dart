@@ -45,7 +45,7 @@ class Joystick extends TinyDisplayObject {
     } else {
       if (id == touchId) {
         if (type == "pointerup") {
-          print("--up");
+          //print("--up");
           isTouch = false;
           this.minX = 0.0;
           this.minY = 0.0;

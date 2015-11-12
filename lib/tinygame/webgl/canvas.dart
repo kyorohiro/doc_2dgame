@@ -89,6 +89,49 @@ class TinyWebglCanvasTS extends TinyCanvas {
     }
   }
 
+  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    double cx = rect.x + rect.w / 2.0;
+    double cy = rect.y + rect.h / 2.0;
+    double a = rect.w / 2;
+    double b = rect.h / 2;
+    int num = 25;
+
+    Matrix4 m = calcMat();
+    Vector3 s = new Vector3(0.0, 0.0, 0.0);
+    double colorR = paint.color.r/0xff;
+    double colorG = paint.color.g/0xff;
+    double colorB = paint.color.b/0xff;
+    double colorA = paint.color.a/0xff;
+    for (int i = 0; i < num; i++) {
+      //
+      int bbb = flVert.length~/7;
+
+      //
+      s.x = cx;
+      s.y = cy;
+      s.z = flZ;
+      s = m * s;
+      flVert.addAll([s.x, s.y, flZ]); 
+      flVert.addAll([colorR, colorG, colorB, colorA]);
+      //
+      s.x = cx + math.cos(2 * math.PI * (i / num)) * a;
+      s.y = cy + math.sin(2 * math.PI * (i / num)) * b;
+      s.z = flZ;
+      s = m * s;
+      flVert.addAll([s.x, s.y, flZ]);
+      flVert.addAll([colorR, colorG, colorB, colorA]);
+      //
+      s.x = cx + math.cos(2 * math.PI * ((i+1) / num)) * a;
+      s.y = cy + math.sin(2 * math.PI * ((i+1) / num)) * b;
+      s.z = flZ;
+      s = m * s;
+      flVert.addAll([s.x, s.y, flZ]);
+      flVert.addAll([colorR, colorG, colorB, colorA]);
+
+      flInde.addAll([bbb+0,bbb+1,bbb+2]);
+      flZ +=0.0001;
+    }
+  }
 
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
     Matrix4 m = calcMat();
@@ -166,8 +209,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {
   }
 
-  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
-  }
+
 
   void clipRect(TinyStage stage, TinyRect rect) {
     
