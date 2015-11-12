@@ -30,6 +30,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
   
 
   void init() {
+    print("#[A]# ${GL.getParameter(RenderingContext.MAX_VERTEX_TEXTURE_IMAGE_UNITS)}");
+    print("#[B]# ${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
     {
       String vs = [
         "attribute vec3 vp;",
@@ -77,7 +79,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   void flush() {
     if(flVert.length != 0) {
-      drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa), TinyPaintStyle.stroke, 1.0);
+      drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa));
     }
   }
   List<double> flVert = [];
@@ -91,24 +93,37 @@ class TinyWebglCanvasTS extends TinyCanvas {
     double ey = rect.y + rect.h;
     Vector3 e = m * new Vector3(ex, ey, 0.0);
     int b = flVert.length~/3;
-    flVert.addAll([s.x, s.y, 0.0, s.x, e.y, 0.0, e.x, s.y, 0.0, e.x, e.y, 0.0]);
-    flInde.addAll([b+0, b+1, b+3, b+2]);
+    flVert.addAll([
+      s.x, s.y, 0.0, // 7
+      s.x, e.y, 0.0, // 1
+      e.x, s.y, 0.0, // 9
+      e.x, e.y, 0.0]); //3
+    //b= 0;
+    flInde.addAll([
+       b+0, b+1, b+2, 
+       b+1, b+3, b+2]);
+/*    flInde.addAll([
+      b+0, b+1, b+3, 
+      b+0, b+2, b+3]);
+  */ 
+    ///*
+    if(flVert.length >0) {
+      flush();
+      flVert = [];
+      flInde = [];
+    }//*/
   }
 
 
 
   Matrix4 baseMat = new Matrix4.identity();
-  void drawVertex(List<double> svertex, List<int> index,
-      TinyColor color, TinyPaintStyle style, double strokeWidth) {
-    //print("---drawRect");
+  void drawVertex(List<double> svertex, List<int> index, TinyColor color) {
     //
     //
     GL.useProgram(programShape);
 
     //
     // vertex
-    //
-
     Buffer rectBuffer = TinyWebglProgram.createArrayBuffer(GL, svertex);
     GL.bindBuffer(RenderingContext.ARRAY_BUFFER, rectBuffer);
 
@@ -119,29 +134,21 @@ class TinyWebglCanvasTS extends TinyCanvas {
     //
     // draw
     {
-      //print("${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
-
       TinyWebglProgram.setUniformMat4(GL, programShape, "u_mat", baseMat);
       TinyWebglProgram.setUniformVec4(
           GL, programShape, "color", [color.rf, color.gf, color.bf, color.af]);
-      TinyWebglProgram.setUniformF(
-          GL, programShape, "u_point_size", strokeWidth);
-
+ 
       int locationVertexPosition = GL.getAttribLocation(programShape, "vp");
       GL.vertexAttribPointer(
           locationVertexPosition, 3, RenderingContext.FLOAT, false, 0, 0);
       GL.enableVertexAttribArray(locationVertexPosition);
-
-      int mode = RenderingContext.TRIANGLE_FAN;
-      if (style == TinyPaintStyle.fill) {
-        mode = RenderingContext.TRIANGLE_FAN;
-      } else {
-        GL.lineWidth(strokeWidth);
-        mode = RenderingContext.LINE_LOOP;
-      }
       GL.drawElements(
-          mode, svertex.length ~/ 3, RenderingContext.UNSIGNED_SHORT, 0);
+          RenderingContext.TRIANGLES,
+          //RenderingContext.LINE_STRIP,
+          index.length,//svertex.length ~/ 3, 
+          RenderingContext.UNSIGNED_SHORT, 0);
     }
+ 
     GL.useProgram(null);
   }
 
@@ -215,6 +222,20 @@ class TinyWebglCanvasTS extends TinyCanvas {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+//
+///
+//
 
 class TinyWebglCanvas extends TinyCanvas {
   RenderingContext GL;
