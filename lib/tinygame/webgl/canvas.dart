@@ -74,20 +74,22 @@ class TinyWebglCanvasTS extends TinyCanvas {
   }
 
   void flush() {
-    
+    drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa), TinyPaintStyle.stroke, 1.0);
   }
+  List<double> flVert = [];
+  List<int> flInde = [];
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
     double sx = rect.x;
     double sy = rect.y;
     double ex = rect.x + rect.w;
     double ey = rect.y + rect.h;
-    drawVertex(stage, [sx, sy, 0.0, sx, ey, 0.0, ex, sy, 0.0, ex, ey, 0.0],
-        [0, 1, 3, 2], paint.color, paint.style, paint.strokeWidth);
+    flVert.addAll([sx, sy, 0.0, sx, ey, 0.0, ex, sy, 0.0, ex, ey, 0.0]);
+    flInde.addAll([0, 1, 3, 2]);
   }
 
 
 
-  void drawVertex(TinyStage stage, List<double> svertex, List<int> index,
+  void drawVertex(List<double> svertex, List<int> index,
       TinyColor color, TinyPaintStyle style, double strokeWidth) {
     //print("---drawRect");
     //

@@ -96,7 +96,7 @@ class TinyWebglStage extends Object with TinyStage {
 
     num prevTime = new DateTime.now().millisecond;
     TinyCanvas c = null;
-    if(isTMode) {
+    if(isTMode==false) {
       c = new TinyWebglCanvas(glContext);
     } else {
       c = new TinyWebglCanvasTS(glContext);
