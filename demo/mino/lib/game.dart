@@ -10,15 +10,18 @@ class MinoRoot extends TinyDisplayObject {
   TinyJoystick joystick;
   TinyButton rotateR;
   TinyButton rotateL;
+  MinoTableUI playboard;
   MinoRoot(this.builder) {
     rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
     rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
     joystick = new TinyJoystick();
-    addChild(new MinoTableUI(builder, game.table));
+    playboard = new MinoTableUI(builder, game.table);
+    addChild(playboard);
     addChild(joystick);
     addChild(rotateR);
     addChild(rotateL);
 
+    playboard.mat.translate(100.0, 25.0, 0.0);
     joystick.mat.translate(100.0, 250.0, 0.0);
     rotateR.mat.translate(250.0, 225.0, 0.0);
     rotateL.mat.translate(300.0, 225.0, 0.0);
