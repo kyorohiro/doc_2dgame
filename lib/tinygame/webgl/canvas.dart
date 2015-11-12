@@ -58,8 +58,12 @@ class TinyWebglCanvasTS extends TinyCanvas {
   }
 
   int stencilV = 1;
+  List<double> flVert = [];
+  List<int> flInde = [];
+  double flZ = 0.0;
   void clear() {
     stencilV = 1;
+    flZ = -0.5;
     double r = 0.0;
     double g = 0.0;
     double b = 0.0;
@@ -84,8 +88,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
       drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa));
     }
   }
-  List<double> flVert = [];
-  List<int> flInde = [];
+
+
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
     Matrix4 m = calcMat();
     double sx = rect.x;
@@ -100,29 +104,20 @@ class TinyWebglCanvasTS extends TinyCanvas {
     double colorB = paint.color.b/0xff;
     double colorA = paint.color.a/0xff;
     flVert.addAll([
-      s.x, s.y, 0.0, // 7
+      s.x, s.y, flZ, // 7
       colorR, colorG, colorB, colorA,// color
-      s.x, e.y, 0.0, // 1
+      s.x, e.y, flZ, // 1
       colorR, colorG, colorB, colorA,// color
-      e.x, s.y, 0.0, // 9
+      e.x, s.y, flZ, // 9
       colorR, colorG, colorB, colorA,// color
-      e.x, e.y, 0.0, //3
+      e.x, e.y, flZ, //3
       colorR, colorG, colorB, colorA// color
       ]);
-
+    flZ +=0.0001;
     //b= 0;
     flInde.addAll([
        b+0, b+1, b+2, 
        b+1, b+3, b+2]);
-/*    flInde.addAll([
-      b+0, b+1, b+3, 
-      b+0, b+2, b+3]);
-  */ 
-    ///*
-    //  flush();
-    //  flVert = [];
-     // flInde = [];
-    //*/
   }
 
 
