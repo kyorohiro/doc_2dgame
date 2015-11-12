@@ -28,6 +28,16 @@ class MinoRoot extends TinyDisplayObject {
       time=0;
     }
     time++;
+    if(joystick.directionX > 0.5) {
+      game.right();
+    }
+    else if(joystick.directionX < -0.5) {
+      game.left();
+    }
+    else if(joystick.directionY < -0.5) {
+      game.down();
+    }
+    print("## ${(joystick.directionX*10).toInt()}:${(joystick.directionY*10).toInt()}");
   }
   
   onTouchCallback(String id) {
@@ -73,8 +83,6 @@ class MinoGame {
     if(collision(minon)) {
       minon.x++;
       setMinon(minon, true);
-      nextMinon();
-      setMinon(minon, true);
     } else {
       setMinon(minon, true);
     }
@@ -85,8 +93,6 @@ class MinoGame {
     minon.x++;
     if(collision(minon)) {
       minon.x--;
-      setMinon(minon, true);
-      nextMinon();
       setMinon(minon, true);
     } else {
       setMinon(minon, true);

@@ -11,8 +11,8 @@ class TinyJoystick extends TinyDisplayObject {
   double minX = 0.0;
   double minY = 0.0;
   double get directionMax => size/2;
-  double get directionX => - minX;
-  double get directionY => - minY;
+  double get directionX => minX/minWidth;
+  double get directionY => - minY/minWidth;
 
   TinyJoystick({this.size:50.0,this.minWidth:25.0}) {
     
@@ -30,7 +30,7 @@ class TinyJoystick extends TinyDisplayObject {
     TinyRect r2 = new TinyRect(minX-(minWidth/2), minY-(minWidth/2), minWidth, minWidth);
     canvas.drawOval(stage, r1, p);
     canvas.drawOval(stage, r2, p);
-    print("x:y=${minX-(minWidth/2)}:${minY-(minWidth/2)}  __ ${minX} ${minY}");
+    //print("x:y=${minX-(minWidth/2)}:${minY-(minWidth/2)}  __ ${minX} ${minY}");
   }
 
   @override
