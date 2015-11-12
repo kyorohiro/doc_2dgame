@@ -7,23 +7,32 @@ import 'package:umiuni2d/tinygame.dart';
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
-  Joystick joystick = new Joystick();
+  TinyJoystick joystick;
+  TinyButton rotateR;
+
   MinoRoot(this.builder) {
+    rotateR = new TinyButton("r", 50.0, 50.0, onTouchCallback);
+    joystick = new TinyJoystick();
     addChild(new MinoTableUI(builder, game.table));
     addChild(joystick);
+    addChild(rotateR);
+
     joystick.mat.translate(100.0,250.0,0.0);
+    rotateR.mat.translate(250.0,225.0,0.0);
   }
 
   int time = 0;
   void onTick(TinyStage stage, int timeStamp) {
-    if(time > 2) {
+    if(time > 10) {
       game.loop();
       time=0;
     }
     time++;
   }
   
-
+  onTouchCallback(String id) {
+    
+  }
 }
 
 class MinoGame {

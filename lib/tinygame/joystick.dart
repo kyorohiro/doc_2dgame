@@ -1,6 +1,6 @@
 part of tinygame;
 
-class Joystick extends TinyDisplayObject {
+class TinyJoystick extends TinyDisplayObject {
   @override
   String objectName = "joystick";
 
@@ -14,7 +14,7 @@ class Joystick extends TinyDisplayObject {
   double get directionX => - minX;
   double get directionY => - minY;
 
-  Joystick({this.size:50.0,this.minWidth:25.0}) {
+  TinyJoystick({this.size:50.0,this.minWidth:25.0}) {
     
   }
 
