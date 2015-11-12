@@ -211,9 +211,9 @@ class TinyWebglStage extends Object with TinyStage {
     glContext.canvasElement.onMouseOut.listen((MouseEvent e) {
      // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
-      //  root.touch(this, 0, "pointercancel", e.offset.x.toDouble(),
-      //      e.offset.y.toDouble());
-      //  isTap = false;
+        root.touch(this, 0, "pointercancel", e.offset.x.toDouble(),
+            e.offset.y.toDouble());
+        isTap = false;
       }
     });
 

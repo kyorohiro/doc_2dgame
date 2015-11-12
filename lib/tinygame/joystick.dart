@@ -44,7 +44,7 @@ class TinyJoystick extends TinyDisplayObject {
       }
     } else {
       if (id == touchId) {
-        if (type == "pointerup") {
+        if (type == "pointerup"|| type == "pointercancel") {
           //print("--up");
           isTouch = false;
           this.minX = 0.0;
