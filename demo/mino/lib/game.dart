@@ -9,16 +9,19 @@ class MinoRoot extends TinyDisplayObject {
   MinoGame game = new MinoGame();
   TinyJoystick joystick;
   TinyButton rotateR;
-
+  TinyButton rotateL;
   MinoRoot(this.builder) {
-    rotateR = new TinyButton("r", 50.0, 50.0, onTouchCallback);
+    rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
+    rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
     joystick = new TinyJoystick();
     addChild(new MinoTableUI(builder, game.table));
     addChild(joystick);
     addChild(rotateR);
+    addChild(rotateL);
 
     joystick.mat.translate(100.0,250.0,0.0);
     rotateR.mat.translate(250.0,225.0,0.0);
+    rotateL.mat.translate(300.0,225.0,0.0);
   }
 
   int time = 0;
@@ -42,6 +45,10 @@ class MinoRoot extends TinyDisplayObject {
     else if(rotateR.isTouch && turnTime <= 0) {
       turnTime = 10;
       game.rotateR();
+    }
+    else if(rotateL.isTouch && turnTime <= 0) {
+      turnTime = 10;
+      game.rotateL();
     }
     print("## ${(joystick.directionX*10).toInt()}:${(joystick.directionY*10).toInt()}");
   }
@@ -116,6 +123,16 @@ class MinoGame {
     }
   }
 
+  rotateL() {
+    setMinon(minon, false);
+    minon.rotateRight();
+    if(collision(minon)) {
+      minon.rotateLeft();
+      setMinon(minon, true);
+    } else {
+      setMinon(minon, true);
+    }
+  }
   bool collision(Minon minon) {
     for (MinonElm e in minon.minos) {
       Mino m = table.getMino(minon.x + e.x, minon.y + e.y);
