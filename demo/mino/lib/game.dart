@@ -6,6 +6,7 @@ import 'package:umiuni2d/tinygame.dart';
 
 part 'glogic/glogic.dart';
 part 'glogic/minon.dart';
+part 'glogic/board.dart';
 
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
