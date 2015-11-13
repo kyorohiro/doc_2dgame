@@ -3,25 +3,29 @@ part of gamelogic;
 
 class MinoGame {
   MinoTable table = new MinoTable();
-  Minon minon = new Minon.l();
+  List<Minon> nexts = [];
+  Minon get minon => nexts.first;
+  Minon get minon2 => nexts[1];
 
   MinoGame() {
     nextMinon();
   }
-
-  loop() {
-    setMinon(minon, true);
-    down();
-  }
-
+  
   nextMinon() {
-    minon = new Minon.random();
+    if(nexts.length > 0) {
+      nexts.removeAt(0);
+    }
+    while(nexts.length < 3) {
+     nexts.add(new Minon.random());
+    }
     minon.x = table.fieldWWithFrame ~/ 2;
   }
 
   down() {
     if(false == move(0, 1)){
       nextMinon();
+      List<int> t = table.clearableLines();
+      table.clearLines(t);
     }
   }
 

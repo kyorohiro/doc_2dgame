@@ -28,4 +28,42 @@ class MinoTable {
     }
     return minos[x + y * fieldWWithFrame];
   }
+  
+  List<int> clearableLines() {
+    List<int> ret = [];
+    bool cleable = true;
+    for (int y = 0; y < fieldHWithFrame-1; y++) {
+      cleable = true;
+      for (int x = 1; x < fieldWWithFrame-1; x++) {
+       if(getMino(x, y).type == MinoTyoe.empty) {
+         cleable = false;
+         break;
+       }
+      }
+      //
+      if(cleable == true) {
+        ret.add(y);
+      }
+    }
+    ret.sort();
+    return ret;
+  }
+  
+  clearLines(List<int> target) {
+    for(int v in target) {
+      clearLine(v);
+    }
+  }
+
+  clearLine(int yS) {
+    for (int y = yS; y >=0; y--) {
+      for (int x = 1; x < fieldWWithFrame-1; x++) {
+        if(getMino(x, y-1).type == MinoTyoe.out) {
+          getMino(x, y).type = MinoTyoe.empty;   
+        } else {
+         getMino(x, y).type = getMino(x, y-1).type;
+        }
+      }
+    }
+  }
 }

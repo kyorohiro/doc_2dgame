@@ -102,12 +102,12 @@ class TinyWebglStage extends Object with TinyStage {
       c = new TinyWebglCanvasTS(glContext);
     }
     while (animeIsStart) {
-      await new Future.delayed(new Duration(milliseconds: 30));
+      await new Future.delayed(new Duration(milliseconds: 15));
       num currentTime = new DateTime.now().millisecondsSinceEpoch;
 
       num s = (currentTime - prevTime);
       kick((prevTime + s).toInt());
-      kick((prevTime + s).toInt());
+     // kick((prevTime + s).toInt());
       sum += s;
       if (s < 0) {}
       count++;
