@@ -22,8 +22,20 @@ class MinoTable {
     }
   }
 
+  clear() {
+    for (int y = 0; y < fieldHWithFrame; y++) {
+      for (int x = 0; x < fieldWWithFrame; x++) {
+        if (x == 0 || x == fieldWWithFrame - 1 || y == fieldH) {
+          getMino(x, y).type = MinoTyoe.frame;
+        } else {
+          getMino(x, y).type = MinoTyoe.empty;
+        }
+      }
+    }
+  }
+
   Mino getMino(int x, int y) {
-    if (x < 0 || x >= fieldHWithFrame || y < 0 || y >= fieldHWithFrame) {
+    if (x < 0 || x > fieldHWithFrame || y < 0 || y > fieldHWithFrame) {
       return outMino;
     }
     return minos[x + y * fieldWWithFrame];

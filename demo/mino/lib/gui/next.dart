@@ -1,11 +1,23 @@
 part of gamelogic;
 
 
-class MinoTableUI extends TinyDisplayObject {
+class MinoNextUI extends TinyDisplayObject {
   TinyGameBuilder builder;
   MinoTable table;
-  MinoTableUI(this.builder, this.table) {
-    ;
+
+  
+  MinoNextUI(this.builder) {
+    table = new MinoTable(fieldW:5,fieldH:5);
+  }
+
+  setMinon(Minon minon) {
+    table.clear();
+    for (MinonElm e in minon.minos) {
+      Mino m = table.getMino(3 + e.x, 3 + e.y);
+      if (m.type != MinoTyoe.out) {
+        m.type = e.type;
+      }
+    }
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
@@ -38,7 +50,7 @@ class MinoTableUI extends TinyDisplayObject {
         } else if (m.type == MinoTyoe.L) {
           p.color = MinoRoot.colorL;
         } else {
-          p.color = MinoRoot.colorL;
+          p.color = MinoRoot.colorO;
         }
         canvas.drawRect(stage, rect, p);
       }
