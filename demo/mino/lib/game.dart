@@ -20,7 +20,7 @@ class MinoRoot extends TinyDisplayObject {
   static final TinyColor colorZ = new TinyColor.argb(0xaa, 0xaa, 0xff, 0xaa);
   static final TinyColor colorJ = new TinyColor.argb(0xaa, 0xaa, 0xaa, 0xff);
   static final TinyColor colorL = new TinyColor.argb(0xaa, 0xff, 0xff, 0xaa);
-  static final TinyColor colorT = new TinyColor.argb(0xaa, 0xff, 0xff, 0xff);
+  static final TinyColor colorT = new TinyColor.argb(0xaa, 0xaa, 0xff, 0xff);
   
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
