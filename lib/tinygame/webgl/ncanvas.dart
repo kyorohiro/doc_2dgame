@@ -227,29 +227,30 @@ class TinyWebglCanvasTS extends TinyCanvas {
     Matrix4 m = calcMat();
     double sx = dst.x;
     double sy = dst.y;
-    Vector3 s = m * new Vector3(sx, sy, 0.0);
     double ex = dst.x + dst.w;
     double ey = dst.y + dst.h;
-    Vector3 e = m * new Vector3(ex, ey, 0.0);
- 
-    //
-    //
+
+    Vector3 ss1 = m * new Vector3(sx, sy, 0.0);
+    Vector3 ss2 = m * new Vector3(sx, ey, 0.0);
+    Vector3 ss3 = m * new Vector3(ex, sy, 0.0);
+    Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
+
     int b = flVert.length~/8;
     double colorR = paint.color.r/0xff;
     double colorG = paint.color.g/0xff;
     double colorB = paint.color.b/0xff;
     double colorA = paint.color.a/0xff;
     flVert.addAll([
-      s.x, s.y, flZ, // 7
+      ss1.x, ss1.y, flZ, // 7
       colorR, colorG, colorB, colorA,// color
       -1.0,
-      s.x, e.y, flZ, // 1
+      ss2.x, ss2.y, flZ, // 1
       colorR, colorG, colorB, colorA,// color
       -1.0,
-      e.x, s.y, flZ, // 9
+      ss3.x, ss3.y, flZ, // 9
       colorR, colorG, colorB, colorA,// color
       -1.0,
-      e.x, e.y, flZ, //3
+      ss4.x, ss4.y, flZ, //3
       colorR, colorG, colorB, colorA,// color
       -1.0
       ]);
