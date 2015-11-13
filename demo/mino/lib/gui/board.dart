@@ -11,7 +11,7 @@ class MinoTableUI extends TinyDisplayObject {
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     TinyRect rect = new TinyRect(0.0, 0.0, 7.0, 7.0);
     TinyPaint p = new TinyPaint();
-    p.style = TinyPaintStyle.stroke;
+    p.style = TinyPaintStyle.fill;
     p.strokeWidth = 1.0;
 
     for (int y = 0; y < table.fieldHWithFrame; y++) {

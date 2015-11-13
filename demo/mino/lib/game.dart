@@ -85,7 +85,7 @@ class MinoRoot extends TinyDisplayObject {
         }
         game.down();
       }else if (joystick.directionY > 0.5) {
-        joyTime = 30-(10*(1/(1+math.exp(-5*(joystick.directionYAbs-1.0))))).toInt();
+        joyTime = 30-(30*(1/(1+math.exp(-5*(joystick.directionYAbs-1.0))))).toInt();
         if(joyTime > 9) {
           joyTime = 9;
         }
