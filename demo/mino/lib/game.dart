@@ -21,7 +21,7 @@ class MinoRoot extends TinyDisplayObject {
   static final TinyColor colorJ = new TinyColor.argb(0xaa, 0xaa, 0xaa, 0xff);
   static final TinyColor colorL = new TinyColor.argb(0xaa, 0xff, 0xff, 0xaa);
   static final TinyColor colorT = new TinyColor.argb(0xaa, 0xaa, 0xff, 0xff);
-  
+
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
   TinyJoystick joystick;
@@ -52,8 +52,8 @@ class MinoRoot extends TinyDisplayObject {
   int time = 0;
   int turnTime = 0;
   int joyTime = 0;
-  
-  
+
+
   void onTick(TinyStage stage, int timeStamp) {
     if (time > 10) {
       game.down();
@@ -64,7 +64,7 @@ class MinoRoot extends TinyDisplayObject {
     joyTime--;
     time++;
     if (joyTime <= 0) {
-      if (joystick.directionX > 0.5) {        
+      if (joystick.directionX > 0.5) {
         joyTime = 10-(10*(1/(1+math.exp(-5*(joystick.directionXAbs-1.0))))).toInt();
         if(joyTime > 9) {
           joyTime = 9;
@@ -77,7 +77,7 @@ class MinoRoot extends TinyDisplayObject {
         }
         game.left();
       }
-      
+
       if (joystick.directionY < -0.5) {
         joyTime = 10-(10*(1/(1+math.exp(-5*(joystick.directionYAbs-1.0))))).toInt();
         if(joyTime > 9) {
@@ -100,7 +100,7 @@ class MinoRoot extends TinyDisplayObject {
       turnTime = 10;
       game.rotateL();
     }
-    
+
     if(game.isGameOver) {
       game.start();
     }
