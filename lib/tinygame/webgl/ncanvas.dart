@@ -22,22 +22,39 @@ class TinyWebglCanvasTS extends TinyCanvas {
         "attribute vec3 vp;",
         "attribute vec4 color;",
         "attribute float useTex;",
+        "varying float v_useTex;",
+        "attribute vec2 a_tex;",
+        "varying vec2 v_tex;",
         "uniform mat4 u_mat;",
         "varying vec4 vColor;",
         "",
         "void main() {",
+        "  v_useTex = useTex;"
         "  gl_Position = u_mat*vec4(vp.x,vp.y,vp.z,1.0);",
         "  if(useTex < 0.0){",
         "    vColor = color;",
         "  }",
+        "  else {",
+        "    vColor = vec4(0.0,0.0,0.0,1.0);",
+        "    v_tex = a_tex;",
+        "  }",
         "  gl_PointSize = 1.0;//u_point_size;",
+        "",
         "}"
       ].join("\n");
       String fs = [
         "precision mediump float;",
+        "varying vec2 v_tex;",
         "varying vec4 vColor;",
+        "varying float v_useTex;",
+        "uniform sampler2D u_image;",
         "void main() {",
-        " gl_FragColor = vColor;",
+        "  if(v_useTex < 0.0){",
+        "    gl_FragColor = vColor;",
+        "  }",
+        "  else {",
+        "    gl_FragColor = texture2D(u_image, v_tex);",
+        "  }",
         "}"
       ].join("\n");
       programShape = TinyWebglProgram.compile(GL, vs, fs);
@@ -47,6 +64,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
   int stencilV = 1;
   List<double> flVert = [];
   List<int> flInde = [];
+  List<double> flTex= [];
+  TinyWebglImage flImg = null;
   double flZ = 0.0;
   void clear() {
     stencilV = 1;
@@ -73,6 +92,10 @@ class TinyWebglCanvasTS extends TinyCanvas {
   void flush() {
     if(flVert.length != 0) {
       drawVertex(flVert,flInde, new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa));
+      flVert.clear();
+      flInde.clear();
+      flTex.clear();
+      flImg = null;
     }
   }
 
@@ -101,7 +124,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flVert.addAll([s.x, s.y, flZ]); 
       flVert.addAll([colorR, colorG, colorB, colorA]);
       flVert.addAll([-1.0]);
-
+      flTex.addAll([0.0,0.0]);
       //
       s.x = cx + math.cos(2 * math.PI * (i / num)) * a;
       s.y = cy + math.sin(2 * math.PI * (i / num)) * b;
@@ -110,6 +133,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flVert.addAll([s.x, s.y, flZ]);
       flVert.addAll([colorR, colorG, colorB, colorA]);
       flVert.addAll([-1.0]);
+      flTex.addAll([0.0,0.0]);
 
       //
       s.x = cx + math.cos(2 * math.PI * ((i+1) / num)) * a;
@@ -119,8 +143,10 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flVert.addAll([s.x, s.y, flZ]);
       flVert.addAll([colorR, colorG, colorB, colorA]);
       flVert.addAll([-1.0]);
+      flTex.addAll([0.0,0.0]);
 
       flInde.addAll([bbb+0,bbb+1,bbb+2]);
+
       flZ +=0.0001;
     }
   }
@@ -156,11 +182,13 @@ class TinyWebglCanvasTS extends TinyCanvas {
       colorR, colorG, colorB, colorA,// color
       -1.0
       ]);
+    flTex.addAll([0.0,0.0, 0.0, 0.0, 0.0,0.0 , 0.0,0.0 ]);
     flZ +=0.0001;
     //b= 0;
     flInde.addAll([
        b+0, b+1, b+2, 
        b+1, b+3, b+2]);
+
   }
 
 
@@ -171,6 +199,34 @@ class TinyWebglCanvasTS extends TinyCanvas {
     //
     GL.useProgram(programShape);
 
+    if(flImg != null) {
+      int texLocation = GL.getAttribLocation(programShape, "a_tex");
+      Buffer texBuffer = GL.createBuffer();
+      GL.bindBuffer(RenderingContext.ARRAY_BUFFER, texBuffer);
+
+      GL.bufferData(
+          RenderingContext.ARRAY_BUFFER,
+          new Float32List.fromList(flTex),
+          RenderingContext.STATIC_DRAW);
+      GL.enableVertexAttribArray(texLocation);
+      
+    
+      GL.vertexAttribPointer(texLocation, 2, RenderingContext.FLOAT, false, 0, 0);
+      {
+        Texture tex = flImg.getTex(GL);
+        GL.bindTexture(RenderingContext.TEXTURE_2D, tex);
+
+        GL.texParameteri(RenderingContext.TEXTURE_2D,
+            RenderingContext.TEXTURE_WRAP_S, RenderingContext.CLAMP_TO_EDGE);
+        GL.texParameteri(RenderingContext.TEXTURE_2D,
+            RenderingContext.TEXTURE_WRAP_T, RenderingContext.CLAMP_TO_EDGE);
+        GL.texParameteri(RenderingContext.TEXTURE_2D,
+            RenderingContext.TEXTURE_MIN_FILTER, RenderingContext.NEAREST);
+        GL.texParameteri(RenderingContext.TEXTURE_2D,
+            RenderingContext.TEXTURE_MAG_FILTER, RenderingContext.NEAREST);
+
+      }
+    }
     //
     // vertex
     Buffer rectBuffer = TinyWebglProgram.createArrayBuffer(GL, svertex);
@@ -224,6 +280,31 @@ class TinyWebglCanvasTS extends TinyCanvas {
   //bool a = false;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
       TinyRect dst, TinyPaint paint) {
+    //flush();
+    //
+    //
+    if(flImg != null && flImg != image) {
+      flush();
+    }
+
+    //if(flImg == null) {
+      flImg  = image;
+    //}
+
+    double xs = src.x/flImg.w;
+    double ys = src.y/flImg.h;
+    double xe = (src.x+src.w)/flImg.w;
+    double ye = (src.y+src.h)/flImg.h;
+    flTex.addAll([
+      xs, ys,
+      xs, ye,
+      xe, ys,
+      xe, ye]);
+  
+    
+    //
+    //
+    //
     Matrix4 m = calcMat();
     double sx = dst.x;
     double sy = dst.y;
@@ -243,22 +324,23 @@ class TinyWebglCanvasTS extends TinyCanvas {
     flVert.addAll([
       ss1.x, ss1.y, flZ, // 7
       colorR, colorG, colorB, colorA,// color
-      -1.0,
+      1.0,
       ss2.x, ss2.y, flZ, // 1
       colorR, colorG, colorB, colorA,// color
-      -1.0,
+      1.0,
       ss3.x, ss3.y, flZ, // 9
       colorR, colorG, colorB, colorA,// color
-      -1.0,
+      1.0,
       ss4.x, ss4.y, flZ, //3
       colorR, colorG, colorB, colorA,// color
-      -1.0
+      1.0
       ]);
     flZ +=0.0001;
     //b= 0;
     flInde.addAll([
        b+0, b+1, b+2, 
        b+1, b+3, b+2]);
+    
   }
 
   void updateMatrix() {}
