@@ -57,7 +57,6 @@ class MinoRoot extends TinyDisplayObject {
   void onTick(TinyStage stage, int timeStamp) {
     if (time > 10) {
       game.down();
-      
       nextUI.setMinon(game.minon2);
       time = 0;
     }
@@ -101,8 +100,10 @@ class MinoRoot extends TinyDisplayObject {
       turnTime = 10;
       game.rotateL();
     }
-    print(
-        "## ${(joystick.directionX*10).toInt()}:${(joystick.directionY*10).toInt()}");
+    
+    if(game.isGameOver) {
+      game.start();
+    }
   }
 
   onTouchCallback(String id) {}

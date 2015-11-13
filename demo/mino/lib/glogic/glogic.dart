@@ -6,6 +6,8 @@ class MinoGame {
   List<Minon> nexts = [];
   Minon get minon => nexts.first;
   Minon get minon2 => nexts[1];
+  
+  bool _isGmaeOver = false;
 
   MinoGame() {
     nextMinon();
@@ -16,13 +18,25 @@ class MinoGame {
       nexts.removeAt(0);
     }
     while(nexts.length < 3) {
-     nexts.add(new Minon.random());
+      Minon n = new Minon.random();
+      n.x = table.fieldWWithFrame ~/ 2;
+      n.y = 0;
+      nexts.add(n);
     }
-    minon.x = table.fieldWWithFrame ~/ 2;
   }
+
+  start() {
+    table.clear();
+    _isGmaeOver = false;
+  }
+
+  bool get isGameOver =>_isGmaeOver;
 
   down() {
     if(false == move(0, 1)){
+      if(collision(minon2)){
+        _isGmaeOver = true;
+      }
       nextMinon();
       List<int> t = table.clearableLines();
       table.clearLines(t);
