@@ -97,8 +97,15 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flImg = null;
     }
   }
-
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    if (paint.style == TinyPaintStyle.fill) {
+      drawFillOval(stage, rect, paint);
+    } else {
+      drawStrokeOval(stage, rect, paint);
+    }
+  }
+
+  void drawFillOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
     double cx = rect.x + rect.w / 2.0;
     double cy = rect.y + rect.h / 2.0;
     double a = rect.w / 2;
@@ -150,6 +157,53 @@ class TinyWebglCanvasTS extends TinyCanvas {
     }
   }
 
+  void drawStrokeOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    double cx = rect.x + rect.w / 2.0;
+    double cy = rect.y + rect.h / 2.0;
+    double a = (rect.w+paint.strokeWidth) / 2;
+    double b = (rect.h+paint.strokeWidth) / 2;
+    double c = rect.w / 2;
+    double d = rect.h / 2;
+    int num = 25;
+
+    Matrix4 m = calcMat();
+    Vector3 s1 = new Vector3(0.0, 0.0, 0.0);
+    Vector3 s2 = new Vector3(0.0, 0.0, 0.0);
+    Vector3 s3 = new Vector3(0.0, 0.0, 0.0);
+    Vector3 s4 = new Vector3(0.0, 0.0, 0.0);
+    double colorR = paint.color.r / 0xff;
+    double colorG = paint.color.g / 0xff;
+    double colorB = paint.color.b / 0xff;
+    double colorA = paint.color.a / 0xff;
+    for (int i = 0; i < num; i++) {
+      //
+      int bbb = flVert.length ~/ 8;
+
+      //
+      s1.x = cx + math.cos(2 * math.PI * (i / num)) * c;
+      s1.y = cy + math.sin(2 * math.PI * (i / num)) * d;
+      s1.z = flZ;
+      s1 = m * s1;
+      
+      s2.x = cx + math.cos(2 * math.PI * (i / num)) * a;
+      s2.y = cy + math.sin(2 * math.PI * (i / num)) * b;
+      s2.z = flZ;
+      s2 = m * s2;
+
+      s3.x = cx + math.cos(2 * math.PI * ((i + 1) / num)) * a;
+      s3.y = cy + math.sin(2 * math.PI * ((i + 1) / num)) * b;
+      s3.z = flZ;
+      s3 = m * s3;
+
+      s4.x = cx + math.cos(2 * math.PI * ((i + 1) / num)) * c;
+      s4.y = cy + math.sin(2 * math.PI * ((i + 1) / num)) * d;
+      s4.z = flZ;
+      s4 = m * s4;
+      _innerDrawFillRect(stage, s1, s2, s4, s3, colorR, colorG, colorB, colorA);
+
+      flZ += 0.0001;
+    }
+  }
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
     if (paint.style == TinyPaintStyle.fill) {
       drawFillRect(stage, rect, paint);
