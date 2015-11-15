@@ -20,25 +20,25 @@ class MinoTableUI extends TinyDisplayObject {
         rect.y = y * 8.0;
         Mino m = table.getMino(x, y);
         if (m.type == MinoTyoe.frame) {
-          p.color = MinoRoot.colorFrame;
+          p.color = PlayScene.colorFrame;
         } else if (m.type == MinoTyoe.empty) {
-          p.color = MinoRoot.colorEmpty;
+          p.color = PlayScene.colorEmpty;
         } else if (m.type == MinoTyoe.l) {
-          p.color = MinoRoot.colorMinon;
+          p.color = PlayScene.colorMinon;
         } else if (m.type == MinoTyoe.o) {
-          p.color = MinoRoot.colorO;
+          p.color = PlayScene.colorO;
         } else if (m.type == MinoTyoe.t) {
-          p.color = MinoRoot.colorT;
+          p.color = PlayScene.colorT;
         } else if (m.type == MinoTyoe.s) {
-          p.color = MinoRoot.colorS;
+          p.color = PlayScene.colorS;
         } else if (m.type == MinoTyoe.z) {
-          p.color = MinoRoot.colorZ;
+          p.color = PlayScene.colorZ;
         } else if (m.type == MinoTyoe.j) {
-          p.color = MinoRoot.colorJ;
+          p.color = PlayScene.colorJ;
         } else if (m.type == MinoTyoe.L) {
-          p.color = MinoRoot.colorL;
+          p.color = PlayScene.colorL;
         } else {
-          p.color = MinoRoot.colorL;
+          p.color = PlayScene.colorL;
         }
         canvas.drawRect(stage, rect, p);
       }
