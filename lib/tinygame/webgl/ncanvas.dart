@@ -86,6 +86,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
         RenderingContext.DEPTH_BUFFER_BIT);
     flVert.clear();
     flInde.clear();
+    flTex.clear();
+    flImg = null;
   }
 
   void flush() {
@@ -284,9 +286,10 @@ class TinyWebglCanvasTS extends TinyCanvas {
     //
     //
     GL.useProgram(programShape);
+    int texLocation = 0;
 
-    if (flImg != null) {
-      int texLocation = GL.getAttribLocation(programShape, "a_tex");
+      
+      texLocation = GL.getAttribLocation(programShape, "a_tex");
       Buffer texBuffer = GL.createBuffer();
       GL.bindBuffer(RenderingContext.ARRAY_BUFFER, texBuffer);
 
@@ -296,6 +299,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
       GL.vertexAttribPointer(
           texLocation, 2, RenderingContext.FLOAT, false, 0, 0);
+      if (flImg != null) {
       {
         Texture tex = flImg.getTex(GL);
         GL.bindTexture(RenderingContext.TEXTURE_2D, tex);
@@ -323,12 +327,12 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
     //
     // draw
+    int locationAttributeUseTex;
     {
       TinyWebglProgram.setUniformMat4(GL, programShape, "u_mat", baseMat);
       int colorAttribLocation = GL.getAttribLocation(programShape, "color");
       int locationVertexPosition = GL.getAttribLocation(programShape, "vp");
-      int locationAttributeUseTex =
-          GL.getAttribLocation(programShape, "useTex");
+      locationAttributeUseTex = GL.getAttribLocation(programShape, "useTex");
 
       GL.vertexAttribPointer(
           locationVertexPosition, 3, RenderingContext.FLOAT, false, 4 * 8, 0);
@@ -336,7 +340,6 @@ class TinyWebglCanvasTS extends TinyCanvas {
           colorAttribLocation, 4, RenderingContext.FLOAT, false, 4 * 8, 4 * 3);
       GL.vertexAttribPointer(locationAttributeUseTex, 1, RenderingContext.FLOAT,
           false, 4 * 8, 4 * 7);
-
       GL.enableVertexAttribArray(locationVertexPosition);
       GL.enableVertexAttribArray(colorAttribLocation);
       GL.enableVertexAttribArray(locationAttributeUseTex);
@@ -347,7 +350,10 @@ class TinyWebglCanvasTS extends TinyCanvas {
           RenderingContext.UNSIGNED_SHORT,
           0);
     }
-
+    if(texLocation != 0) {
+      GL.disableVertexAttribArray(texLocation);
+      GL.bindTexture(RenderingContext.TEXTURE_2D, null);
+    }
     GL.useProgram(null);
   }
 

@@ -24,18 +24,18 @@ class TinyDisplayObject {
     return null;
   }
 
-  addChild(TinyDisplayObject d) async {
+  Future addChild(TinyDisplayObject d) async {
     await new Future.value();
     child.add(d);
   }
 
-  rmChild(TinyDisplayObject d) async {
+  Future rmChild(TinyDisplayObject d) async {
     await new Future.value();
     child.remove(d);
     d.unattach();
   }
 
-  clearChild() async {
+  Future clearChild() async {
     await new Future.value();
     for(TinyDisplayObject d in child) {
       rmChild(d);
