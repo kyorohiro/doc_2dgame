@@ -10,6 +10,7 @@ class MinoGame {
   bool _isGmaeOver = false;
   int score = 0;
   int level = 1;
+  int baseLevel = 1;
 
   MinoGame() {
     nextMinon();
@@ -31,6 +32,7 @@ class MinoGame {
     table.clear();
     _isGmaeOver = false;
     score = 0;
+    level = baseLevel;
   }
   
   updateScore(int numOfClear) {

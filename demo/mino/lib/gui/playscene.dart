@@ -25,7 +25,7 @@ class PlayScene extends TinyDisplayObject {
   ScoreUI levelUI;
   SpriteSheetInfo spriteInfo = null;
   TinyImage image = null;
-  PlayScene(this.builder) {
+  PlayScene(this.builder,{int level:1}) {
     rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
     rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
     joystick = new TinyJoystick(size:70.0,minWidth:35.0);
@@ -55,13 +55,10 @@ class PlayScene extends TinyDisplayObject {
     });
     builder.loadString("assets/se_play.json").then((String x) {
       spriteInfo = new SpriteSheetInfo.fronmJson(x);
-      for (SpriteSheetInfoFrame f in spriteInfo.frames) {
-        print("### fname: ${f.fileName} ###");
-        print("##### dst: ${f.dstRect} ###");
-        print("##### src: ${f.srcRect} ###");
-        print("##### ang: ${f.angle} ###");
-      }
     });
+    game.baseLevel = level;
+    game.level = level;
+    print("### game =  ${game.baseLevel}");
   }
 
   int time = 0;
