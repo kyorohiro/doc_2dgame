@@ -14,6 +14,7 @@ class PlayScene extends TinyDisplayObject {
   static final TinyColor colorT = new TinyColor.argb(0xaa, 0xaa, 0xff, 0xff);
 
   TinyGameBuilder builder;
+  MinoRoot root;
   MinoGame game = new MinoGame();
   TinyJoystick joystick;
   TinyButton rotateR;
@@ -25,7 +26,7 @@ class PlayScene extends TinyDisplayObject {
   ScoreUI levelUI;
   SpriteSheetInfo spriteInfo = null;
   TinyImage image = null;
-  PlayScene(this.builder,{int level:1}) {
+  PlayScene(this.builder, this.root,{int level:1}) {
     rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
     rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
     joystick = new TinyJoystick(size:70.0,minWidth:35.0);
@@ -116,7 +117,10 @@ class PlayScene extends TinyDisplayObject {
     }
 
     if(game.isGameOver) {
-      game.start();
+      //game.start();
+      this.root.clearChild().then((_){
+        this.root.addChild(new ClearScene(builder, root));       
+      });
     }
   }
 
