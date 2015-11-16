@@ -19,6 +19,58 @@ class MinoRoot extends TinyDisplayObject {
   }
 }
 
+class PrepareScene extends TinyDisplayObject {
+  TinyImage bgimg;
+  MinoRoot root;
+  TinyGameBuilder builder;
+  TinyRect srcRect;
+  TinyRect dstRect;
+  TinyPaint p = new TinyPaint();
+
+  PrepareScene(this.builder, this.root) {
+    builder.loadImage("assets/bg_setting.png").then((v){
+      bgimg = v;
+      srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
+      dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);
+    });
+    TinyButton level1 = new TinyButton("L01", 45.0, 45.0, onLevelButton);
+    level1.mat.translate(70.0+50*0,60.0,0.0);
+
+    TinyButton level2 = new TinyButton("L02", 45.0, 45.0, onLevelButton);
+    level2.mat.translate(70.0+50*1.0,60.0,0.0);
+
+    TinyButton level3 = new TinyButton("L03", 45.0, 45.0, onLevelButton);
+    level3.mat.translate(70.0+50*2.0,60.0,0.0);
+
+    addChild(level1);
+    addChild(level2);
+    addChild(level3);
+
+    TinyButton startB = new TinyButton("start", 200.0, 50.0, onStartButton);
+    startB.mat.translate(100.0,200.0,0.0);
+    addChild(startB);
+  }
+  onLevelButton(String id){
+    print("touch # ${id}");
+  }
+
+  onStartButton(String id){
+    print("touch # ${id}");
+    this.root.clearChild().then((_){
+      this.root.addChild(new PlayScene(builder));        
+    });
+  }
+
+  bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
+    return false;
+  }
+  void onPaint(TinyStage stage, TinyCanvas canvas) {
+      if(bgimg != null) {
+        canvas.drawImageRect(stage, bgimg, srcRect, dstRect, p);
+      }
+  }
+}
+
 class StartScene extends TinyDisplayObject {
   TinyImage bgimg;
   MinoRoot root;
@@ -33,20 +85,20 @@ class StartScene extends TinyDisplayObject {
       srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
       dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);
     });
+    TinyButton startB = new TinyButton("start", 200.0, 50.0, onStartButton);
+    startB.mat.translate(100.0,200.0,0.0);
+    addChild(startB);
+  }
+  onStartButton(String id){
+    print("touch # ${id}");
+    this.root.clearChild().then((_){
+      this.root.addChild(new PrepareScene(builder, root));
+//        this.root.addChild(new PlayScene(builder));        
+    });
   }
   bool a = false;
   bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
-    if(a == true) {
-      return false;
-    }    
-    if(0.0<x && x<400.0 && 0.0<y && y<400.0) {
-      print("--");
-      this.root.clearChild().then((_){
-        this.root.addChild(new PlayScene(builder));        
-      });
-      a = true;
-    }
-    return true;
+    return false;
   }
   void onPaint(TinyStage stage, TinyCanvas canvas) {
       if(bgimg != null) {
