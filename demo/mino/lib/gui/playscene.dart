@@ -18,26 +18,50 @@ class PlayScene extends TinyDisplayObject {
   TinyJoystick joystick;
   TinyButton rotateR;
   TinyButton rotateL;
+
   MinoTableUI playboard;
   MinoNextUI nextUI;
-
+  ScoreUI scoreUI;
+  ScoreUI levelUI;
+  SpriteSheetInfo spriteInfo = null;
+  TinyImage image = null;
   PlayScene(this.builder) {
     rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
     rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
     joystick = new TinyJoystick(size:70.0,minWidth:35.0);
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
+    scoreUI = new ScoreUI(this);
+    levelUI = new ScoreUI(this);
+    levelUI.size = 3;
     addChild(playboard);
     addChild(joystick);
     addChild(rotateR);
     addChild(rotateL);
     addChild(nextUI);
-
+    addChild(scoreUI);
+    addChild(levelUI);
     playboard.mat.translate(100.0, 25.0, 0.0);
     joystick.mat.translate(100.0, 250.0, 0.0);
     rotateR.mat.translate(250.0, 225.0, 0.0);
     rotateL.mat.translate(300.0, 225.0, 0.0);
     nextUI.mat.translate(225.0, 153.0, 0.0);
+    scoreUI.mat.translate(225.0, 50.0, 0.0);
+    levelUI.mat.translate(225.0, 85.0, 0.0);
+    //
+    //
+    builder.loadImage("assets/se_play.png").then((TinyImage i) {
+      image = i;
+    });
+    builder.loadString("assets/se_play.json").then((String x) {
+      spriteInfo = new SpriteSheetInfo.fronmJson(x);
+      for (SpriteSheetInfoFrame f in spriteInfo.frames) {
+        print("### fname: ${f.fileName} ###");
+        print("##### dst: ${f.dstRect} ###");
+        print("##### src: ${f.srcRect} ###");
+        print("##### ang: ${f.angle} ###");
+      }
+    });
   }
 
   int time = 0;
@@ -46,6 +70,8 @@ class PlayScene extends TinyDisplayObject {
 
 
   void onTick(TinyStage stage, int timeStamp) {
+    scoreUI.score = game.score;
+    levelUI.score = game.level;
     if (time > 10) {
       game.down();
       nextUI.setMinon(game.minon2);

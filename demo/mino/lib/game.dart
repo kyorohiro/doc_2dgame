@@ -10,6 +10,7 @@ part 'glogic/board.dart';
 part 'gui/board.dart';
 part 'gui/next.dart';
 part 'gui/playscene.dart';
+part 'gui/score.dart';
 
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
@@ -80,7 +81,7 @@ class StartScene extends TinyDisplayObject {
   TinyPaint p = new TinyPaint();
 
   StartScene(this.builder, this.root) {
-    builder.loadImage("assets/bg_startscene.png").then((v){
+    builder.loadImage("assets/bg_start.png").then((v){
       bgimg = v;
       srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
       dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);

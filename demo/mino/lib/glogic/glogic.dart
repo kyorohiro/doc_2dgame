@@ -8,6 +8,8 @@ class MinoGame {
   Minon get minon2 => nexts[1];
   
   bool _isGmaeOver = false;
+  int score = 0;
+  int level = 1;
 
   MinoGame() {
     nextMinon();
@@ -28,6 +30,13 @@ class MinoGame {
   start() {
     table.clear();
     _isGmaeOver = false;
+    score = 0;
+  }
+  
+  updateScore(int numOfClear) {
+    if(numOfClear > 0) {
+      score += math.pow(level*10, numOfClear);
+    }
   }
 
   bool get isGameOver =>_isGmaeOver;
@@ -39,6 +48,7 @@ class MinoGame {
       }
       nextMinon();
       List<int> t = table.clearableLines();
+      updateScore(t.length);
       table.clearLines(t);
     }
   }
