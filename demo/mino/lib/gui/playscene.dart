@@ -65,8 +65,6 @@ class PlayScene extends TinyDisplayObject {
     print("### game =  ${game.baseLevel}");
   }
 
-  int time = 0;
-  int turnTime = 0;
   void onTick(TinyStage stage, int timeStamp) {
     scoreUI.score = game.score;
     levelUI.score = game.level;
@@ -84,12 +82,10 @@ class PlayScene extends TinyDisplayObject {
       game.downWithLevel(timeStamp, fource: true);
     }
 
-    if (rotateR.isTouch && turnTime <= timeStamp) {
-      turnTime = timeStamp + 500;
-      game.rotateR();
-    } else if (rotateL.isTouch && turnTime <= timeStamp) {
-      turnTime = timeStamp + 500;
-      game.rotateL();
+    if (rotateR.isTouch) {
+      game.rotateRWithLevel(timeStamp);
+    } else if (rotateL.isTouch) {
+      game.rotateLWithLevel(timeStamp);
     }
 
     if (game.isGameOver) {

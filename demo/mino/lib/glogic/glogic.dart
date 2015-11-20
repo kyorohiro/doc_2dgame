@@ -8,9 +8,12 @@ class MinoGame {
   Minon get minon2 => nexts[1];
   
   static final int levelMax = 5;
-  static final List<int> levelMoveIntervalTime = [500, 250, 200, 150, 100];
-  int get moveInterval => levelMoveIntervalTime[level];  
- 
+  static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 110];
+  static final List<int> levelMoveIntervalTimes = [200, 150, 125, 100, 75];
+  static final List<int> levelRotateIntervalTimes = [150, 125, 100, 95, 75];
+  int get moveInterval => levelMoveIntervalTimes[level];
+  int get atuoMoveInterval => levelAutoDownIntervalTimes[level]; 
+  int get rotateInterval =>levelRotateIntervalTimes[level];
 
   bool _isGmaeOver = false;
   int score = 0;
@@ -18,6 +21,7 @@ class MinoGame {
   int baseLevel = 1;
 
   int lastMoveTimeStamp = 0;
+  int lastRotateTimeStamp = 0;
   int lastAutoDownTimeStamp = 0;
   MinoGame() {
     nextMinon();
@@ -51,7 +55,7 @@ class MinoGame {
   bool get isGameOver =>_isGmaeOver;
 
   onTouchStart(int timeStamp) {
-    if(lastAutoDownTimeStamp+moveInterval < timeStamp) {
+    if(lastAutoDownTimeStamp+atuoMoveInterval < timeStamp) {
       lastAutoDownTimeStamp = timeStamp;
       down();
     }
@@ -60,7 +64,7 @@ class MinoGame {
     
   }
   downWithLevel(int timeStamp, {fource:false}) {
-    if(fource == true || lastMoveTimeStamp+moveInterval < timeStamp) {
+    if(fource == true || lastMoveTimeStamp+atuoMoveInterval < timeStamp) {
       lastMoveTimeStamp = timeStamp;
       down();
     }
@@ -74,12 +78,24 @@ class MinoGame {
   }
 
   rightWithLevel(int timeStamp){
-    if(lastMoveTimeStamp+moveInterval < timeStamp) {
+    if(lastMoveTimeStamp+moveInterval  < timeStamp) {
       lastMoveTimeStamp = timeStamp;
       right();
     }
   }
 
+  rotateRWithLevel(int timeStamp){
+    if(lastRotateTimeStamp+rotateInterval < timeStamp) {
+      lastRotateTimeStamp = timeStamp;
+      rotateR();
+    }
+  }
+  rotateLWithLevel(int timeStamp){
+    if(lastRotateTimeStamp+rotateInterval < timeStamp) {
+      lastRotateTimeStamp = timeStamp;
+      rotateL();
+    }
+  }
   down() {
     if(false == move(0, 1)){
       if(collision(minon2)){
