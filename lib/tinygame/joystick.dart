@@ -38,7 +38,7 @@ class TinyJoystick extends TinyDisplayObject {
   @override
   bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
     if (isTouch == false) {
-      if (distance(x, y, 0.0, 0.0) < minWidth) {
+      if (distance(x, y, 0.0, 0.0) < size) {
         touchId = id;
         isTouch = true;
         this.minX = x;

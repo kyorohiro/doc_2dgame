@@ -7,11 +7,18 @@ class MinoGame {
   Minon get minon => nexts.first;
   Minon get minon2 => nexts[1];
   
+  static final int levelMax = 5;
+  static final List<int> levelMoveIntervalTime = [500, 250, 200, 150, 100];
+  int get moveInterval => levelMoveIntervalTime[level];  
+ 
+
   bool _isGmaeOver = false;
   int score = 0;
   int level = 1;
   int baseLevel = 1;
 
+  int lastMoveTimeStamp = 0;
+  int lastAutoDownTimeStamp = 0;
   MinoGame() {
     nextMinon();
   }
@@ -42,6 +49,36 @@ class MinoGame {
   }
 
   bool get isGameOver =>_isGmaeOver;
+
+  onTouchStart(int timeStamp) {
+    if(lastAutoDownTimeStamp+moveInterval < timeStamp) {
+      lastAutoDownTimeStamp = timeStamp;
+      down();
+    }
+  }
+  onTouchEnd(int timeStamp) {
+    
+  }
+  downWithLevel(int timeStamp, {fource:false}) {
+    if(fource == true || lastMoveTimeStamp+moveInterval < timeStamp) {
+      lastMoveTimeStamp = timeStamp;
+      down();
+    }
+  }
+
+  leftWithLevel(int timeStamp){
+    if(lastMoveTimeStamp+moveInterval < timeStamp) {
+      lastMoveTimeStamp = timeStamp;
+      left();
+    }
+  }
+
+  rightWithLevel(int timeStamp){
+    if(lastMoveTimeStamp+moveInterval < timeStamp) {
+      lastMoveTimeStamp = timeStamp;
+      right();
+    }
+  }
 
   down() {
     if(false == move(0, 1)){
