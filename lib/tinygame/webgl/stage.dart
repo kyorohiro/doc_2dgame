@@ -61,6 +61,8 @@ class TinyWebglStage extends Object with TinyStage {
   double get paddingRight => 0.0;
   double get paddingLeft => 0.0;
 
+  int lastUpdateTime = 0;
+  int tappedEventTime = 0;
   bool animeIsStart = false;
   int animeId = 0;
 
@@ -104,6 +106,7 @@ class TinyWebglStage extends Object with TinyStage {
     while (animeIsStart) {
       await new Future.delayed(new Duration(milliseconds: 15));
       num currentTime = new DateTime.now().millisecondsSinceEpoch;
+      lastUpdateTime = currentTime;
 
       num s = (currentTime - prevTime);
       kick((prevTime + s).toInt());
@@ -135,6 +138,7 @@ class TinyWebglStage extends Object with TinyStage {
   void touchTtest() {
     Map touchs = {};
     oStu(TouchEvent e) {
+      tappedEventTime = lastUpdateTime;
       for (Touch t in e.changedTouches) {
         int x = t.page.x-glContext._canvasElement.offsetLeft;
         int y = t.page.y-glContext._canvasElement.offsetTop;
@@ -151,6 +155,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
     }
     oEnd(TouchEvent e) {
+      tappedEventTime = lastUpdateTime;
       for (Touch t in e.changedTouches) {
           if (touchs.containsKey(t.identifier)) {
             int x = t.page.x-glContext._canvasElement.offsetLeft;
@@ -173,55 +178,62 @@ class TinyWebglStage extends Object with TinyStage {
   void mouseTest() {
     bool isTap = false;
     glContext.canvasElement.onMouseDown.listen((MouseEvent e) {
+      if(tappedEventTime + 500 < lastUpdateTime) {
        //print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       isTap = true;
       root.touch(
           this, 0, "pointerdown", e.offset.x.toDouble(), e.offset.y.toDouble());
-    });
+    }});
     glContext.canvasElement.onMouseUp.listen((MouseEvent e) {
+      if(tappedEventTime + 500 < lastUpdateTime) {
       //print("up offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         root.touch(
             this, 0, "pointerup", e.offset.x.toDouble(), e.offset.y.toDouble());
         isTap = false;
       }
-    });
+    }});
     glContext.canvasElement.onMouseEnter.listen((MouseEvent e) {
+      if(tappedEventTime + 500 < lastUpdateTime) {
       // print("enter offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         //root.touch(this, 0, "pointercancel", e.offsetX.toDouble(), e.offsetY.toDouble());
       }
-    });
+    }});
     glContext.canvasElement.onMouseLeave.listen((MouseEvent e) {
+      if(tappedEventTime + 500 < lastUpdateTime) {
      //  print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         root.touch(this, 0, "pointercancel", e.offset.x.toDouble(),
             e.offset.y.toDouble());
         isTap = false;
       }
-    });
+    }});
     glContext.canvasElement.onMouseMove.listen((MouseEvent e) {
+      if(tappedEventTime + 500 < lastUpdateTime) {
       //print("move offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         root.touch(this, 0, "pointermove", e.offset.x.toDouble(),
             e.offset.y.toDouble());
       }
-    });
+    }});
 
     glContext.canvasElement.onMouseOut.listen((MouseEvent e) {
+      if(tappedEventTime + 500 < lastUpdateTime) {
      // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         root.touch(this, 0, "pointercancel", e.offset.x.toDouble(),
             e.offset.y.toDouble());
         isTap = false;
       }
-    });
+    }});
 
     glContext.canvasElement.onMouseOver.listen((MouseEvent e) {
-       print("over offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+      if(tappedEventTime + 500 < lastUpdateTime) {
+      // print("over offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         // root.touch(this, 0, event.type, e.offsetX.toDouble(), e.offsetY.toDouble());
       }
-    });
+    }});
   }
 }
