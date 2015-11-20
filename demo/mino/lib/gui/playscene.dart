@@ -68,6 +68,9 @@ class PlayScene extends TinyDisplayObject {
   void onTick(TinyStage stage, int timeStamp) {
     scoreUI.score = game.score;
     levelUI.score = game.level;
+    if(game.nexts.length > 1 && game.nexts[1] != null) {
+      nextUI.setMinon(game.nexts[1]);
+    }
 
     game.onTouchStart(timeStamp);
     if (joystick.directionX > 0.5) {

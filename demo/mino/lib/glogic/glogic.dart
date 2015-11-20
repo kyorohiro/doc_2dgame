@@ -9,8 +9,8 @@ class MinoGame {
   
   static final int levelMax = 5;
   static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 110];
-  static final List<int> levelMoveIntervalTimes = [200, 150, 125, 100, 75];
-  static final List<int> levelRotateIntervalTimes = [150, 125, 100, 95, 75];
+  static final List<int> levelMoveIntervalTimes = [150, 150, 125, 100, 85];
+  static final List<int> levelRotateIntervalTimes = [150, 125, 100, 95, 85];
   int get moveInterval => levelMoveIntervalTimes[level];
   int get atuoMoveInterval => levelAutoDownIntervalTimes[level]; 
   int get rotateInterval =>levelRotateIntervalTimes[level];
@@ -64,7 +64,7 @@ class MinoGame {
     
   }
   downWithLevel(int timeStamp, {fource:false}) {
-    if(fource == true || lastMoveTimeStamp+atuoMoveInterval < timeStamp) {
+    if(fource == true || lastMoveTimeStamp+moveInterval/2 < timeStamp) {
       lastMoveTimeStamp = timeStamp;
       down();
     }
