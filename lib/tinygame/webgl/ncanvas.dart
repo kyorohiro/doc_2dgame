@@ -359,7 +359,33 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {}
 
-  void clipRect(TinyStage stage, TinyRect rect) {}
+  void clipRect(TinyStage stage, TinyRect rect) {
+    flush();
+    GL.colorMask(false, false, false, false);
+    GL.depthMask(false);
+    GL.stencilOp(RenderingContext.KEEP, RenderingContext.REPLACE,
+        RenderingContext.REPLACE);
+    GL.stencilFunc(RenderingContext.ALWAYS, stencilV, 0xff);
+
+    //
+
+    TinyPaint p = new TinyPaint();
+    p.color = new TinyColor.argb(0xff, 0xff, 0xff, 0xff);
+    drawRect(null, rect, p);
+    flush();
+    //
+
+    // GL.disable(RenderingContext.STENCIL_TEST);
+    //
+    GL.colorMask(true, true, true, true);
+    GL.depthMask(true);
+    GL.stencilOp(
+        RenderingContext.KEEP, RenderingContext.KEEP, RenderingContext.KEEP);
+    // todo
+    GL.stencilFunc(RenderingContext.LEQUAL, stencilV, 0xff);
+    stencilV++;
+
+  }
 
   //bool a = false;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
