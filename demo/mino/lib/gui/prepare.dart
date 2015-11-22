@@ -111,6 +111,7 @@ class PrepareScene extends TinyDisplayObject {
     print("touch # ${id}");
     this.root.clearChild().then((_){
       print("### level =  ${level}");
+      root.game.start();
       this.root.addChild(new PlayScene(builder,root, root.game, level:level));        
     });
   }
