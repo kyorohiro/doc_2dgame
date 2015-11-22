@@ -17,7 +17,7 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
     return await audioManager.loadAudioSource("${resourceRoot}${path}");
   }
 
-  Future<String> loadString(String path) async {
+  Future<String> loadStringBase(String path) async {
     String a = await ResourceLoader.loadString("${resourceRoot}${path}");
     return a;
   }

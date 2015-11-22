@@ -16,11 +16,49 @@ part 'gui/prepare.dart';
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
   MinoRoot(this.builder) {
-    addChild(new StartScene(builder, this));
+    addChild(new ResourceLoader(builder, this));
+//    addChild(new StartScene(builder, this));
 //    addChild(new PlayScene(builder));
   }
 }
 
+class ResourceLoader extends TinyDisplayObject {
+  MinoRoot root;
+  TinyGameBuilder builder;
+  ResourceLoader(this.builder, this.root) {
+    load();
+  }
+ 
+  load() async{
+    try {
+      await builder.loadImage("assets/bg_clear01.png");
+    } catch(e){};
+    try {
+      await builder.loadImage("assets/bg_start.png");
+    } catch(e){};
+    try {
+      await builder.loadString("assets/se_play.json");
+      await builder.loadImage("assets/se_play.png");
+    } catch(e){};
+
+    try {
+      await builder.loadImage("assets/se_setting.png");
+      await builder.loadString("assets/se_setting.json");
+    } catch(e){};
+
+    await this.root.clearChild();
+    await this.root.addChild(new StartScene(builder, root)); 
+  }
+
+  int count = 0;
+  void onPaint(TinyStage stage, TinyCanvas canvas) {
+    count++; 
+    double size = 100.0+((count/2)%10)*5;
+    canvas.drawRect(stage,
+        new TinyRect(-size/2+200, -size/2+150, size, size),
+        new TinyPaint(color:new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa)));
+  }
+}
 
 class ClearScene extends TinyDisplayObject {
   TinyImage bgimg;

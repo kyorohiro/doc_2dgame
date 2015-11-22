@@ -2,6 +2,7 @@ part of tinygame;
 
 abstract class TinyGameBuilder {
   Map<String, TinyImage> cach = {};
+  Map<String, String> cachString = {};
   TinyStage createStage(TinyDisplayObject root);
   Future<TinyImage> loadImageBase(String path);
   Future<TinyImage> loadImage(String path) async {
@@ -13,7 +14,16 @@ abstract class TinyGameBuilder {
   }
 
   Future<TinyAudioSource> loadAudio(String path);
-  Future<String> loadString(String path);
+
+  Future<String> loadStringBase(String path);
+  Future<String> loadString(String path) async {
+    if (cachString.containsKey(path)) {
+      return cachString[path];
+    }
+    cachString[path] = await loadStringBase(path);
+    return cachString[path];
+  }
+
   TinyImage getImage(String path) {
     if (cach.containsKey(path)) {
       return cach[path];
@@ -24,6 +34,9 @@ abstract class TinyGameBuilder {
 
   Future clearImageCash() {
     cach.clear();
+  }
+  Future clearStringCash() {
+    cachString.clear();
   }
 }
 

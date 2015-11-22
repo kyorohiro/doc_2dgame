@@ -9,6 +9,9 @@ class PrepareScene extends TinyDisplayObject {
   TinyPaint p = new TinyPaint();
   SpriteSheetInfo spriteInfo = null;
   int level = 1;
+  ScoreUI no1;
+  ScoreUI no2;
+  ScoreUI no3;
 
 
   PrepareScene(this.builder, this.root) {
@@ -16,10 +19,17 @@ class PrepareScene extends TinyDisplayObject {
       bgimg = v;
       srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
       dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);
+      no1.image = v;
+      no2.image = v;
+      no3.image = v;
     });
  
-    builder.loadString("assets/se_setting.json").then((String x) {
+    builder.loadStringBase("assets/se_setting.json").then((String x) {
       spriteInfo = new SpriteSheetInfo.fronmJson(x);
+      no1.spriteInfo = spriteInfo;
+      no2.spriteInfo = spriteInfo;
+      no3.spriteInfo = spriteInfo;
+
     });
 
     TinyButton level1 = new TinyButton("L01", 45.0, 45.0, onLevelButton);
@@ -42,13 +52,21 @@ class PrepareScene extends TinyDisplayObject {
     level5.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     level5.mat.translate(50+265.0,50.0,0.0);
     
-
-    
     addChild(level1);
     addChild(level2);
     addChild(level3);
     addChild(level4);
     addChild(level5);
+
+    no1 = new ScoreUI(null, null);
+    no1.mat.translate(120.0,140.0,0.0);
+    no2 = new ScoreUI(null, null);
+    no2.mat.translate(150.0,180.0,0.0);
+    no3 = new ScoreUI(null, null);
+    no3.mat.translate(180.0,220.0,0.0);
+    addChild(no1);
+    addChild(no2);
+    addChild(no3);
 
     level = 1;
     onLevelButton("L01");

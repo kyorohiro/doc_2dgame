@@ -9,7 +9,7 @@ class SpriteSheetTest extends TinyDisplayObject {
     builder.loadImage("assets/nono.png").then((TinyImage i) {
       image = i;
     });
-    builder.loadString("assets/nono.json").then((String x) {
+    builder.loadStringBase("assets/nono.json").then((String x) {
       spriteInfo = new SpriteSheetInfo.fronmJson(x);
       for (SpriteSheetInfoFrame f in spriteInfo.frames) {
         print("### fname: ${f.fileName} ###");

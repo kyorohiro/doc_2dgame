@@ -31,7 +31,7 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
     return c.future;
   }
 
-  Future<String> loadString(String path) async {
+  Future<String> loadStringBase(String path) async {
     Completer<String> c = new Completer();
     HttpRequest request = new HttpRequest();
     request.open("GET", path);

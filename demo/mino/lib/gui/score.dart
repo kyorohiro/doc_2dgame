@@ -1,15 +1,17 @@
 part of gamelogic;
 
 class ScoreUI extends TinyDisplayObject {
-  PlayScene parent;
+
+  SpriteSheetInfo spriteInfo;
+  TinyImage image;
   int score = 0;
   int size = 7;
-  ScoreUI(this.parent) {
+  ScoreUI(this.spriteInfo, this.image) {
     
   }
   
   void onPaint(TinyStage stage, TinyCanvas canvas) {
-    if(parent.spriteInfo == null || parent.image == null) {
+    if(spriteInfo == null || image == null) {
       return;
     }
 
@@ -24,8 +26,8 @@ class ScoreUI extends TinyDisplayObject {
   void drawScore(TinyStage stage, TinyCanvas canvas, int v, int x) {
     TinyPaint p = new TinyPaint();
     TinyRect dst = new TinyRect(0.0+x, 0.0, 15.0, 15.0);
-    canvas.drawImageRect(stage, parent.image, 
-        parent.spriteInfo.frameFromFileName("NUM00${v}.png").srcRect,
+    canvas.drawImageRect(stage, image, 
+        spriteInfo.frameFromFileName("NUM00${v}.png").srcRect,
         dst, p);
   }
 }

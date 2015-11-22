@@ -35,8 +35,8 @@ class PlayScene extends TinyDisplayObject {
     joystick = new TinyJoystick(size: 70.0, minWidth: 35.0);
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
-    scoreUI = new ScoreUI(this);
-    levelUI = new ScoreUI(this);
+    scoreUI = new ScoreUI(this.spriteInfo, this.image);
+    levelUI = new ScoreUI(this.spriteInfo, this.image);
     levelUI.size = 3;
     addChild(playboard);
     addChild(joystick);
@@ -56,9 +56,13 @@ class PlayScene extends TinyDisplayObject {
     //
     builder.loadImage("assets/se_play.png").then((TinyImage i) {
       image = i;
+      scoreUI.image = i;
+      levelUI.image = i;
     });
-    builder.loadString("assets/se_play.json").then((String x) {
+    builder.loadStringBase("assets/se_play.json").then((String x) {
       spriteInfo = new SpriteSheetInfo.fronmJson(x);
+      scoreUI.spriteInfo = spriteInfo;
+      levelUI.spriteInfo = spriteInfo;
     });
     game.baseLevel = level;
     game.level = level;
