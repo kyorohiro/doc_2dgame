@@ -15,6 +15,7 @@ part 'gui/prepare.dart';
 
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
+  MinoGame game = new MinoGame();
   MinoRoot(this.builder) {
     addChild(new ResourceLoader(builder, this));
 //    addChild(new StartScene(builder, this));

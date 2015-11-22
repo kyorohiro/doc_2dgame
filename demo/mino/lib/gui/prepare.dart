@@ -13,7 +13,6 @@ class PrepareScene extends TinyDisplayObject {
   ScoreUI no2;
   ScoreUI no3;
 
-
   PrepareScene(this.builder, this.root) {
     builder.loadImage("assets/se_setting.png").then((v){
       bgimg = v;
@@ -112,7 +111,7 @@ class PrepareScene extends TinyDisplayObject {
     print("touch # ${id}");
     this.root.clearChild().then((_){
       print("### level =  ${level}");
-      this.root.addChild(new PlayScene(builder,root,level:level));        
+      this.root.addChild(new PlayScene(builder,root, root.game, level:level));        
     });
   }
 
@@ -131,5 +130,8 @@ class PrepareScene extends TinyDisplayObject {
             //srcRect,
             new TinyRect(chX, chY,35.0,35.0), p);
       }
+      no1.score = root.game.no1Score;
+      no2.score = root.game.no2Score;
+      no3.score = root.game.no3Score;
   }
 }

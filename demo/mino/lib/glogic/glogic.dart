@@ -23,6 +23,13 @@ class MinoGame {
   int lastMoveTimeStamp = 0;
   int lastRotateTimeStamp = 0;
   int lastAutoDownTimeStamp = 0;
+  
+  List<int> ranking = [0,0,0];
+
+  int get no1Score => ranking[2];
+  int get no2Score => ranking[1];
+  int get no3Score => ranking[0];
+
   MinoGame() {
     nextMinon();
   }
@@ -48,7 +55,8 @@ class MinoGame {
   
   updateScore(int numOfClear) {
     if(numOfClear > 0) {
-      score += math.pow(level*10, numOfClear);
+      score += math.pow((level+1)*20, numOfClear);
+      print("${score}");
     }
   }
 
@@ -60,9 +68,11 @@ class MinoGame {
       down();
     }
   }
+
   onTouchEnd(int timeStamp) {
     
   }
+
   downWithLevel(int timeStamp, {fource:false}) {
     if(fource == true || lastMoveTimeStamp+moveInterval/2 < timeStamp) {
       lastMoveTimeStamp = timeStamp;
@@ -100,11 +110,21 @@ class MinoGame {
     if(false == move(0, 1)){
       if(collision(minon2)){
         _isGmaeOver = true;
+        updateRanking();
       }
       nextMinon();
       List<int> t = table.clearableLines();
       updateScore(t.length);
       table.clearLines(t);
+    }
+  }
+  
+  updateRanking() {
+    int currentScore = score;
+    ranking.add(currentScore);
+    ranking.sort();
+    if(ranking.length > 3) {
+      ranking.removeAt(0);
     }
   }
 

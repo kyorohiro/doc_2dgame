@@ -18,7 +18,7 @@ class PlayScene extends TinyDisplayObject {
 
   TinyGameBuilder builder;
   MinoRoot root;
-  MinoGame game = new MinoGame();
+  MinoGame game;
   TinyJoystick joystick;
   TinyButton rotateR;
   TinyButton rotateL;
@@ -29,7 +29,7 @@ class PlayScene extends TinyDisplayObject {
   ScoreUI levelUI;
   SpriteSheetInfo spriteInfo = null;
   TinyImage image = null;
-  PlayScene(this.builder, this.root, {int level: 1}) {
+  PlayScene(this.builder, this.root, this.game,{int level: 1}) {
     rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
     rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
     joystick = new TinyJoystick(size: 70.0, minWidth: 35.0);
