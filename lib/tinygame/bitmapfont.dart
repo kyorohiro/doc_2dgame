@@ -29,7 +29,7 @@ class BitmapFontInfoElem {
 
   TinySize _dst = new TinySize(0.0, 0.0);
   TinyRect _src = new TinyRect(0.0, 0.0, 0.0, 0.0);
-  TinySize dstRect(double width, double height) {
+  TinySize dstSize(double width, double height) {
     _dst.w = w*width;
     _dst.h = h*height;
     return _dst;

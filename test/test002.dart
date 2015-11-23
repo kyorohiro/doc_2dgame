@@ -22,8 +22,8 @@ void main() {
     test.expect(infos.r["あ".codeUnitAt(0)].vw,42.0);
     test.expect(infos.r["あ".codeUnitAt(0)].vh,42.0);
     test.expect(new TinyRect(42.0,0.0,42.0,42.0), infos.r["あ".codeUnitAt(0)].srcRect(256.0, 256.0));
-    test.expect(new TinySize(42.0,42.0),  infos.r["あ".codeUnitAt(0)].dstRect(256.0, 256.0));
+    test.expect(new TinySize(42.0,42.0),  infos.r["あ".codeUnitAt(0)].dstSize(256.0, 256.0));
     test.expect(new TinyRect(0.0,0.0,42.0,42.0),  infos.r["い".codeUnitAt(0)].srcRect(256.0, 256.0));
-    test.expect(new TinySize(42.0,42.0),  infos.r["い".codeUnitAt(0)].dstRect(256.0, 256.0));
+    test.expect(new TinySize(42.0,42.0),  infos.r["い".codeUnitAt(0)].dstSize(256.0, 256.0));
   });
 }
