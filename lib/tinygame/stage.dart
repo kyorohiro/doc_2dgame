@@ -1,6 +1,11 @@
 part of tinygame;
 
 abstract class TinyStage {
+  static const String TYPE_POINTER_CANCEL_EVENT = "pointercancel";
+  static const String TYPE_POINTER_UP_EVENT = "pointerup";
+  static const String TYPE_POINTER_DOWN_EVENT = "pointerdown";
+  static const String TYPE_POINTER_MOVE_EVENT = "pointermove";
+  
   double get x;
   double get y;
   double get w;

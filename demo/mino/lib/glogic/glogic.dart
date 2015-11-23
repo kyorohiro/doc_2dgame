@@ -8,9 +8,12 @@ class MinoGame {
   Minon get minon2 => nexts[1];
   
   static final int levelMax = 5;
-  static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 110];
-  static final List<int> levelMoveIntervalTimes = [150, 150, 125, 100, 85];
-  static final List<int> levelRotateIntervalTimes = [150, 125, 100, 95, 85];
+  static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 125];
+  static final List<int> levelMoveIntervalTimes = [150, 150, 125, 100, 100];
+  static final List<int> levelRotateIntervalTimes = [150, 125, 125, 125, 125];
+  static final List<int> levelScoreBase = [5, 8, 10, 12, 15];
+  static final List<int> levelups = [10, 20, 30, 40, 50];
+  
   int get moveInterval => levelMoveIntervalTimes[level];
   int get atuoMoveInterval => levelAutoDownIntervalTimes[level]; 
   int get rotateInterval =>levelRotateIntervalTimes[level];
@@ -30,10 +33,18 @@ class MinoGame {
   int get no2Score => ranking[1];
   int get no3Score => ranking[0];
 
+  int countOfMinon = 0;
+
   MinoGame() {
     nextMinon();
   }
-  
+  levelup() {
+    if(countOfMinon > levelups[level]) {
+      if((level+1) < levelups.length) {
+        level++;
+      }
+    }
+  }
   nextMinon() {
     if(nexts.length > 0) {
       nexts.removeAt(0);
@@ -55,9 +66,13 @@ class MinoGame {
   
   updateScore(int numOfClear) {
     if(numOfClear > 0) {
-      score += math.pow((level+1)*20, numOfClear);
+      score += math.pow(levelScoreBase[level], numOfClear);
       print("${score}");
     }
+    if(numOfClear == 4) {
+      countOfMinon++;
+    }
+    levelup();
   }
 
   bool get isGameOver =>_isGmaeOver;
