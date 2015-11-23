@@ -19,3 +19,4 @@ part 'tinygame/seekbar.dart';
 part 'tinygame/sprite.dart';
 part 'tinygame/spritesheet.dart';
 part 'tinygame/joystick.dart';
+part 'tinygame/bitmapfont.dart';
