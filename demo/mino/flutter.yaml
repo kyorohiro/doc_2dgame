@@ -1,12 +1,11 @@
 assets:
   - web/assets/bg_clear01.png
   - web/assets/bg_clear02.png
-  - web/assets/bg_start.png
+  - web/assets/se_start.gif
+  - web/assets/se_start.json
   - web/assets/font_a.json
   - web/assets/font_a.png
   - web/assets/se_play.json
   - web/assets/se_play.png
   - web/assets/se_setting.json
   - web/assets/se_setting.png
-
-

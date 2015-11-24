@@ -12,6 +12,7 @@ part 'gui/next.dart';
 part 'gui/playscene.dart';
 part 'gui/score.dart';
 part 'gui/prepare.dart';
+part 'gui/start.dart';
 
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
@@ -37,7 +38,8 @@ class ResourceLoader extends TinyDisplayObject {
     } catch (e) {}
     ;
     try {
-      await builder.loadImage("assets/bg_start.png");
+      await builder.loadImage("assets/se_start.gif");
+      await builder.loadString("assets/se_start.json");
     } catch (e) {}
     ;
     try {
@@ -47,7 +49,7 @@ class ResourceLoader extends TinyDisplayObject {
     ;
 
     try {
-      await builder.loadImage("assets/se_setting.png");
+      await builder.loadImage("assets/se_setting.gif");
       await builder.loadString("assets/se_setting.json");
     } catch (e) {}
     ;
@@ -138,40 +140,3 @@ class ClearScene extends TinyDisplayObject {
   }
 }
 
-class StartScene extends TinyDisplayObject {
-  TinyImage bgimg;
-  MinoRoot root;
-  TinyGameBuilder builder;
-  TinyRect srcRect;
-  TinyRect dstRect;
-  TinyPaint p = new TinyPaint();
-
-  StartScene(this.builder, this.root) {
-    builder.loadImage("assets/bg_start.png").then((v) {
-      bgimg = v;
-      srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
-      dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);
-    });
-    TinyButton startB = new TinyButton("start", 200.0, 50.0, onStartButton);
-    startB.mat.translate(100.0, 200.0, 0.0);
-    addChild(startB);
-  }
-  onStartButton(String id) {
-    print("touch # ${id}");
-    this.root.clearChild().then((_) {
-      this.root.addChild(new PrepareScene(builder, root));
-    });
-  }
-
-  bool a = false;
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
-      double globalX, globalY) {
-    return false;
-  }
-
-  void onPaint(TinyStage stage, TinyCanvas canvas) {
-    if (bgimg != null) {
-      canvas.drawImageRect(stage, bgimg, srcRect, dstRect, p);
-    }
-  }
-}

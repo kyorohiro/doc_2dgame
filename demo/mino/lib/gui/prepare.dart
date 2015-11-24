@@ -14,7 +14,7 @@ class PrepareScene extends TinyDisplayObject {
   ScoreUI no3;
 
   PrepareScene(this.builder, this.root) {
-    builder.loadImage("assets/se_setting.png").then((v){
+    builder.loadImage("assets/se_setting.gif").then((v){
       bgimg = v;
       srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
       dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);

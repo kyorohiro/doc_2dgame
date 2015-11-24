@@ -1,0 +1,92 @@
+{"frames": [
+{
+	"filename": "BG001.png",
+	"frame": {"x":0,"y":0,"w":400,"h":300},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":300},
+	"sourceSize": {"w":400,"h":300},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+  "filename": "S001.png",
+  "frame": {"x":110,"y":330,"w":290,"h":110},
+  "rotated": false,
+  "trimmed": false,
+  "spriteSourceSize": {"x":0,"y":0,"w":290,"h":110},
+  "sourceSize": {"w":290,"h":110},
+  "pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "B001.png",
+	"frame": {"x":10,"y":445,"w":80,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":80},
+	"sourceSize": {"w":80,"h":80},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "B002.png",
+	"frame": {"x":110,"y":450,"w":85,"h":70},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":85,"h":70},
+	"sourceSize": {"w":85,"h":70},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "B003.png",
+	"frame": {"x":195,"y":450,"w":80,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":60},
+	"sourceSize": {"w":80,"h":60},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "B004.png",
+	"frame": {"x":275,"y":450,"w":90,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":55},
+	"sourceSize": {"w":90,"h":55},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "B005.png",
+	"frame": {"x":75,"y":515,"w":120,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":40},
+	"sourceSize": {"w":120,"h":40},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "B006.png",
+	"frame": {"x":200,"y":505,"w":75,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":75,"h":55},
+	"sourceSize": {"w":75,"h":55},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "B007.png",
+	"frame": {"x":285,"y":510,"w":80,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":50},
+	"sourceSize": {"w":80,"h":50},
+	"pivot": {"x":0.5,"y":0.5}
+}
+],
+"meta": {
+	"app": "none",
+	"version": "1.0",
+	"image": "se_start.png",
+	"format": "RGBA8888",
+	"size": {"w":400,"h":600},
+	"scale": "1"
+}
+}
