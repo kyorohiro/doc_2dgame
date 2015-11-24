@@ -98,7 +98,7 @@ class PlayScene extends TinyDisplayObject {
     if (game.isGameOver) {
       //game.start();
       this.root.clearChild().then((_) {
-        this.root.addChild(new ClearScene(builder, root));
+        this.root.addChild(new ClearScene(builder, root, game.score));
       });
     }
     game.onTouchEnd(timeStamp);

@@ -32,6 +32,9 @@ class ResourceLoader extends TinyDisplayObject {
     try {
       await builder.loadImage("assets/bg_clear01.png");
     } catch (e) {}
+    try {
+      await builder.loadImage("assets/bg_clear02.png");
+    } catch (e) {}
     ;
     try {
       await builder.loadImage("assets/bg_start.png");
@@ -83,10 +86,17 @@ class ClearScene extends TinyDisplayObject {
   BitmapFontInfo fontInfo;
   TinyPaint p = new TinyPaint();
   static final String messageOne = "ミノーンの雪が降った。";
+  static final String messageTwo = "ミノーンが仲間になった。";
   String currentMessage  = "";
 
-  ClearScene(this.builder, this.root) {
-    builder.loadImage("assets/bg_clear01.png").then((v) {
+  ClearScene(this.builder, this.root, int score) {
+    String imgFileName = "assets/bg_clear01.png";
+    currentMessage = messageOne;
+    if(score > 10000) {
+      imgFileName = "assets/bg_clear02.png";
+      currentMessage = messageTwo;
+    }
+    builder.loadImage(imgFileName).then((v) {
       bgimg = v;
       srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
       dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);
@@ -122,7 +132,7 @@ class ClearScene extends TinyDisplayObject {
     }
     if(fontimg != null && fontInfo != null) {
       fontInfo.drawText(stage, canvas, 
-          fontimg, messageOne, 
+          fontimg, currentMessage, 
           20.0, new TinyRect(80.0, 230.0, 400.0, 200.0));
     }
   }
