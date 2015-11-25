@@ -1,53 +1,5 @@
 part of tinygame_webgl;
 
-class TinyGameBuilderForWebgl extends TinyGameBuilder {
-  int width = 600 + 100;
-  int height = 400 + 100;
-  TinyStage createStage(TinyDisplayObject root) {
-    return new TinyWebglStage(this, root);
-  }
-
-  Future<TinyImage> loadImageBase(String path) async {
-    ImageElement elm = await TinyWebglLoader.loadImage(path);
-    return new TinyWebglImage(elm);
-  }
-
-  Future<TinyAudioSource> loadAudio(String path) async {
-    Completer<TinyAudioSource> c = new Completer();
-    AudioContext context = new AudioContext();
-    HttpRequest request = new HttpRequest();
-    request.open("GET", path);
-    request.responseType = "arraybuffer";
-    print("---d-1--");
-    request.onLoad.listen((ProgressEvent e) async {
-      print("---d-2-");
-      AudioBuffer buffer = await context.decodeAudioData(request.response);
-      c.complete(new TinyWebglAudioSource(context, buffer));
-    });
-    request.onError.listen((ProgressEvent e) {
-      c.completeError(e);
-    });
-    request.send();
-    return c.future;
-  }
-
-  Future<String> loadStringBase(String path) async {
-    Completer<String> c = new Completer();
-    HttpRequest request = new HttpRequest();
-    request.open("GET", path);
-    request.responseType = "arraybuffer";
-    request.onLoad.listen((ProgressEvent e) async {
-      ByteBuffer buffer = request.response;
-      c.complete(conv.UTF8.decode(buffer.asUint8List(),allowMalformed: true));
-    });
-    request.onError.listen((ProgressEvent e) {
-      c.completeError(e);
-    });
-    request.send();
-    return c.future;
-  }
-}
-
 
 class TinyWebglStage extends Object with TinyStage {
   TinyWebglContext glContext;

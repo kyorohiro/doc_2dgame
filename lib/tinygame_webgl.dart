@@ -15,3 +15,4 @@ part 'tinygame/webgl/util.dart';
 part 'tinygame/webgl/audio.dart';
 part 'tinygame/webgl/canvas.dart';
 part 'tinygame/webgl/ncanvas.dart';
+part 'tinygame/webgl/gamebuilder.dart';

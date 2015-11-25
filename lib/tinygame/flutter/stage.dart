@@ -21,6 +21,10 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
     String a = await ResourceLoader.loadString("${resourceRoot}${path}");
     return a;
   }
+
+  Future<TinyFile> loadFile(String name) async {
+    return null;
+  }
 }
 
 class TinyFlutterImage implements TinyImage {

@@ -38,6 +38,14 @@ abstract class TinyGameBuilder {
   Future clearStringCash() {
     cachString.clear();
   }
+  
+  Future<TinyFile> loadFile(String name);
+}
+
+abstract class TinyFile {
+  Future<int> write(List<int> buffer, int start,[int length=null]);
+  Future<List<int>> read(int offset, int length, {List<int> tmp: null});
+  Future<int> getLength();
 }
 
 abstract class TinyAudioSource {
