@@ -25,6 +25,9 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
   Future<TinyFile> loadFile(String name) async {
     return null;
   }
+  Future<List<String>> getFiles() async {
+    return [];
+  }
 }
 
 class TinyFlutterImage implements TinyImage {

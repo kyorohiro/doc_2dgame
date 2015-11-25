@@ -40,6 +40,7 @@ abstract class TinyGameBuilder {
   }
   
   Future<TinyFile> loadFile(String name);
+  Future<List<String>> getFiles();
 }
 
 abstract class TinyFile {
