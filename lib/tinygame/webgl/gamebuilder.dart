@@ -68,6 +68,7 @@ class TinyWebglFile extends TinyFile {
   TinyWebglFile(this._filename) {}
 
   Future<Entry> init() async {
+    await requestQuota();
     if (_fileEntry != null) {
       return _fileEntry;
     }
@@ -75,6 +76,16 @@ class TinyWebglFile extends TinyFile {
     Entry e = await f.root.createFile(filename);
     _fileEntry = (e as FileEntry);
     return _fileEntry;
+  }
+
+  Future<int> requestQuota() {
+    Completer<int> ret = new Completer();
+    window.navigator.persistentStorage.requestQuota(5 * 1024 * 1024, (a) {
+      ret.complete(a);
+    }, (b) {
+      ret.completeError(b);
+    });
+    return ret.future;
   }
 
   Future<int> write(List<int> buffer, int offset) async {

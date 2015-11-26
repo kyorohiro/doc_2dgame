@@ -28,7 +28,6 @@ class PrepareScene extends TinyDisplayObject {
       no1.spriteInfo = spriteInfo;
       no2.spriteInfo = spriteInfo;
       no3.spriteInfo = spriteInfo;
-
     });
 
     TinyButton level1 = new TinyButton("L01", 45.0, 45.0, onLevelButton);

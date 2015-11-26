@@ -29,9 +29,9 @@ class MinoGame {
   
   List<int> ranking = [0,0,0];
 
-  int get no1Score => ranking[2];
-  int get no2Score => ranking[1];
-  int get no3Score => ranking[0];
+  int get no1Score => (ranking.length >=3?ranking[2]:0);
+  int get no2Score => (ranking.length >=2?ranking[1]:0);
+  int get no3Score => (ranking.length >=1?ranking[0]:0);
 
   int countOfMinon = 0;
 
@@ -134,8 +134,13 @@ class MinoGame {
     }
   }
   
-  updateRanking() {
-    int currentScore = score;
+  updateRanking({currentScore:null}) {
+    if(currentScore == null) {
+      currentScore = score;
+    }
+    while(ranking.length < 3) {
+      ranking.add(0);
+    }
     ranking.add(currentScore);
     ranking.sort();
     if(ranking.length > 3) {

@@ -2,6 +2,7 @@ library gamelogic;
 
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:convert' as conv;
 import 'package:umiuni2d/tinygame.dart';
 
 part 'glogic/glogic.dart';
@@ -19,8 +20,57 @@ part 'gui/resource.dart';
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
+  Database database;
   MinoRoot(this.builder) {
+    database = new Database(builder);
     addChild(new ResourceLoader(builder, this));
+    loadScore();
+  }
+
+  loadScore() async {
+    await database.load();
+    List<int> r = await database.getRank();
+    for (int i in r) {
+      game.updateRanking(currentScore:i);
+    }
   }
 }
 
+class Database {
+  List<int> rank = [0, 0, 0];
+  TinyGameBuilder builder;
+  Database(this.builder) {}
+
+  Future<List<int>> getRank() async {
+    return new List.from(rank);
+  }
+
+  Future setRank(List<int> _rank) async {
+    this.rank.clear();
+    this.rank.addAll(_rank);
+  }
+
+  Future<String> createData() async {
+    String v = conv.JSON.encode({"v": "1", "rank": rank});
+    print("##${v}");
+    return v;
+  }
+
+  load() async {
+    TinyFile f = await builder.loadFile("database.dat");
+    List<int> t = await f.read(0, await f.getLength());
+    String v = conv.UTF8.decode(t);
+    Map d = conv.JSON.decode(v);
+    rank.clear();
+    for (int v in d["rank"]) {
+      print("##${v}");
+      rank.add(v);
+    }
+  }
+
+  save() async {
+    TinyFile f = await builder.loadFile("database.dat");
+    await f.truncate(0);
+    f.write(conv.UTF8.encode(await createData()), 0);
+  }
+}
