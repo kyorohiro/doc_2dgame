@@ -1,0 +1,6 @@
+# Flutter launch configuration for demo/mino/lib/main.dart.
+type: flutter
+path: demo/mino/lib/main.dart
+
+flutter:
+  checked: true

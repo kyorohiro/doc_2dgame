@@ -38,13 +38,13 @@ abstract class TinyGameBuilder {
   Future clearStringCash() {
     cachString.clear();
   }
-  
+
   Future<TinyFile> loadFile(String name);
   Future<List<String>> getFiles();
 }
 
 abstract class TinyFile {
-  Future<int> write(List<int> buffer, int start, int length);
+  Future<int> write(List<int> buffer, int offset);
   Future<List<int>> read(int offset, int length);
   Future<int> getLength();
   Future<int> truncate(int fileSize);
@@ -63,13 +63,13 @@ class TinyRect {
   double w;
   double h;
   TinyRect(this.x, this.y, this.w, this.h) {}
-  
+
   @override
   bool operator ==(o) => o is TinyRect && o.x == x && o.y == y && o.w == w && o.h == h;
 
   @override
   int get hashCode => JenkinsHash.calc([x.hashCode, y.hashCode, w.hashCode, h.hashCode]);
- 
+
   @override
   String toString() {
     return "x:${x}, y:${y}, w:${w}, h:${h}";
@@ -80,13 +80,13 @@ class TinyPoint {
   double x;
   double y;
   TinyPoint(this.x, this.y) {}
-  
+
   @override
   bool operator ==(o) => o is TinyPoint && o.x == x && o.y == y;
 
   @override
   int get hashCode => JenkinsHash.calc([x.hashCode, y.hashCode]);
-  
+
   @override
   String toString() {
     return "x:${x}, y:${y}";
@@ -97,7 +97,7 @@ class TinySize {
   double w;
   double h;
   TinySize(this.w, this.h) {}
-  
+
   @override
   bool operator ==(o) => o is TinySize && o.w == w && o.h == h;
 
@@ -142,13 +142,13 @@ class TinyColor {
     value |= (b & 0xff) << 0;
     value &= 0xFFFFFFFF;
   }
-  
+
   @override
   bool operator ==(o) => o is TinyColor && o.value == value;
 
   @override
   int get hashCode => JenkinsHash.calc([value.hashCode]);
-  
+
   @override
   String toString() {
     return "a:${a}, r:${r}, g:${g}, b:${b}";

@@ -20,7 +20,7 @@ class FileTest extends TinyDisplayObject {
       }
     }
     TinyFile f = await builder.loadFile("test.dat");
-    await f.write(conv.UTF8.encode("abcdef"), 0, conv.UTF8.encode("abcdef").length);
+    await f.write(conv.UTF8.encode("abcdef"), 0);
 
     {
       List<String> ss = await builder.getFiles();

@@ -77,7 +77,7 @@ class TinyWebglFile extends TinyFile {
     return _fileEntry;
   }
 
-  Future<int> write(List<int> buffer, int start, int length) async {
+  Future<int> write(List<int> buffer, int offset) async {
     if (!(buffer is Uint8List)) {
       buffer = new Uint8List.fromList(buffer);
     }
@@ -94,14 +94,14 @@ class TinyWebglFile extends TinyFile {
       writer.abort();
     });
     int len = await getLength();
-    if (len < start) {
+    if (len < offset) {
       Uint8List dummy = null;
-      dummy = new Uint8List.fromList(new List.filled(start - len, 0));
+      dummy = new Uint8List.fromList(new List.filled(offset - len, 0));
       writer.seek(len);
-      writer.write(new Blob([dummy, buffer]).slice(0, length + dummy.length));
+      writer.write(new Blob([dummy, buffer]).slice(0, buffer.length + dummy.length));
     } else {
-      writer.seek(start);
-      writer.write(new Blob([buffer]).slice(0, length));
+      writer.seek(offset);
+      writer.write(new Blob([buffer]).slice(0, buffer.length));
     }
 
     return completer.future;
