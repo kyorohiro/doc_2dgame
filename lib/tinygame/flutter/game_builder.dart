@@ -26,7 +26,7 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
 
   Future<TinyFile> loadFile(String name) async {
     await initFile();
-    File f = new File("${rootPath.path}/dummy.txt");
+    File f = new File("${rootPath.path}/${name}");
     return new TinyFlutterFile(f);
   }
 
@@ -57,15 +57,23 @@ class TinyFlutterFile extends TinyFile {
   TinyFlutterFile(this.f) {
   }
 
+  init() async {
+    if(await f.exists() == false) {
+      await f.create(recursive: true);
+    }
+  }
+
   Future<int> write(List<int> buffer, int offset) async {
-    RandomAccessFile af = await f.open();
+    await init();
+    RandomAccessFile af = await f.open(mode: FileMode.WRITE);
     await af.setPosition(offset);
-    af.writeFrom(buffer);
+    await af.writeFrom(buffer);
     await af.close();
     return buffer.length;
   }
 
   Future<List<int>> read(int offset, int length) async {
+    await init();
     RandomAccessFile af = await f.open();
     await af.setPosition(offset);
     List<int> ret = await af.read(length);
@@ -74,10 +82,12 @@ class TinyFlutterFile extends TinyFile {
   }
 
   Future<int> getLength() async {
+    await init();
     return f.length();
   }
 
   Future<int> truncate(int fileSize) async {
+    await init();
     RandomAccessFile af = await f.open();
     await af.truncate(fileSize);
     int ret = await getLength();

@@ -19,7 +19,7 @@ class FileTest extends TinyDisplayObject {
         print("[0]value:${conv.UTF8.decode(v)}");
       }
     }
-    TinyFile f = await builder.loadFile("test.dat");
+    TinyFile f = await builder.loadFile("test1.dat");
     await f.write(conv.UTF8.encode("abcdef"), 0);
 
     {
