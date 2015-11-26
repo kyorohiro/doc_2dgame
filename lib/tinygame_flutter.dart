@@ -14,3 +14,4 @@ import 'package:mojo/core.dart';
 
 part 'tinygame/flutter/stage.dart';
 part 'tinygame/flutter/audio.dart';
+part 'tinygame/flutter/game_builder.dart';
