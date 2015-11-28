@@ -9,31 +9,31 @@ class ResourceLoader extends TinyDisplayObject {
 
   load() async {
     try {
-      await builder.loadImage("assets/bg_clear01.png");
-    } catch (e) {}
-    try {
-      await builder.loadImage("assets/bg_clear02.png");
-    } catch (e) {}
-    ;
-    try {
-      await builder.loadImage("assets/se_start.gif");
-      await builder.loadString("assets/se_start.json");
+      await Future.wait([
+      builder.loadImage("assets/bg_clear01.png"),
+      builder.loadImage("assets/bg_clear02.png"),
+      builder.loadImage("assets/bg_clear03.png"),
+      builder.loadImage("assets/bg_clear04.png")
+      ]);      
     } catch (e) {}
     ;
     try {
-      await builder.loadString("assets/se_play.json");
-      await builder.loadImage("assets/se_play.png");
+      await Future.wait([
+        builder.loadImage("assets/se_start.gif"),
+        builder.loadString("assets/se_start.json"),
+        builder.loadString("assets/se_play.json"),
+       builder.loadImage("assets/se_play.png")
+      ]);      
     } catch (e) {}
     ;
 
     try {
-      await builder.loadImage("assets/se_setting.gif");
-      await builder.loadString("assets/se_setting.json");
-    } catch (e) {}
-    ;
-    try {
-      await builder.loadImage("assets/font_a.png");
-      await builder.loadString("assets/font_a.json");
+      await Future.wait([
+        builder.loadImage("assets/se_setting.gif"),
+        builder.loadString("assets/se_setting.json"),
+        builder.loadImage("assets/font_a.png"),
+        builder.loadString("assets/font_a.json"),
+      ]);      
     } catch (e) {}
     ;
 

@@ -54,7 +54,7 @@ class BitmapFontInfo {
       dst.h = height;
       if((dst.x+dst.w) > rect.w) {
         dst.x  = rect.x;
-        dst.y  = height + 5;
+        dst.y  += height + 5;
       }
       canvas.drawImageRect(stage, fontImg, src, dst, p);
       x = dst.x+dst.w + 2;
