@@ -6,16 +6,16 @@ class MinoGame {
   List<Minon> nexts = [];
   Minon get minon => nexts.first;
   Minon get minon2 => nexts[1];
-  
+
   static final int levelMax = 5;
   static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 125];
-  static final List<int> levelMoveIntervalTimes = [150, 150, 125, 100, 100];
+  static final List<int> levelMoveIntervalTimes = [150, 150, 125, 125, 125];
   static final List<int> levelRotateIntervalTimes = [150, 125, 125, 125, 125];
-  static final List<int> levelScoreBase = [5, 8, 10, 12, 15];
+  static final List<int> levelScoreBase = [6, 7, 8, 9, 10];
   static final List<int> levelups = [10, 20, 30, 40, 50];
-  
+
   int get moveInterval => levelMoveIntervalTimes[level];
-  int get atuoMoveInterval => levelAutoDownIntervalTimes[level]; 
+  int get atuoMoveInterval => levelAutoDownIntervalTimes[level];
   int get rotateInterval =>levelRotateIntervalTimes[level];
 
   bool _isGmaeOver = false;
@@ -26,7 +26,7 @@ class MinoGame {
   int lastMoveTimeStamp = 0;
   int lastRotateTimeStamp = 0;
   int lastAutoDownTimeStamp = 0;
-  
+
   List<int> ranking = [0,0,0];
 
   int get no1Score => (ranking.length >=3?ranking[2]:0);
@@ -63,7 +63,7 @@ class MinoGame {
     score = 0;
     level = baseLevel;
   }
-  
+
   updateScore(int numOfClear) {
     if(numOfClear > 0) {
       score += math.pow(levelScoreBase[level], numOfClear);
@@ -85,7 +85,7 @@ class MinoGame {
   }
 
   onTouchEnd(int timeStamp) {
-    
+
   }
 
   downWithLevel(int timeStamp, {fource:false}) {
@@ -133,7 +133,7 @@ class MinoGame {
       table.clearLines(t);
     }
   }
-  
+
   updateRanking({currentScore:null}) {
     if(currentScore == null) {
       currentScore = score;
@@ -211,4 +211,3 @@ class MinoGame {
     }
   }
 }
-
