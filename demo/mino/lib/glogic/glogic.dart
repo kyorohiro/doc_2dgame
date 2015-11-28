@@ -9,12 +9,14 @@ class MinoGame {
 
   static final int levelMax = 5;
   static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 125];
-  static final List<int> levelMoveIntervalTimes = [150, 150, 125, 125, 125];
+  static final List<int> levelMoveLRIntervalTimes = [150, 150, 125, 125, 125];
+  static final List<int> levelMoveDIntervalTimes = [50, 50, 50, 50, 50];
   static final List<int> levelRotateIntervalTimes = [150, 125, 125, 125, 125];
   static final List<int> levelScoreBase = [6, 7, 8, 9, 10];
   static final List<int> levelups = [10, 20, 30, 40, 50];
 
-  int get moveInterval => levelMoveIntervalTimes[level];
+  int get moveLRInterval => levelMoveLRIntervalTimes[level];
+  int get moveDInterval => levelMoveDIntervalTimes[level];
   int get atuoMoveInterval => levelAutoDownIntervalTimes[level];
   int get rotateInterval =>levelRotateIntervalTimes[level];
 
@@ -23,7 +25,8 @@ class MinoGame {
   int level = 1;
   int baseLevel = 1;
 
-  int lastMoveTimeStamp = 0;
+  int lastMoveLRTimeStamp = 0;
+  int lastMoveDTimeStamp = 0;
   int lastRotateTimeStamp = 0;
   int lastAutoDownTimeStamp = 0;
 
@@ -89,22 +92,22 @@ class MinoGame {
   }
 
   downWithLevel(int timeStamp, {fource:false}) {
-    if(fource == true || lastMoveTimeStamp+moveInterval/2 < timeStamp) {
-      lastMoveTimeStamp = timeStamp;
+    if(fource == true || lastMoveDTimeStamp+moveDInterval/2 < timeStamp) {
+      lastMoveDTimeStamp = timeStamp;
       down();
     }
   }
 
   leftWithLevel(int timeStamp){
-    if(lastMoveTimeStamp+moveInterval < timeStamp) {
-      lastMoveTimeStamp = timeStamp;
+    if(lastMoveLRTimeStamp+moveLRInterval < timeStamp) {
+      lastMoveLRTimeStamp = timeStamp;
       left();
     }
   }
 
   rightWithLevel(int timeStamp){
-    if(lastMoveTimeStamp+moveInterval  < timeStamp) {
-      lastMoveTimeStamp = timeStamp;
+    if(lastMoveLRTimeStamp+moveLRInterval  < timeStamp) {
+      lastMoveLRTimeStamp = timeStamp;
       right();
     }
   }
