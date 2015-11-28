@@ -171,24 +171,32 @@ class MinoGame {
 
   rotateR() {
     setMinon(minon, false);
-    minon.rotateRight();
-    if (collision(minon)) {
-      minon.rotateLeft();
-      setMinon(minon, true);
-    } else {
-      setMinon(minon, true);
+    for(int xp in [0,-1, 1, -2, 2]) {
+      minon.x += xp;
+      minon.rotateRight();
+      if (!collision(minon)) {
+        break;
+      } else {
+        minon.rotateLeft();
+        minon.x -= xp;
+      }
     }
+    setMinon(minon, true);
   }
 
   rotateL() {
     setMinon(minon, false);
-    minon.rotateRight();
-    if (collision(minon)) {
+    for(int xp in [0,-1, 1, -2, 2]) {
+      minon.x += xp;
       minon.rotateLeft();
-      setMinon(minon, true);
-    } else {
-      setMinon(minon, true);
+      if (!collision(minon)) {
+        break;
+      } else {
+        minon.rotateRight();
+        minon.x -= xp;
+      }
     }
+    setMinon(minon, true);
   }
 
   bool collision(Minon minon) {
