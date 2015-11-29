@@ -1,6 +1,5 @@
 part of gamelogic;
 
-
 class MinoGame {
   MinoTable table = new MinoTable();
   List<Minon> nexts = [];
@@ -12,14 +11,17 @@ class MinoGame {
   static final List<int> levelAutoDownIntervalTimes = [500, 225, 150, 125, 75];
   static final List<int> levelMoveLRIntervalTimes = [150, 150, 125, 125, 125];
   static final List<int> levelMoveDIntervalTimes = [70, 70, 70, 70, 70];
+  static final List<int> levelMoveDPlusIntervalTimesFromNext = [150, 150, 150, 150, 150];
   static final List<int> levelRotateIntervalTimes = [150, 150, 150, 150, 150];
+  static final List<int> levelClearable = [1, 2, 2, 2, 3];
   static final List<int> levelScoreBase = [6, 7, 8, 9, 10];
   static final List<int> levelups = [10, 20, 30, 40, 50];
 
   int get moveLRInterval => levelMoveLRIntervalTimes[level];
   int get moveDInterval => levelMoveDIntervalTimes[level];
   int get atuoMoveInterval => levelAutoDownIntervalTimes[level];
-  int get rotateInterval =>levelRotateIntervalTimes[level];
+  int get rotateInterval => levelRotateIntervalTimes[level];
+  int get moveDPlusInterval => levelMoveDPlusIntervalTimesFromNext[level];
 
   bool _isGmaeOver = false;
   int score = 0;
@@ -30,12 +32,13 @@ class MinoGame {
   int lastMoveDTimeStamp = 0;
   int lastRotateTimeStamp = 0;
   int lastAutoDownTimeStamp = 0;
+  int lastNextTimeStamp = 0;
 
-  List<int> ranking = [0,0,0];
+  List<int> ranking = [0, 0, 0];
 
-  int get no1Score => (ranking.length >=3?ranking[2]:0);
-  int get no2Score => (ranking.length >=2?ranking[1]:0);
-  int get no3Score => (ranking.length >=1?ranking[0]:0);
+  int get no1Score => (ranking.length >= 3 ? ranking[2] : 0);
+  int get no2Score => (ranking.length >= 2 ? ranking[1] : 0);
+  int get no3Score => (ranking.length >= 1 ? ranking[0] : 0);
 
   int countOfMinon = 0;
 
@@ -43,17 +46,18 @@ class MinoGame {
     nextMinon();
   }
   levelup() {
-    if(countOfMinon > levelups[level]) {
-      if((level+1) < levelups.length) {
+    if (countOfMinon > levelups[level]) {
+      if ((level + 1) < levelups.length) {
         level++;
       }
     }
   }
+
   nextMinon() {
-    if(nexts.length > 0) {
+    if (nexts.length > 0) {
       nexts.removeAt(0);
     }
-    while(nexts.length < 3) {
+    while (nexts.length < 3) {
       Minon n = new Minon.random();
       n.x = table.fieldWWithFrame ~/ 2;
       n.y = 0;
@@ -69,95 +73,102 @@ class MinoGame {
   }
 
   updateScore(int numOfClear) {
-    if(numOfClear > 0) {
+    if (numOfClear > 0) {
       score += math.pow(levelScoreBase[level], numOfClear);
       print("${score}");
     }
-    if(numOfClear == 4) {
+    if (numOfClear == 4) {
       countOfMinon++;
     }
     levelup();
   }
 
-  bool get isGameOver =>_isGmaeOver;
+  bool get isGameOver => _isGmaeOver;
 
   onTouchStart(int timeStamp) {
-    if(lastAutoDownTimeStamp+atuoMoveInterval < timeStamp) {
+    if (lastAutoDownTimeStamp + atuoMoveInterval < timeStamp) {
       lastAutoDownTimeStamp = timeStamp;
-      down();
+      down(timeStamp);
     }
   }
 
-  onTouchEnd(int timeStamp) {
+  onTouchEnd(int timeStamp) {}
 
-  }
-
-  downWithLevel(int timeStamp, {force:false}) {
-    if(force == true || lastMoveDTimeStamp+moveDInterval/2 < timeStamp) {
+  downWithLevel(int timeStamp, {force: false}) {
+    if (force == true || lastMoveDTimeStamp + moveDInterval  < timeStamp) {
       lastMoveDTimeStamp = timeStamp;
-      down();
+      down(timeStamp);
     }
   }
 
-  leftWithLevel(int timeStamp,{bool force:false}){
-    if(force == true || lastMoveLRTimeStamp+moveLRInterval < timeStamp) {
+  downPlusWithLevel(int timeStamp, {force: false}) {
+    if (force == true || lastNextTimeStamp + moveDPlusInterval < timeStamp) {
+      down(timeStamp);
+    }
+  }
+
+  leftWithLevel(int timeStamp, {bool force: false}) {
+    if (force == true || lastMoveLRTimeStamp + moveLRInterval < timeStamp) {
       lastMoveLRTimeStamp = timeStamp;
       left();
     }
   }
 
-  rightWithLevel(int timeStamp,{bool force:false}){
-    if(force == true || lastMoveLRTimeStamp+moveLRInterval  < timeStamp) {
+  rightWithLevel(int timeStamp, {bool force: false}) {
+    if (force == true || lastMoveLRTimeStamp + moveLRInterval < timeStamp) {
       lastMoveLRTimeStamp = timeStamp;
       right();
     }
   }
 
-  rotateRWithLevel(int timeStamp,{bool force:false}){
-    if(force == true || lastRotateTimeStamp+rotateInterval < timeStamp) {
+  rotateRWithLevel(int timeStamp, {bool force: false}) {
+    if (force == true || lastRotateTimeStamp + rotateInterval < timeStamp) {
       lastRotateTimeStamp = timeStamp;
       rotateR();
     }
   }
-  rotateLWithLevel(int timeStamp,{bool force:false}){
-    if(force == true || lastRotateTimeStamp+rotateInterval < timeStamp) {
+
+  rotateLWithLevel(int timeStamp, {bool force: false}) {
+    if (force == true || lastRotateTimeStamp + rotateInterval < timeStamp) {
       lastRotateTimeStamp = timeStamp;
       rotateL();
     }
   }
 
-  bool clearable = false;
-  bool down() {
-    if(false == move(0, 1)){
-      if(collision(minon2)){
-        if(clearable == true) {
-          clearable = false;
-          _isGmaeOver = true;
-          updateRanking();
-        } else {
-          clearable = true;
-        }
+  int clearable = 0;
+  bool down(int timeStamp) {
+    if (false == move(0, 1)) {
+      if (collision(minon2)) {
+        _isGmaeOver = true;
+        updateRanking();
       }
-      nextMinon();
-      List<int> t = table.clearableLines();
-      updateScore(t.length);
-      table.clearLines(t);
+      if (clearable >= levelClearable[level]) {
+        clearable = 0;
+        nextMinon();
+        List<int> t = table.clearableLines();
+        updateScore(t.length);
+        table.clearLines(t);
+        lastNextTimeStamp = timeStamp;
+      } else {
+        clearable += 1;
+      }
+
       return false;
     } else {
       return true;
     }
   }
 
-  updateRanking({currentScore:null}) {
-    if(currentScore == null) {
+  updateRanking({currentScore: null}) {
+    if (currentScore == null) {
       currentScore = score;
     }
-    while(ranking.length < 3) {
+    while (ranking.length < 3) {
       ranking.add(0);
     }
     ranking.add(currentScore);
     ranking.sort();
-    if(ranking.length > 3) {
+    if (ranking.length > 3) {
       ranking.removeAt(0);
     }
   }
@@ -170,8 +181,8 @@ class MinoGame {
     minon.x += dx;
     minon.y += dy;
     if (collision(minon)) {
-      minon.x-=dx;
-      minon.y-=dy;
+      minon.x -= dx;
+      minon.y -= dy;
       setMinon(minon, true);
       return false;
     } else {
@@ -182,7 +193,7 @@ class MinoGame {
 
   rotateR() {
     setMinon(minon, false);
-    for(int xp in [0,-1, 1, -2, 2]) {
+    for (int xp in [0, -1, 1, -2, 2]) {
       minon.x += xp;
       minon.rotateRight();
       if (!collision(minon)) {
@@ -197,7 +208,7 @@ class MinoGame {
 
   rotateL() {
     setMinon(minon, false);
-    for(int xp in [0,-1, 1, -2, 2]) {
+    for (int xp in [0, -1, 1, -2, 2]) {
       minon.x += xp;
       minon.rotateLeft();
       if (!collision(minon)) {

@@ -84,9 +84,9 @@ class PlayScene extends TinyDisplayObject {
     }
 
     if (joystick.directionY < -0.6) {
-      game.downWithLevel(timeStamp, force: false);
+      game.downWithLevel(timeStamp, force: joystick.registerUp);
     } else if (joystick.directionY > 0.7) {
-      game.downWithLevel(timeStamp, force: true);
+      game.downPlusWithLevel(timeStamp, force: joystick.registerUp);
     }
 
     if (rotateR.isTouch) {
