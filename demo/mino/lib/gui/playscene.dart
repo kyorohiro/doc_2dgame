@@ -77,9 +77,19 @@ class PlayScene extends TinyDisplayObject {
     }
 
     game.onTouchStart(timeStamp);
-    if (joystick.directionX > 0.5) {
+    if (joystick.directionX > 0.5 ||
+      (joystick.registerDown == true &&joystick.registerUp == true && joystick.directionX_released > 0.5)) {
+      joystick.registerDown = false;
+      if(joystick.registerDown == true &&joystick.registerUp == true && joystick.directionX_released > 0.5) {
+        print("------------hotX up");
+      }
       game.rightWithLevel(timeStamp, force:joystick.registerUp);
-    } else if (joystick.directionX < -0.5) {
+    } else if (joystick.directionX < -0.5 ||
+    (joystick.registerDown == true &&joystick.registerUp == true && joystick.directionX_released < -0.5)) {
+      joystick.registerDown = false;
+      if(joystick.registerUp == true && joystick.directionX_released < -0.5) {
+        print("------------hotX up");
+      }
       game.leftWithLevel(timeStamp,force:joystick.registerUp);
     }
 

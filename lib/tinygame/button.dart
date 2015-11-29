@@ -26,8 +26,8 @@ class TinyButton extends TinyDisplayObject {
     }
   }
 
-  double px = 0.0;
-  double py = 0.0;
+  //double px = 0.0;
+  //double py = 0.0;
   double prevGX = 0.0;
   double prevGY = 0.0;
   bool onTouch(TinyStage stage, int id, String type, double x, double y,
@@ -39,23 +39,24 @@ class TinyButton extends TinyDisplayObject {
           isFocus = true;
           prevGX = globalX;
           prevGY = globalY;
-          px = 0.0;
-          py = 0.0;
+        //  px = 0.0;
+      //    py = 0.0;
           registerDown = true;
         }
         break;
       case "pointermove":
         if (checkFocus(x, y)) {
           isFocus = true;
-          px += globalX - prevGX;
-          py += globalY - prevGY;
-          if (math.sqrt(px * px) > w || math.sqrt(py * py) > h) {
-            isTouch = false;
-            isFocus = false;
-          }
+        //  px += globalX - prevGX;
+        //  py += globalY - prevGY;
+          //if (math.sqrt(px * px) > w || math.sqrt(py * py) > h) {
+        //    isTouch = false;
+          //  isFocus = false;
+          ///}
         } else {
           isTouch = false;
           isFocus = false;
+          registerUp = true;
         }
         break;
       case "pointerup":

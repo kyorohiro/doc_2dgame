@@ -10,14 +10,19 @@ class TinyJoystick extends TinyDisplayObject {
   int touchId = 0;
   double minX = 0.0;
   double minY = 0.0;
+  double releaseMinX = 0.0;
+  double releaseMinY = 0.0;
   double get directionMax => size/2;
   double get directionX => minX/minWidth;
   double get directionY => - minY/minWidth;
+  double get directionX_released => releaseMinX/minWidth;
+  double get directionY_released => - releaseMinY/minWidth;
   double get directionXAbs => abs(directionX);
   double get directionYAbs =>  abs(directionY);
   // if release joystickm input ture;
   bool registerUp = false;
-
+  // if down joystickm input ture;
+  bool registerDown = false;
   TinyJoystick({this.size:50.0,this.minWidth:25.0}) {
 
   }
@@ -41,6 +46,7 @@ class TinyJoystick extends TinyDisplayObject {
   bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
     if (isTouch == false) {
       if (distance(x, y, 0.0, 0.0) < size) {
+        registerDown = true;
         touchId = id;
         isTouch = true;
         this.minX = x;
@@ -52,6 +58,8 @@ class TinyJoystick extends TinyDisplayObject {
           //print("--up");
           if(isTouch) {
             registerUp = true;
+            releaseMinX = minX;
+            releaseMinY = minY;
           }
           isTouch = false;
           this.minX = 0.0;
