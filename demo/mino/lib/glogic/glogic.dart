@@ -10,7 +10,7 @@ class MinoGame {
   static final int levelMax = 5;
   static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 125];
   static final List<int> levelMoveLRIntervalTimes = [150, 150, 125, 125, 125];
-  static final List<int> levelMoveDIntervalTimes = [50, 50, 50, 50, 50];
+  static final List<int> levelMoveDIntervalTimes = [70, 70, 70, 70, 70];
   static final List<int> levelRotateIntervalTimes = [150, 150, 150, 150, 150];
   static final List<int> levelScoreBase = [6, 7, 8, 9, 10];
   static final List<int> levelups = [10, 20, 30, 40, 50];
@@ -124,16 +124,26 @@ class MinoGame {
       rotateL();
     }
   }
-  down() {
+
+  bool clearable = false;
+  bool down() {
     if(false == move(0, 1)){
       if(collision(minon2)){
-        _isGmaeOver = true;
-        updateRanking();
+        if(clearable == true) {
+          clearable = false;
+          _isGmaeOver = true;
+          updateRanking();
+        } else {
+          clearable = true;
+        }
       }
       nextMinon();
       List<int> t = table.clearableLines();
       updateScore(t.length);
       table.clearLines(t);
+      return false;
+    } else {
+      return true;
     }
   }
 

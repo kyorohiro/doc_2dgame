@@ -83,7 +83,7 @@ class PlayScene extends TinyDisplayObject {
       game.leftWithLevel(timeStamp);
     }
 
-    if (joystick.directionY < -0.7) {
+    if (joystick.directionY < -0.6) {
       game.downWithLevel(timeStamp, fource: false);
     } else if (joystick.directionY > 0.7) {
       game.downWithLevel(timeStamp, fource: true);
