@@ -10,11 +10,11 @@ part 'glogic/minon.dart';
 part 'glogic/board.dart';
 part 'gui/board.dart';
 part 'gui/next.dart';
-part 'gui/playscene.dart';
+part 'gui/play.dart';
 part 'gui/score.dart';
 part 'gui/prepare.dart';
 part 'gui/start.dart';
-part 'gui/clearscene.dart';
+part 'gui/clears.dart';
 part 'gui/resource.dart';
 
 class MinoRoot extends TinyDisplayObject {
