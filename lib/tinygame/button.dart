@@ -16,6 +16,8 @@ class TinyButton extends TinyDisplayObject {
   TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback) {}
   // if release joystickm input ture;
   bool registerUp = false;
+  // if down joystickm input ture;
+  bool registerDown = false;
   bool checkFocus(double x, double y) {
     if (x > 0 && y > 0 && y < h && x < w) {
       return true;
@@ -39,6 +41,7 @@ class TinyButton extends TinyDisplayObject {
           prevGY = globalY;
           px = 0.0;
           py = 0.0;
+          registerDown = true;
         }
         break;
       case "pointermove":

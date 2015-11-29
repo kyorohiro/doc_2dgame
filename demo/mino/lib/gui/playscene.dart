@@ -71,7 +71,7 @@ class PlayScene extends TinyDisplayObject {
 
   void onTick(TinyStage stage, int timeStamp) {
     scoreUI.score = game.score;
-    levelUI.score = game.level;
+    levelUI.score = game.level+1;
     if(game.nexts.length > 1 && game.nexts[1] != null) {
       nextUI.setMinon(game.nexts[1]);
     }
@@ -89,9 +89,12 @@ class PlayScene extends TinyDisplayObject {
       game.downPlusWithLevel(timeStamp, force: joystick.registerUp);
     }
 
-    if (rotateR.isTouch) {
+    if (rotateR.isTouch || (rotateR.registerDown == true &&rotateR.registerUp == true)) {
+      rotateR.registerDown = false;
       game.rotateRWithLevel(timeStamp,force: rotateR.registerUp);
-    } else if (rotateL.isTouch) {
+    }
+    if (rotateL.isTouch|| (rotateL.registerDown == true &&rotateL.registerUp == true)) {
+      rotateL.registerDown = false;
       game.rotateLWithLevel(timeStamp,force: rotateL.registerUp);
     }
 

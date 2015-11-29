@@ -12,7 +12,7 @@ class MinoGame {
   static final List<int> levelMoveLRIntervalTimes = [150, 150, 125, 125, 125];
   static final List<int> levelMoveDIntervalTimes = [70, 70, 70, 70, 70];
   static final List<int> levelMoveDPlusIntervalTimesFromNext = [150, 150, 150, 150, 150];
-  static final List<int> levelRotateIntervalTimes = [150, 150, 150, 150, 150];
+  static final List<int> levelRotateIntervalTimes = [200, 200, 200, 200, 200];
   static final List<int> levelClearable = [1, 2, 2, 2, 3];
   static final List<int> levelScoreBase = [6, 7, 8, 9, 10];
   static final List<int> levelups = [10, 20, 30, 40, 50];
