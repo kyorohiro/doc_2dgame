@@ -47,8 +47,8 @@ class PlayScene extends TinyDisplayObject {
     addChild(levelUI);
     playboard.mat.translate(100.0, 25.0, 0.0);
     joystick.mat.translate(100.0, 250.0, 0.0);
-    rotateR.mat.translate(250.0, 225.0, 0.0);
-    rotateL.mat.translate(300.0, 225.0, 0.0);
+    rotateL.mat.translate(250.0, 225.0, 0.0);
+    rotateR.mat.translate(300.0, 225.0, 0.0);
     nextUI.mat.translate(225.0, 153.0, 0.0);
     scoreUI.mat.translate(225.0, 50.0, 0.0);
     levelUI.mat.translate(225.0, 85.0, 0.0);
