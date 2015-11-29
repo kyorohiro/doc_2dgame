@@ -15,7 +15,7 @@ class MinoGame {
   static final List<int> levelRotateIntervalTimes = [200, 200, 200, 200, 200];
   static final List<int> levelClearable = [1, 2, 2, 2, 3];
   static final List<int> levelScoreBase = [6, 7, 8, 9, 10];
-  static final List<int> levelups = [10, 20, 30, 40, 50];
+  static final List<int> levelups = [2, 5, 6, 10, 50];
 
   int get moveLRInterval => levelMoveLRIntervalTimes[level];
   int get moveDInterval => levelMoveDIntervalTimes[level];
@@ -49,6 +49,7 @@ class MinoGame {
     if (countOfMinon > levelups[level]) {
       if ((level + 1) < levelups.length) {
         level++;
+        countOfMinon=0;
       }
     }
   }
