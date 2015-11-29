@@ -88,6 +88,10 @@ class TinyFlutterFile extends TinyFile {
 
   Future<int> truncate(int fileSize) async {
     await init();
+    int s = await getLength();
+    if(fileSize >= s) {
+      return s;
+    }
     RandomAccessFile af = await f.open();
     await af.truncate(fileSize);
     int ret = await getLength();

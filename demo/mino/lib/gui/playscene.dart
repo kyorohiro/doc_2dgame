@@ -113,10 +113,12 @@ class PlayScene extends TinyDisplayObject {
       this.root.clearChild().then((_) async {
         this.root.addChild(new ClearScene(builder, root, game.score));
         try {
+          print("--a");
         await this.root.database.setRank(root.game.ranking);
+        print("--b");
         await this.root.database.save();
         } catch(e) {
-          print("## failed to save score");
+          print("## failed to save score ${e}");
         }
       });
     }

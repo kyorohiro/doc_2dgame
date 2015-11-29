@@ -31,7 +31,7 @@ class MinoRoot extends TinyDisplayObject {
     await database.load();
     List<int> r = await database.getRank();
     for (int i in r) {
-      game.updateRanking(currentScore:i);
+      game.updateRanking(currentScore: i);
     }
   }
 }
@@ -57,20 +57,29 @@ class Database {
   }
 
   load() async {
-    TinyFile f = await builder.loadFile("database.dat");
-    List<int> t = await f.read(0, await f.getLength());
-    String v = conv.UTF8.decode(t);
-    Map d = conv.JSON.decode(v);
-    rank.clear();
-    for (int v in d["rank"]) {
-      print("##${v}");
-      rank.add(v);
+    try {
+      TinyFile f = await builder.loadFile("database.dat");
+      List<int> t = await f.read(0, await f.getLength());
+      String v = conv.UTF8.decode(t);
+      print("##### load database.dat ${v}");
+      Map d = conv.JSON.decode(v);
+      rank.clear();
+      for (int v in d["rank"]) {
+        print("##${v}");
+        rank.add(v);
+      }
+    } catch (e) {
+      ;
     }
   }
 
   save() async {
     TinyFile f = await builder.loadFile("database.dat");
-    await f.truncate(0);
+    try {
+      await f.truncate(0);
+    } catch(e) {
+      print("e: truncate ${e}");
+    }
     f.write(conv.UTF8.encode(await createData()), 0);
   }
 }
