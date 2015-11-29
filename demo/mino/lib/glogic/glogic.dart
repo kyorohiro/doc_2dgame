@@ -8,7 +8,8 @@ class MinoGame {
   Minon get minon2 => nexts[1];
 
   static final int levelMax = 5;
-  static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 125];
+//  static final List<int> levelAutoDownIntervalTimes = [500, 250, 200, 150, 125];
+  static final List<int> levelAutoDownIntervalTimes = [500, 225, 150, 125, 75];
   static final List<int> levelMoveLRIntervalTimes = [150, 150, 125, 125, 125];
   static final List<int> levelMoveDIntervalTimes = [70, 70, 70, 70, 70];
   static final List<int> levelRotateIntervalTimes = [150, 150, 150, 150, 150];
@@ -91,35 +92,35 @@ class MinoGame {
 
   }
 
-  downWithLevel(int timeStamp, {fource:false}) {
-    if(fource == true || lastMoveDTimeStamp+moveDInterval/2 < timeStamp) {
+  downWithLevel(int timeStamp, {force:false}) {
+    if(force == true || lastMoveDTimeStamp+moveDInterval/2 < timeStamp) {
       lastMoveDTimeStamp = timeStamp;
       down();
     }
   }
 
-  leftWithLevel(int timeStamp){
-    if(lastMoveLRTimeStamp+moveLRInterval < timeStamp) {
+  leftWithLevel(int timeStamp,{bool force:false}){
+    if(force == true || lastMoveLRTimeStamp+moveLRInterval < timeStamp) {
       lastMoveLRTimeStamp = timeStamp;
       left();
     }
   }
 
-  rightWithLevel(int timeStamp){
-    if(lastMoveLRTimeStamp+moveLRInterval  < timeStamp) {
+  rightWithLevel(int timeStamp,{bool force:false}){
+    if(force == true || lastMoveLRTimeStamp+moveLRInterval  < timeStamp) {
       lastMoveLRTimeStamp = timeStamp;
       right();
     }
   }
 
-  rotateRWithLevel(int timeStamp){
-    if(lastRotateTimeStamp+rotateInterval < timeStamp) {
+  rotateRWithLevel(int timeStamp,{bool force:false}){
+    if(force == true || lastRotateTimeStamp+rotateInterval < timeStamp) {
       lastRotateTimeStamp = timeStamp;
       rotateR();
     }
   }
-  rotateLWithLevel(int timeStamp){
-    if(lastRotateTimeStamp+rotateInterval < timeStamp) {
+  rotateLWithLevel(int timeStamp,{bool force:false}){
+    if(force == true || lastRotateTimeStamp+rotateInterval < timeStamp) {
       lastRotateTimeStamp = timeStamp;
       rotateL();
     }

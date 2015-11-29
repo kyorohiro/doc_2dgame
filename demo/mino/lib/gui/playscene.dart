@@ -78,21 +78,21 @@ class PlayScene extends TinyDisplayObject {
 
     game.onTouchStart(timeStamp);
     if (joystick.directionX > 0.5) {
-      game.rightWithLevel(timeStamp);
+      game.rightWithLevel(timeStamp, force:joystick.registerUp);
     } else if (joystick.directionX < -0.5) {
-      game.leftWithLevel(timeStamp);
+      game.leftWithLevel(timeStamp,force:joystick.registerUp);
     }
 
     if (joystick.directionY < -0.6) {
-      game.downWithLevel(timeStamp, fource: false);
+      game.downWithLevel(timeStamp, force: false);
     } else if (joystick.directionY > 0.7) {
-      game.downWithLevel(timeStamp, fource: true);
+      game.downWithLevel(timeStamp, force: true);
     }
 
     if (rotateR.isTouch) {
-      game.rotateRWithLevel(timeStamp);
+      game.rotateRWithLevel(timeStamp,force: rotateR.registerUp);
     } else if (rotateL.isTouch) {
-      game.rotateLWithLevel(timeStamp);
+      game.rotateLWithLevel(timeStamp,force: rotateL.registerUp);
     }
 
     if (game.isGameOver) {
@@ -108,6 +108,9 @@ class PlayScene extends TinyDisplayObject {
       });
     }
     game.onTouchEnd(timeStamp);
+    joystick.registerUp = false;
+    rotateL.registerUp = false;
+    rotateR.registerUp = false;
   }
 
   onTouchCallback(String id) {}

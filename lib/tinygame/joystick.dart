@@ -15,9 +15,11 @@ class TinyJoystick extends TinyDisplayObject {
   double get directionY => - minY/minWidth;
   double get directionXAbs => abs(directionX);
   double get directionYAbs =>  abs(directionY);
+  // if release joystickm input ture;
+  bool registerUp = false;
 
   TinyJoystick({this.size:50.0,this.minWidth:25.0}) {
-    
+
   }
 
   @override
@@ -48,6 +50,9 @@ class TinyJoystick extends TinyDisplayObject {
       if (id == touchId) {
         if (type == "pointerup"|| type == "pointercancel") {
           //print("--up");
+          if(isTouch) {
+            registerUp = true;
+          }
           isTouch = false;
           this.minX = 0.0;
           this.minY = 0.0;

@@ -14,7 +14,8 @@ class TinyButton extends TinyDisplayObject {
   TinyColor bgcolorFocus = new TinyColor.argb(0xaa, 0xcc, 0xff, 0xaa);
   TinyButtonCallback onTouchCallback;
   TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback) {}
-
+  // if release joystickm input ture;
+  bool registerUp = false;
   bool checkFocus(double x, double y) {
     if (x > 0 && y > 0 && y < h && x < w) {
       return true;
@@ -56,6 +57,7 @@ class TinyButton extends TinyDisplayObject {
         break;
       case "pointerup":
         if (isTouch == true && onTouchCallback != null) {
+          registerUp = true;
           new Future(() {
             onTouchCallback(buttonName);
           });
