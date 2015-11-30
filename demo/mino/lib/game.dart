@@ -16,6 +16,7 @@ part 'gui/prepare.dart';
 part 'gui/start.dart';
 part 'gui/clears.dart';
 part 'gui/resource.dart';
+part 'gui/snow.dart';
 
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
