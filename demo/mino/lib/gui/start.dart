@@ -18,7 +18,7 @@ class StartScene extends TinyDisplayObject {
     });
     {
     for(int i=1;i<=7;i++) {
-      snows.addIdName("B00${i}.png");
+      snows.addIdName("B00${i}.png", 0.35);
     }
     }
   }

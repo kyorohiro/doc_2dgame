@@ -13,7 +13,12 @@ class MinoTableUI extends TinyDisplayObject {
     TinyPaint p = new TinyPaint();
     p.style = TinyPaintStyle.fill;
     p.strokeWidth = 1.0;
-
+    
+    {
+      p.color = PlayScene.bgColor;
+      TinyRect rect = new TinyRect(0.0, 0.0, 8.0*table.fieldWWithFrame, 8.0*table.fieldHWithFrame);
+      canvas.drawRect(stage, rect, p);
+    }
     for (int y = 0; y < table.fieldHWithFrame; y++) {
       for (int x = 0; x < table.fieldWWithFrame; x++) {
         rect.x = x * 8.0;

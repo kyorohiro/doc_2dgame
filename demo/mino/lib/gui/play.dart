@@ -1,15 +1,12 @@
 part of gamelogic;
 
 class PlayScene extends TinyDisplayObject {
-  static final TinyColor colorEmpty =
-      new TinyColor.argb(0xaa, 0x88, 0x88, 0x88);
-  static final TinyColor colorFrame =
-      new TinyColor.argb(0xaa, 0x55, 0x33, 0x33);
+  static final TinyColor bgColor = new TinyColor.argb(0xff, 0xee, 0xee, 0xff);
+  static final TinyColor colorEmpty = new TinyColor.argb(0xaa, 0x88, 0x88, 0x88);
+  static final TinyColor colorFrame = new TinyColor.argb(0xaa, 0x55, 0x33, 0x33);
+  static final TinyColor colorMinon = new TinyColor.argb(0xaa, 0xff, 0xff, 0xff);
 
-  static final TinyColor colorMinon =
-      new TinyColor.argb(0xaa, 0xff, 0xff, 0xff);
   static final TinyColor colorO = new TinyColor.argb(0xaa, 0x00, 0x00, 0x00);
-
   static final TinyColor colorS = new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa);
   static final TinyColor colorZ = new TinyColor.argb(0xaa, 0xaa, 0xff, 0xaa);
   static final TinyColor colorJ = new TinyColor.argb(0xaa, 0xaa, 0xaa, 0xff);
@@ -29,6 +26,8 @@ class PlayScene extends TinyDisplayObject {
   ScoreUI levelUI;
   SpriteSheetInfo spriteInfo = null;
   TinyImage image = null;
+  
+  Snows snows = new Snows();
   PlayScene(this.builder, this.root, this.game,{int level: 1}) {
     rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
     rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
@@ -38,6 +37,17 @@ class PlayScene extends TinyDisplayObject {
     scoreUI = new ScoreUI(this.spriteInfo, this.image);
     levelUI = new ScoreUI(this.spriteInfo, this.image);
     levelUI.size = 3;
+    {    //
+      //
+      addChild(snows);
+      snows.addIdName("S001.png", 0.25, randomSize: true);
+      snows.addIdName("S002.png", 0.25, randomSize: true);
+      snows.addIdName("S001.png", 0.25, randomSize: true);
+      snows.addIdName("S002.png", 0.25, randomSize: true);
+      snows.addIdName("S001.png", 0.25, randomSize: true);
+      snows.addIdName("S002.png", 0.25, randomSize: true);
+
+    }
     addChild(playboard);
     addChild(joystick);
     addChild(rotateR);
@@ -58,17 +68,22 @@ class PlayScene extends TinyDisplayObject {
       image = i;
       scoreUI.image = i;
       levelUI.image = i;
+      snows.bgimg = i;
     });
     builder.loadStringBase("assets/se_play.json").then((String x) {
       spriteInfo = new SpriteSheetInfo.fronmJson(x);
       scoreUI.spriteInfo = spriteInfo;
       levelUI.spriteInfo = spriteInfo;
+      snows.info = spriteInfo;
     });
     game.baseLevel = level;
     game.level = level;
     print("### game =  ${game.baseLevel}");
-  }
 
+  }
+  void onPaint(TinyStage stage, TinyCanvas canvas) {
+    //snows.onPaint(stage, canvas);
+  }
   void onTick(TinyStage stage, int timeStamp) {
     scoreUI.score = game.score;
     levelUI.score = game.level+1;
