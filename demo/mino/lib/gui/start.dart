@@ -10,10 +10,17 @@ class StartScene extends TinyDisplayObject {
   StartScene(this.builder, this.root) {
     builder.loadImage("assets/se_start.gif").then((v) {
       bgimg = v;
+      snows.bgimg = bgimg;
     });
     builder.loadString("assets/se_start.json").then((v) {
       info = new SpriteSheetInfo.fronmJson(v);
+      snows.info = info;
     });
+    {
+    for(int i=1;i<=7;i++) {
+      snows.addIdName("B00${i}.png");
+    }
+    }
   }
   bool isTouch = false;
   bool onTouch(TinyStage stage, int id, String type, double x, double y,
@@ -38,7 +45,7 @@ class StartScene extends TinyDisplayObject {
           info.frameFromFileName("BG001.png").dstRect,
           p);
 
-      snows.onPaint(stage, canvas, this);
+      snows.onPaint(stage, canvas);
     }
   }
 }

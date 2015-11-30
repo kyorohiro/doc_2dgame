@@ -20,23 +20,27 @@ class Snow {
 }
 
 class Snows {
-  List<Snow> sn = [];
   math.Random r = new math.Random();
+  TinyImage bgimg;
+  SpriteSheetInfo info;
+  List<Snow> idnames = [];
+  TinyPaint p = new TinyPaint();
+
   Snows() {
-    for(int i=1;i<=7;i++) {
-      sn.add(new Snow("B00${i}.png"));
-    }
   }
-  void onPaint(TinyStage stage, TinyCanvas canvas, StartScene scene) {
-    if (scene.bgimg != null && scene.info != null) {
-      for (Snow se in sn) {
-        TinySize s = scene.info.frameFromFileName(se.type).sourceSize;
+  addIdName(String name) {
+   idnames.add(new Snow(name));
+  }
+  void onPaint(TinyStage stage, TinyCanvas canvas) {
+    if (bgimg != null && info != null) {
+      for (Snow se in idnames) {
+        TinySize s = info.frameFromFileName(se.type).sourceSize;
         canvas.drawImageRect(
             stage,
-            scene.bgimg,
-            scene.info.frameFromFileName(se.type).srcRect,
+            bgimg,
+            info.frameFromFileName(se.type).srcRect,
             new TinyRect(se.x, se.y, s.w / 3, s.h / 3),
-            scene.p);
+            p);
         se.x += se.dx;
         se.y += se.dy;
         se.dy += 0.001;
