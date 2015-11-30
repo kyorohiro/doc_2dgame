@@ -42,6 +42,12 @@ class ClearScene extends TinyDisplayObject {
   }
 
   ClearScene(this.builder, this.root, int score) {
+    initFromScore(score);
+  }
+
+  initFromScore(int score) {
+    fontimg = null;
+    bgimg = null;
     int type = typeFromScore(score);
     currentMessage = message[type];
     String imgFileName = path[type];
@@ -58,6 +64,7 @@ class ClearScene extends TinyDisplayObject {
     builder.loadString("assets/font_a.json").then((String v) {
       fontInfo = new BitmapFontInfo.fromJson(v);
     });
+    return this;
   }
 
   bool isTouch = false;
@@ -66,7 +73,7 @@ class ClearScene extends TinyDisplayObject {
     if(isTouch == true && type == TinyStage.TYPE_POINTER_UP_EVENT) {   
       isTouch = false;
     this.root.clearChild().then((_) {
-      this.root.addChild(new PrepareScene(builder, root));
+      this.root.addChild(root.prepareScene);
     });
     }
     else if(type == TinyStage.TYPE_POINTER_DOWN_EVENT) {

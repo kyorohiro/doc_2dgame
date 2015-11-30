@@ -21,10 +21,19 @@ part 'gui/snow.dart';
 class MinoRoot extends TinyDisplayObject {
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
+  ResourceLoader loaderScene;
+  StartScene startScene;
+  PrepareScene prepareScene;
+  ClearScene clearScene;
+
   Database database;
   MinoRoot(this.builder) {
     database = new Database(builder);
-    addChild(new ResourceLoader(builder, this));
+    loaderScene = new ResourceLoader(builder, this);
+    startScene = new StartScene(builder, this);
+    prepareScene = new PrepareScene(builder, this);
+    clearScene = new ClearScene(builder, this, 0);
+    addChild(loaderScene);
     loadScore();
   }
 

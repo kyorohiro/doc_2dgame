@@ -38,7 +38,7 @@ class ResourceLoader extends TinyDisplayObject {
     ;
 
     await this.root.clearChild();
-    await this.root.addChild(new StartScene(builder, root));
+    await this.root.addChild(root.startScene);
   }
 
   int count = 0;

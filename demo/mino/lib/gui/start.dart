@@ -21,7 +21,7 @@ class StartScene extends TinyDisplayObject {
     if (isTouch == true && type == TinyStage.TYPE_POINTER_UP_EVENT) {
       isTouch = false;
       this.root.clearChild().then((_) {
-        this.root.addChild(new PrepareScene(builder, root));
+        this.root.addChild(root.prepareScene);
       });
     } else if (type == TinyStage.TYPE_POINTER_DOWN_EVENT) {
       isTouch = true;

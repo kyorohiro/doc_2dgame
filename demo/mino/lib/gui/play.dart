@@ -111,7 +111,7 @@ class PlayScene extends TinyDisplayObject {
     if (game.isGameOver) {
       //game.start();
       this.root.clearChild().then((_) async {
-        this.root.addChild(new ClearScene(builder, root, game.score));
+        this.root.addChild(root.clearScene.initFromScore(game.score));
         try {
           print("--a");
         await this.root.database.setRank(root.game.ranking);
