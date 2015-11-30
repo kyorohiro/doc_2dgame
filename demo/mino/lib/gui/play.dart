@@ -29,8 +29,10 @@ class PlayScene extends TinyDisplayObject {
   
   Snows snows = new Snows();
   PlayScene(this.builder, this.root, this.game,{int level: 1}) {
-    rotateR = new TinyButton("r", 40.0, 40.0, onTouchCallback);
-    rotateL = new TinyButton("l", 40.0, 40.0, onTouchCallback);
+    rotateR = new TinyButton("r", 50.0, 50.0, onTouchCallback);
+    rotateL = new TinyButton("l", 50.0, 50.0, onTouchCallback);
+    rotateR.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
+    rotateL.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     joystick = new TinyJoystick(size: 70.0, minWidth: 35.0);
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
@@ -57,7 +59,7 @@ class PlayScene extends TinyDisplayObject {
     addChild(levelUI);
     playboard.mat.translate(100.0, 25.0, 0.0);
     joystick.mat.translate(100.0, 250.0, 0.0);
-    rotateL.mat.translate(250.0, 225.0, 0.0);
+    rotateL.mat.translate(230.0, 225.0, 0.0);
     rotateR.mat.translate(300.0, 225.0, 0.0);
     nextUI.mat.translate(225.0, 153.0, 0.0);
     scoreUI.mat.translate(225.0, 50.0, 0.0);
@@ -81,8 +83,20 @@ class PlayScene extends TinyDisplayObject {
     print("### game =  ${game.baseLevel}");
 
   }
+
+  TinyPaint p = new TinyPaint();
+  TinyRect d1 = new TinyRect(0.0, 0.0, 50.0, 50.0);
+  TinyRect d2 = new TinyRect(0.0, 0.0, 50.0, 50.0);
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     //snows.onPaint(stage, canvas);
+    if(image != null && spriteInfo != null) {
+    d1.x = 230.0;
+    d1.y = 225.0;  
+    canvas.drawImageRect(stage, image, spriteInfo.frameFromFileName("BT01.png").srcRect, d1, p);
+    d2.x = 300.0;
+    d2.y = 225.0;  
+    canvas.drawImageRect(stage, image, spriteInfo.frameFromFileName("BT02.png").srcRect, d2, p);
+    }
   }
   void onTick(TinyStage stage, int timeStamp) {
     scoreUI.score = game.score;

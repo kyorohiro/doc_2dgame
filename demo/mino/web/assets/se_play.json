@@ -106,6 +106,24 @@
   "spriteSourceSize": {"x":0,"y":0,"w":250,"h":250},
   "sourceSize": {"w":250,"h":250},
   "pivot": {"x":0.5,"y":0.5}
+},
+{
+  "filename": "BT01.png",
+  "frame": {"x":0,"y":500,"w":250,"h":250},
+  "rotated": false,
+  "trimmed": false,
+  "spriteSourceSize": {"x":0,"y":0,"w":250,"h":250},
+  "sourceSize": {"w":250,"h":250},
+  "pivot": {"x":0.5,"y":0.5}
+},
+{
+  "filename": "BT02.png",
+  "frame": {"x":250,"y":500,"w":250,"h":250},
+  "rotated": false,
+  "trimmed": false,
+  "spriteSourceSize": {"x":0,"y":0,"w":250,"h":250},
+  "sourceSize": {"w":250,"h":250},
+  "pivot": {"x":0.5,"y":0.5}
 }
 ],
 "meta": {
