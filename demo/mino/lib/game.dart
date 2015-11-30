@@ -25,7 +25,7 @@ class MinoRoot extends TinyDisplayObject {
   StartScene startScene;
   PrepareScene prepareScene;
   ClearScene clearScene;
-
+  PlayScene playScene;
   Database database;
   MinoRoot(this.builder) {
     database = new Database(builder);
@@ -33,6 +33,7 @@ class MinoRoot extends TinyDisplayObject {
     startScene = new StartScene(builder, this);
     prepareScene = new PrepareScene(builder, this);
     clearScene = new ClearScene(builder, this, 0);
+    playScene = new PlayScene(builder, this, this.game, level:1);
     addChild(loaderScene);
     loadScore();
   }

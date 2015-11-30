@@ -50,13 +50,15 @@ class PrepareScene extends TinyDisplayObject {
     level5.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     level5.mat.translate(50+215.0,50.0,0.0);
 
-
+    TinyButton back = new TinyButton("BACK", 45.0, 45.0, onLevelButton);
+    back.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
+    back.mat.translate(50+215+50.0,50.0,0.0);
     addChild(level1);
     addChild(level2);
     addChild(level3);
     addChild(level4);
     addChild(level5);
-
+    addChild(back);
     no1 = new ScoreUI(null, null);
     no1.mat.translate(90.0,220.0,0.0);
     no2 = new ScoreUI(null, null);
@@ -105,6 +107,12 @@ class PrepareScene extends TinyDisplayObject {
         chY = 60.0;
         level = 4;
         break;
+      case "BACK":
+        this.root.clearChild().then((_){
+          root.game.start();
+          this.root.addChild(root.startScene);        
+        });
+        break;
     }
   }
 
@@ -113,7 +121,7 @@ class PrepareScene extends TinyDisplayObject {
     this.root.clearChild().then((_){
       print("### level =  ${level}");
       root.game.start();
-      this.root.addChild(new PlayScene(builder,root, root.game, level:level));        
+      this.root.addChild(root.playScene.initFromLevel(level));//new PlayScene(builder,root, root.game, level:level));        
     });
   }
 

@@ -27,6 +27,16 @@ class TinyJoystick extends TinyDisplayObject {
 
   }
 
+  clearStatus() {
+    registerUp = false;
+    registerDown = false;
+    isTouch = false;
+    touchId = 0;
+    minX = 0.0;
+    minY = 0.0;
+    releaseMinX = 0.0;
+    releaseMinY = 0.0;
+  }
   @override
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     TinyPaint p = new TinyPaint();

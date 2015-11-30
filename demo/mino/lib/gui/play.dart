@@ -83,7 +83,12 @@ class PlayScene extends TinyDisplayObject {
     print("### game =  ${game.baseLevel}");
 
   }
-
+  PlayScene initFromLevel(int level) {
+  game.baseLevel = level;
+  game.level = level;
+  joystick.clearStatus();
+  return this;
+  }
   TinyPaint p = new TinyPaint();
   TinyRect d1 = new TinyRect(0.0, 0.0, 50.0, 50.0);
   TinyRect d2 = new TinyRect(0.0, 0.0, 50.0, 50.0);
