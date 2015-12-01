@@ -26,7 +26,7 @@ class PlayScene extends TinyDisplayObject {
   ScoreUI levelUI;
   SpriteSheetInfo spriteInfo = null;
   TinyImage image = null;
-  
+
   Snows snows = new Snows();
   PlayScene(this.builder, this.root, this.game,{int level: 1}) {
     rotateR = new TinyButton("r", 50.0, 50.0, onTouchCallback);
@@ -44,10 +44,10 @@ class PlayScene extends TinyDisplayObject {
       addChild(snows);
       snows.addIdName("S001.png", 0.25, randomSize: true);
       snows.addIdName("S002.png", 0.25, randomSize: true);
-      snows.addIdName("S001.png", 0.25, randomSize: true);
-      snows.addIdName("S002.png", 0.25, randomSize: true);
-      snows.addIdName("S001.png", 0.25, randomSize: true);
-      snows.addIdName("S002.png", 0.25, randomSize: true);
+      //snows.addIdName("S001.png", 0.25, randomSize: true);
+      //snows.addIdName("S002.png", 0.25, randomSize: true);
+      //snows.addIdName("S001.png", 0.25, randomSize: true);
+      //snows.addIdName("S002.png", 0.25, randomSize: true);
 
     }
     addChild(playboard);
@@ -96,10 +96,10 @@ class PlayScene extends TinyDisplayObject {
     //snows.onPaint(stage, canvas);
     if(image != null && spriteInfo != null) {
     d1.x = 230.0;
-    d1.y = 225.0;  
+    d1.y = 225.0;
     canvas.drawImageRect(stage, image, spriteInfo.frameFromFileName("BT01.png").srcRect, d1, p);
     d2.x = 300.0;
-    d2.y = 225.0;  
+    d2.y = 225.0;
     canvas.drawImageRect(stage, image, spriteInfo.frameFromFileName("BT02.png").srcRect, d2, p);
     }
   }
