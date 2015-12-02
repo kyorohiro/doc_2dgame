@@ -1,7 +1,7 @@
 import 'package:umiuni2d/tinygame.dart';
 import 'package:umiuni2d/tinygame_webgl.dart';
 //import 'package:vector_math/vector_math_64.dart';
-import 'package:snowdraw/snow_test.dart';
+import 'package:snowtest/snow_test.dart';
 
 main() async {
   TinyGameBuilder builder = new TinyGameBuilderForWebgl();

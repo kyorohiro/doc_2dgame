@@ -1,6 +1,6 @@
 import 'package:umiuni2d/tinygame.dart';
 import 'package:umiuni2d/tinygame_flutter.dart';
-import 'package:snowdraw/snow_test.dart';
+import 'package:snowtest/snow_test.dart';
 //
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
