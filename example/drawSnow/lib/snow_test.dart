@@ -38,12 +38,15 @@ class Snow {
   bool randomSize;
   double baseSize = 1.0;
   math.Random r = new math.Random();
+  double getWidth(double baseW) => baseW* size;
+  double getHeight(double baseH) => baseH* size;
+ 
   Snow(this.type,this.baseSize, {this.randomSize:false}) {
     reset();
   }
   reset() {
     x = r.nextDouble() * 400;
-    y = -1*r.nextDouble()*100;
+    y = -1*r.nextDouble()*100-100;
     dx = r.nextDouble()-0.5;
     dy = r.nextDouble();
     if(randomSize) {
@@ -74,12 +77,12 @@ class Snows extends TinyDisplayObject{
             stage,
             bgimg,
             info.frameFromFileName(se.type).srcRect,
-            new TinyRect(se.x, se.y, s.w *se.size, s.h *se.size),
+            new TinyRect(se.x, se.y, se.getWidth(s.w), se.getHeight(s.h)),
             p);
         se.x += se.dx;
         se.y += se.dy;
         se.dy += 0.001;
-        if(se.x < 0 || se.x > 400 || se.y>300) {
+        if(se.x+se.getWidth(s.w) < 0 || se.x -se.getWidth(s.w)> 400 || se.y-se.getHeight(s.h)>300) {
           se.reset();
         }
       }
