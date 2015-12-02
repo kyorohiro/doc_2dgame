@@ -40,7 +40,7 @@ class Snow {
   math.Random r = new math.Random();
   double getWidth(double baseW) => baseW* size;
   double getHeight(double baseH) => baseH* size;
- 
+  TinyRect tmp = new TinyRect(0.0,0.0,0.0,0.0);
   Snow(this.type,this.baseSize, {this.randomSize:false}) {
     reset();
   }
@@ -73,11 +73,15 @@ class Snows extends TinyDisplayObject{
     if (bgimg != null && info != null) {
       for (Snow se in idnames) {
         TinySize s = info.frameFromFileName(se.type).sourceSize;
+        se.tmp.x = se.x;
+        se.tmp.y = se.y;
+        se.tmp.w = se.getWidth(s.w);
+        se.tmp.h = se.getHeight(s.h);
         canvas.drawImageRect(
             stage,
             bgimg,
             info.frameFromFileName(se.type).srcRect,
-            new TinyRect(se.x, se.y, se.getWidth(s.w), se.getHeight(s.h)),
+            se.tmp,
             p);
         se.x += se.dx;
         se.y += se.dy;

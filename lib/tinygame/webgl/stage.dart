@@ -75,7 +75,7 @@ class TinyWebglStage extends Object with TinyStage {
         c.flush();
         isPaint = false;
       }
-
+//      if (count > 10) {
       if (count > 40) {
         print("###fps  ${sum~/count}");
         sum = 0.0;
