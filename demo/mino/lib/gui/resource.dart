@@ -13,7 +13,8 @@ class ResourceLoader extends TinyDisplayObject {
       builder.loadImage("assets/bg_clear01.png"),
       builder.loadImage("assets/bg_clear02.png"),
       builder.loadImage("assets/bg_clear03.png"),
-      builder.loadImage("assets/bg_clear04.png")
+      builder.loadImage("assets/bg_clear04.png"),
+      builder.loadImage("assets/bg_clear05.png")
       ]);      
     } catch (e) {}
     ;

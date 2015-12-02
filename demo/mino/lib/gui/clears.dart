@@ -17,16 +17,18 @@ class ClearScene extends TinyDisplayObject {
 
   List<int> event = [
 //    10,20,30,40
-    0,5000,20000,100000
+    0,5000, 12000, 50000, 100000
   ];
   List<String> path = [
     "assets/bg_clear01.png",
     "assets/bg_clear02.png",
+    "assets/bg_clear05.png",
     "assets/bg_clear03.png",
    "assets/bg_clear04.png"];
   List<String> message = [
      "そして、ミノーンの雪が降った。",
      "ミノーンが仲間になった。",
+     "炎の妖精がこちらを見ている。",
      "闇が辺りを照らした。",
      "ミーティアを詠唱した。"
     ];
