@@ -20,7 +20,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   List<Point> vertices = [];
   List<Point> textureCoordinates = [];
   List<Color> colors = [];
-  List<int> indicies = [0, 1, 2, 3];
+  List<int> indicies = [];
   flush() {
 
     canvas.drawVertices(
@@ -34,11 +34,25 @@ class TinyFlutterNCanvas extends TinyCanvas {
       //
       vertices.clear();
       textureCoordinates.clear();
+      colors.clear();
+      indicies.clear();
   }
+
 
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
       TinyRect dst, TinyPaint paint) {
-        vertices.addAll([]);
+        int bi = vertices.length;
+        vertices.addAll([
+          new Point(dst.x, dst.y),
+          new Point(dst.x, dst.y+dst.h),
+          new Point(dst.x+dst.w, dst.y+dst.h),
+          new Point(dst.x+dst.w, dst.y),
+        ]);
+        Color c = new Color.fromARGB(0x33, 0xff, 0xff, 0xff);
+        colors.addAll([c,c,c,c]);
+
+        indicies.addAll([bi+0,bi+1,bi+2, bi+0,bi+2,bi+3]);
+      //  flush();
     /*Rect s = new Rect.fromLTWH(src.x, src.y, src.w, src.h);
     Rect d = new Rect.fromLTWH(dst.x, dst.y, dst.w, dst.h);
     sky.Image i = (image as TinyFlutterImage).rawImage;
