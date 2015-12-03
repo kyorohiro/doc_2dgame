@@ -8,7 +8,52 @@ class TinyFlutterNCanvas extends TinyCanvas {
   List<Point> textureCoordinates = [];
   List<Color> colors = [];
   List<int> indicies = [];
-  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {}
+  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    double cx = rect.x + rect.w / 2.0;
+    double cy = rect.y + rect.h / 2.0;
+    double a = rect.w / 2;
+    double b = rect.h / 2;
+    int num = 25;
+    Matrix4 m = calcMat();
+    Vector3 s = new Vector3(0.0, 0.0, 0.0);
+    double flZ = 0.0;
+    Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
+    for (int i = 0; i < num; i++) {
+      //
+      int bbb = vertices.length;
+
+      //
+      s.x = cx;
+      s.y = cy;
+      s.z = flZ;
+      s = m * s;
+      vertices.addAll([new Point(s.x, s.y)]);
+      colors.add(c);
+//      textureCoordinates.addAll([new Point(-1.0, -1.0),
+      //
+      s.x = cx + math.cos(2 * math.PI * (i / num)) * a;
+      s.y = cy + math.sin(2 * math.PI * (i / num)) * b;
+      s.z = flZ;
+      s = m * s;
+      vertices.addAll([new Point(s.x, s.y)]);
+      colors.add(c);
+//      textureCoordinates.addAll([new Point(-1.0, -1.0),
+
+      //
+      s.x = cx + math.cos(2 * math.PI * ((i + 1) / num)) * a;
+      s.y = cy + math.sin(2 * math.PI * ((i + 1) / num)) * b;
+      s.z = flZ;
+      s = m * s;
+      vertices.addAll([new Point(s.x, s.y)]);
+      colors.add(c);
+//      textureCoordinates.addAll([new Point(-1.0, -1.0),
+
+      indicies.addAll([bbb + 0, bbb + 1, bbb + 2]);
+
+      flZ += 0.0001;
+    }
+
+  }
 
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {}
 
