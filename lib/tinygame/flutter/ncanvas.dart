@@ -17,11 +17,20 @@ class TinyFlutterNCanvas extends TinyCanvas {
       flush();
     }
     int bi = vertices.length;
+    Matrix4 m = calcMat();
+    Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
+    Vector3 v2 = new Vector3(rect.x, rect.y + rect.h, 0.0);
+    Vector3 v3 = new Vector3(rect.x + rect.w, rect.y + rect.h, 0.0);
+    Vector3 v4 = new Vector3(rect.x + rect.w, rect.y, 0.0);
+    v1 = m * v1;
+    v2 = m * v2;
+    v3 = m * v3;
+    v4 = m * v4;
     vertices.addAll([
-      new Point(rect.x, rect.y),
-      new Point(rect.x, rect.y+rect.h),
-      new Point(rect.x+rect.w, rect.y+rect.h),
-      new Point(rect.x+rect.w, rect.y),
+      new Point(v1.x, v1.y),
+      new Point(v2.x, v2.y),
+      new Point(v3.x, v3.y),
+      new Point(v4.x, v4.y)
     ]);
     Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
     colors.addAll([c, c, c, c]);
@@ -36,7 +45,12 @@ class TinyFlutterNCanvas extends TinyCanvas {
   }
 
   void clipRect(TinyStage stage, TinyRect rect) {
-    canvas.clipRect(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h));
+    Matrix4 m = calcMat();
+    Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
+    Vector3 v2 = new Vector3(rect.x +rect.w, rect.y + rect.h, 0.0);
+    v1 = m * v1;
+    v2 = m * v2;
+    canvas.clipRect(new Rect.fromLTRB(v1.x, v1.y, v2.x, v2.y));
   }
 
   flush() {
@@ -88,7 +102,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   }
 
   void updateMatrix() {
-    canvas.setMatrix(this.getMatrix().storage);
+    //canvas.setMatrix(this.getMatrix().storage);
   }
 
   Matrix4 cacheMatrix = new Matrix4.identity();
@@ -96,7 +110,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     cacheMatrix.setIdentity();
     //cacheMatrix = cacheMatrix.translate(-1.0, 1.0, 0.0);
     //cacheMatrix = cacheMatrix.scale(2.0 / glContext.widht, -2.0 / glContext.height, 1.0);
-    //cacheMatrix = cacheMatrix * getMatrix();
+    cacheMatrix = cacheMatrix * getMatrix();
     return cacheMatrix;
   }
 }
