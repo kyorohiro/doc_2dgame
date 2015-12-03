@@ -64,10 +64,10 @@ class TinyFlutterNCanvas extends TinyCanvas {
         Color c = new Color.fromARGB(0x33, 0xff, 0xff, 0xff);
         colors.addAll([c,c,c,c]);
         textureCoordinates.addAll([
-          new Point(0.0, 0.0),
-          new Point(0.0, dst.h),
-          new Point(dst.w, dst.h),
-          new Point(dst.w, 0.0)
+          new Point(src.x, src.y),
+          new Point(src.x, src.y+src.h),
+          new Point(src.x+src.w, src.y+src.h),
+          new Point(src.x+src.w, src.y)
         ]);
         indicies.addAll([bi+0,bi+1,bi+2, bi+0,bi+2,bi+3]);
       //  flush();
