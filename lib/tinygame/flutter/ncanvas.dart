@@ -52,7 +52,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
           curImage = image;
         }
         if(curImage != null && curImage != image) {
-        //  flush();
+          flush();
         }
         int bi = vertices.length;
         vertices.addAll([
@@ -61,7 +61,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
           new Point(dst.x+dst.w, dst.y+dst.h),
           new Point(dst.x+dst.w, dst.y),
         ]);
-        Color c = new Color.fromARGB(0x33, 0xff, 0xff, 0xff);
+        Color c = new Color.fromARGB(0x00, 0x00, 0x00, 0x00);
         colors.addAll([c,c,c,c]);
         textureCoordinates.addAll([
           new Point(src.x, src.y),
@@ -70,15 +70,6 @@ class TinyFlutterNCanvas extends TinyCanvas {
           new Point(src.x+src.w, src.y)
         ]);
         indicies.addAll([bi+0,bi+1,bi+2, bi+0,bi+2,bi+3]);
-      //  flush();
-    /*Rect s = new Rect.fromLTWH(src.x, src.y, src.w, src.h);
-    Rect d = new Rect.fromLTWH(dst.x, dst.y, dst.w, dst.h);
-    sky.Image i = (image as TinyFlutterImage).rawImage;
-    canvas.drawImageRect(
-        i,
-        s,
-        d,
-        new Paint());*/
   }
 
   void updateMatrix() {
