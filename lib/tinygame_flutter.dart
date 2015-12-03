@@ -8,6 +8,7 @@ import 'dart:ui' as sky;
 import 'dart:async';
 import 'dart:math'as math;
 import 'dart:io';
+import 'dart:typed_data' as data;
 import 'package:vector_math/vector_math_64.dart';
 import 'tinygame.dart';
 import 'package:sky_services/media/media.mojom.dart';

@@ -22,15 +22,22 @@ class TinyFlutterNCanvas extends TinyCanvas {
   List<Color> colors = [];
   List<int> indicies = [];
   flush() {
-
+    Paint p = new Paint()..style = sky.PaintingStyle.fill;
+    if(curImage != null){
+    sky.TransferMode transferMode = sky.TransferMode.color;
+    sky.TileMode tmx = sky.TileMode.clamp;
+    sky.TileMode tmy = sky.TileMode.clamp;
+    data.Float64List matrix4 = new Matrix4.identity().storage;
+    sky.ImageShader imgShader = new sky.ImageShader((curImage as TinyFlutterImage).rawImage, tmx, tmy, matrix4);
+    p.shader = imgShader;
+    }
     canvas.drawVertices(
       sky.VertexMode.triangles,
       vertices,
       textureCoordinates,
       colors,
       sky.TransferMode.color,
-      indicies,
-      new Paint()..style = sky.PaintingStyle.fill);
+      indicies, p);
       //
       vertices.clear();
       textureCoordinates.clear();
@@ -38,9 +45,15 @@ class TinyFlutterNCanvas extends TinyCanvas {
       indicies.clear();
   }
 
-
+  TinyImage curImage = null;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
       TinyRect dst, TinyPaint paint) {
+        if(curImage == null) {
+          curImage = image;
+        }
+        if(curImage != null && curImage != image) {
+        //  flush();
+        }
         int bi = vertices.length;
         vertices.addAll([
           new Point(dst.x, dst.y),
@@ -50,7 +63,12 @@ class TinyFlutterNCanvas extends TinyCanvas {
         ]);
         Color c = new Color.fromARGB(0x33, 0xff, 0xff, 0xff);
         colors.addAll([c,c,c,c]);
-
+        textureCoordinates.addAll([
+          new Point(0.0, 0.0),
+          new Point(0.0, dst.h),
+          new Point(dst.w, dst.h),
+          new Point(dst.w, 0.0)
+        ]);
         indicies.addAll([bi+0,bi+1,bi+2, bi+0,bi+2,bi+3]);
       //  flush();
     /*Rect s = new Rect.fromLTWH(src.x, src.y, src.w, src.h);
