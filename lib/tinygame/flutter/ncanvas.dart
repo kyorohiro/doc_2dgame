@@ -84,11 +84,20 @@ class TinyFlutterNCanvas extends TinyCanvas {
           flush();
         }
         int bi = vertices.length;
+        Matrix4 m = calcMat();
+        Vector3 v1 = new Vector3(dst.x, dst.y, 0.0);
+        Vector3 v2 = new Vector3(dst.x, dst.y + dst.h, 0.0);
+        Vector3 v3 = new Vector3(dst.x + dst.w, dst.y + dst.h, 0.0);
+        Vector3 v4 = new Vector3(dst.x + dst.w, dst.y, 0.0);
+        v1 = m * v1;
+        v2 = m * v2;
+        v3 = m * v3;
+        v4 = m * v4;
         vertices.addAll([
-          new Point(dst.x, dst.y),
-          new Point(dst.x, dst.y+dst.h),
-          new Point(dst.x+dst.w, dst.y+dst.h),
-          new Point(dst.x+dst.w, dst.y),
+          new Point(v1.x, v1.y),
+          new Point(v2.x, v2.y),
+          new Point(v3.x, v3.y),
+          new Point(v4.x, v4.y)
         ]);
         Color c = new Color.fromARGB(0x00, 0x00, 0x00, 0x00);
         colors.addAll([c,c,c,c]);
