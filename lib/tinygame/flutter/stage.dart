@@ -58,6 +58,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   TinyGameBuilder _builder;
   TinyGameBuilder get builder => _builder;
 
+  bool isNCanvas = false;
   TinyFlutterStage(this._builder, TinyDisplayObject root) {
     this.root = root;
     init();

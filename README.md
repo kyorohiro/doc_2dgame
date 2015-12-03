@@ -1,7 +1,6 @@
 # Memo: 2d game math x physics
 
 本書では、2Dゲーム用の数学と物理を紹介してきます。
-
 文献をあたるなどして、得た知識を体系的に解説するスタイルはとりません。実際にライブラリを作成して、得た知見を、随時、紹介していきます。
 
 
@@ -18,11 +17,12 @@ PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを
 
 ## Umiuni2D
 Umiuni2D is 2D Gmae Library for writing this book.
+https://github.com/kyorohiro/doc_2dgame
 
 ## Index
-* Math & Sprite 
+* Math & Sprite
  * Velocity
- * Matrix 
+ * Matrix
  * move
  * rotate
  * scale
