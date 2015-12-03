@@ -57,10 +57,11 @@ class TinyFlutterStage extends RenderBox with TinyStage {
 
   TinyGameBuilder _builder;
   TinyGameBuilder get builder => _builder;
-
+  TinyFlutterCanvas canvas;
   bool isNCanvas = false;
   TinyFlutterStage(this._builder, TinyDisplayObject root) {
     this.root = root;
+    this.canvas = new TinyFlutterCanvas(null);
     init();
   }
 
@@ -105,7 +106,8 @@ class TinyFlutterStage extends RenderBox with TinyStage {
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    root.paint(this, new TinyFlutterCanvas(context.canvas));
+    this.canvas.canvas = context.canvas;
+    root.paint(this, this.canvas);
   }
 
   @override
