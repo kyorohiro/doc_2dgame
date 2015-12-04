@@ -57,14 +57,17 @@ class PlayScene extends TinyDisplayObject {
       //snows.addIdName("S002.png", 0.25, randomSize: true);
 
     }
+
     addChild(playboard);
-    addChild(joystick);
-    addChild(rotateR);
-    addChild(rotateL);
-    addChild(stopButton);
     addChild(nextUI);
     addChild(scoreUI);
     addChild(levelUI);
+
+    addChild(stopButton);
+    addChild(joystick);
+    addChild(rotateR);
+    addChild(rotateL);
+
     playboard.mat.translate(100.0, 25.0, 0.0);
     joystick.mat.translate(100.0, 250.0, 0.0);
     rotateL.mat.translate(230.0, 225.0, 0.0);

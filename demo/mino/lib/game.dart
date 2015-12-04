@@ -18,7 +18,8 @@ part 'gui/clears.dart';
 part 'gui/resource.dart';
 part 'gui/snow.dart';
 
-class MinoRoot extends TinyDisplayObject {
+
+class MinoRoot extends TinyGameRoot { //TinyDisplayObject {
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
   ResourceLoader loaderScene;
@@ -27,7 +28,7 @@ class MinoRoot extends TinyDisplayObject {
   ClearScene clearScene;
   PlayScene playScene;
   Database database;
-  MinoRoot(this.builder) {
+  MinoRoot(this.builder) : super(400.0, 300.0) {
     database = new Database(builder);
     loaderScene = new ResourceLoader(builder, this);
     startScene = new StartScene(builder, this);
