@@ -2,12 +2,9 @@ part of gamelogic;
 
 class PlayScene extends TinyDisplayObject {
   static final TinyColor bgColor = new TinyColor.argb(0xff, 0xee, 0xee, 0xff);
-  static final TinyColor colorEmpty =
-      new TinyColor.argb(0xaa, 0x88, 0x88, 0x88);
-  static final TinyColor colorFrame =
-      new TinyColor.argb(0xaa, 0x55, 0x33, 0x33);
-  static final TinyColor colorMinon =
-      new TinyColor.argb(0xaa, 0xff, 0xff, 0xff);
+  static final TinyColor colorEmpty = new TinyColor.argb(0xaa, 0x88, 0x88, 0x88);
+  static final TinyColor colorFrame = new TinyColor.argb(0xaa, 0x55, 0x33, 0x33);
+  static final TinyColor colorMinon = new TinyColor.argb(0xaa, 0xff, 0xff, 0xff);
 
   static final TinyColor colorO = new TinyColor.argb(0xaa, 0x00, 0x00, 0x00);
   static final TinyColor colorS = new TinyColor.argb(0xaa, 0xff, 0xaa, 0xaa);

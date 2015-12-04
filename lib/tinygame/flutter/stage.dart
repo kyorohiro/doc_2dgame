@@ -119,7 +119,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
        (this.canvas as TinyFlutterNCanvas).canvas = context.canvas;
    }
     this.canvas.clear();
-    root.paint(this, this.canvas);
+    kickPaint(this, this.canvas);
     this.canvas.flush();
   }
 
@@ -142,7 +142,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
       touchPoints[e.pointer].x += (e.dx == null ? 0 : e.dx);
       touchPoints[e.pointer].y += (e.dy == null ? 0 : e.dy);
     }
-    root.touch(this, e.pointer, event.type, touchPoints[e.pointer].x,
+    kickTouch(this, e.pointer, event.type, touchPoints[e.pointer].x,
         touchPoints[e.pointer].y);
 
     if (event.type == "pointerup") {

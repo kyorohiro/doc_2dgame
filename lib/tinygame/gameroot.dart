@@ -29,9 +29,9 @@ class TinyGameRoot extends TinyDisplayObject {
 
   bool touch(TinyStage stage, int id,
     String type, double x, double y) {
-      stage.pushMulMatrix(mat);
+    //  stage.pushMulMatrix(mat);
       super.touch(stage, id, type, x, y);
-      stage.popMatrix();
+      //stage.popMatrix();
     }
 
   void onTick(TinyStage stage, int timeStamp) {
@@ -40,11 +40,11 @@ class TinyGameRoot extends TinyDisplayObject {
 
   void paint(TinyStage stage, TinyCanvas canvas) {
     TinyRect rect = new TinyRect(0.0, 0.0, w, h);
-    canvas.pushMulMatrix(mat);
+//    canvas.pushMulMatrix(mat);
     canvas.pushClipRect(stage, rect);
     super.paint(stage, canvas);
     canvas.popClipRect(stage);
-    canvas.popMatrix();
+//    canvas.popMatrix();
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
