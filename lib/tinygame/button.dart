@@ -7,6 +7,13 @@ class TinyButton extends TinyDisplayObject {
   double h;
   bool isTouch = false;
   bool isFocus = false;
+  double dx = 0.0;
+  double dy = 0.0;
+  double prevGX = 0.0;
+  double prevGY = 0.0;
+  TinyImage bgImg = null;
+  TinyRect bgImgSrcRect = new TinyRect(0.0, 0.0, 0.0, 0.0);
+  TinyRect bgImgDstRect = new TinyRect(0.0, 0.0, 0.0, 0.0);
 
   String buttonName;
   TinyColor bgcolorOff = new TinyColor.argb(0xaa, 0xff, 0xaa, 0xcc);
@@ -26,10 +33,7 @@ class TinyButton extends TinyDisplayObject {
     }
   }
 
-  //double px = 0.0;
-  //double py = 0.0;
-  double prevGX = 0.0;
-  double prevGY = 0.0;
+
   bool onTouch(TinyStage stage, int id, String type, double x, double y,
       double globalX, globalY) {
     switch (type) {
@@ -39,23 +43,21 @@ class TinyButton extends TinyDisplayObject {
           isFocus = true;
           prevGX = globalX;
           prevGY = globalY;
-        //  px = 0.0;
-      //    py = 0.0;
           registerDown = true;
         }
         break;
       case "pointermove":
         if (checkFocus(x, y)) {
           isFocus = true;
-        //  px += globalX - prevGX;
-        //  py += globalY - prevGY;
-          //if (math.sqrt(px * px) > w || math.sqrt(py * py) > h) {
-        //    isTouch = false;
-          //  isFocus = false;
-          ///}
+          dx = globalX -prevGX;
+          dy = globalY -prevGY;
+          prevGX = globalX;
+          prevGY = globalY;
         } else {
           isTouch = false;
           isFocus = false;
+          dx = 0.0;
+          dy = 0.0;
           registerUp = true;
         }
         break;
@@ -68,10 +70,14 @@ class TinyButton extends TinyDisplayObject {
         }
         isTouch = false;
         isFocus = false;
+        dx = 0.0;
+        dy = 0.0;
         break;
       default:
         isTouch = false;
         isFocus = false;
+        dx = 0.0;
+        dy = 0.0;
     }
 
     return false;
@@ -79,6 +85,9 @@ class TinyButton extends TinyDisplayObject {
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     TinyPaint paint = new TinyPaint();
+    if(bgImg != null) {
+      canvas.drawImageRect(stage, bgImg, bgImgSrcRect, bgImgDstRect, paint);
+    }
     if (isTouch) {
       paint.color = bgcolorOn;
       canvas.drawRect(stage, new TinyRect(0.0, 0.0, w, h), paint);

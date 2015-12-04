@@ -23,6 +23,11 @@ class TinyJoystick extends TinyDisplayObject {
   bool registerUp = false;
   // if down joystickm input ture;
   bool registerDown = false;
+  double dx = 0.0;
+  double dy = 0.0;
+  double prevGX = 0.0;
+  double prevGY = 0.0;
+
   TinyJoystick({this.size:50.0,this.minWidth:25.0}) {
 
   }
@@ -61,6 +66,8 @@ class TinyJoystick extends TinyDisplayObject {
         isTouch = true;
         this.minX = x;
         this.minY = y;
+        prevGX = globalX;
+        prevGY = globalY;
       }
     } else {
       if (id == touchId) {
@@ -72,6 +79,8 @@ class TinyJoystick extends TinyDisplayObject {
             releaseMinY = minY;
           }
           isTouch = false;
+          this.dx = 0.0;
+          this.dy = 0.0;
           this.minX = 0.0;
           this.minY = 0.0;
         } else {
@@ -84,6 +93,11 @@ class TinyJoystick extends TinyDisplayObject {
             this.minX = size / 2 * (this.minX) / dd;
             this.minY = size / 2 * (this.minY) / dd;
           }
+          //
+          dx = globalX -prevGX;
+          dy = globalY -prevGY;
+          prevGX = globalX;
+          prevGY = globalY;
         }
       }
     }
