@@ -36,6 +36,7 @@ class PlayScene extends TinyDisplayObject {
     stopButton = new TinyButton("s", 50.0, 50.0, onTouchCallback);
     rotateR.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     rotateL.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
+    stopButton.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     joystick = new TinyJoystick(size: 70.0, minWidth: 35.0);
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
@@ -109,10 +110,14 @@ class PlayScene extends TinyDisplayObject {
       rotateL.bgImg = image;
       rotateL.bgImgDstRect = new TinyRect(0.0, 0.0, 50.0, 50.0);
       rotateL.bgImgSrcRect = spriteInfo.frameFromFileName("BT01.png").srcRect;
+      stopButton.bgImg = image;
 
       rotateR.bgImg = image;
       rotateR.bgImgDstRect = new TinyRect(0.0, 0.0, 50.0, 50.0);
       rotateR.bgImgSrcRect = spriteInfo.frameFromFileName("BT02.png").srcRect;
+      stopButton.bgImg = image;
+      stopButton.bgImgDstRect = new TinyRect(0.0, 0.0, 50.0, 50.0);
+      stopButton.bgImgSrcRect = spriteInfo.frameFromFileName("BT03.png").srcRect;
     }
   }
 
