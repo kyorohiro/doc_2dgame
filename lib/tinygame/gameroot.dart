@@ -9,8 +9,9 @@ class TinyGameRoot extends TinyDisplayObject {
   double l = 0.0;
   double t = 0.0;
   TinyColor bkcolor;
+  bool isClipRect;
 
-  TinyGameRoot(this.w, this.h, {this.bkcolor}) {
+  TinyGameRoot(this.w, this.h, {this.bkcolor, this.isClipRect:true}) {
     if (bkcolor == null) {
       bkcolor = new TinyColor.argb(0xff, 0xee, 0xee, 0xff);
     }
@@ -41,9 +42,13 @@ class TinyGameRoot extends TinyDisplayObject {
   void paint(TinyStage stage, TinyCanvas canvas) {
     TinyRect rect = new TinyRect(0.0, 0.0, w, h);
 //    canvas.pushMulMatrix(mat);
-    canvas.pushClipRect(stage, rect);
+    if(isClipRect == true) {
+      canvas.pushClipRect(stage, rect);
+    }
     super.paint(stage, canvas);
-    canvas.popClipRect(stage);
+    if(isClipRect == true) {
+      canvas.popClipRect(stage);
+    }
 //    canvas.popMatrix();
   }
 
@@ -51,7 +56,6 @@ class TinyGameRoot extends TinyDisplayObject {
     TinyRect rect = new TinyRect(0.0, 0.0, w, h);
     TinyPaint paint = new TinyPaint();
     paint.color = bkcolor;
-    canvas.clipRect(stage, rect);
     canvas.drawRect(stage, rect, paint);
   }
 }

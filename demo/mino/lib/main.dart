@@ -18,7 +18,7 @@ class GameWidget extends OneChildRenderObjectWidget {
   GameWidget() {}
   RenderObject createRenderObject() {
     TinyGameBuilderForFlutter builder = new TinyGameBuilderForFlutter("web/");
-    TinyStage stage = builder.createStage(new MinoGameRoot(builder));
+    TinyStage stage = builder.createStage(new MinoRoot(builder));
     (stage as TinyFlutterStage).isNCanvas = true;
     stage.start();
     return (stage as TinyFlutterStage);
