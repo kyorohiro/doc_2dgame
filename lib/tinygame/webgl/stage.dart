@@ -46,6 +46,7 @@ class TinyWebglStage extends Object with TinyStage {
   bool isTMode = false;
   Future _anime() async {
     double sum = 0.0;
+    double sum_a = 0.0;
     int count = 0;
 
     num prevTime = new DateTime.now().millisecond;
@@ -65,15 +66,17 @@ class TinyWebglStage extends Object with TinyStage {
       kick((prevTime + s).toInt());
      // kick((prevTime + s).toInt());
       sum += s;
+      sum_a += s;
       if (s < 0) {}
       count++;
       prevTime = currentTime;
       markNeedsPaint();
-      if (isPaint && sum > 40.0) {
+      if (isPaint && sum_a > 40.0) {
         c.clear();
         kickPaint(this, c);
         c.flush();
         isPaint = false;
+        sum_a = 0.0;
       }
 //      if (count > 10) {
       if (count > 40) {
