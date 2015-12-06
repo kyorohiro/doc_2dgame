@@ -37,7 +37,7 @@ class PlayScene extends TinyDisplayObject {
     rotateR.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     rotateL.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     stopButton.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
-    joystick = new TinyJoystick(size: 70.0, minWidth: 35.0);
+    joystick = new TinyJoystick(size: 83.0, minWidth: 32.0);
     playboard = new MinoTableUI(builder, game.table);
     nextUI = new MinoNextUI(builder);
     scoreUI = new ScoreUI(this.spriteInfo, this.image);
@@ -136,6 +136,7 @@ class PlayScene extends TinyDisplayObject {
 
   void onTickGame(TinyStage stage, int timeStamp) {
     game.onTouchStart(timeStamp);
+    bool isMoved = false;
     if (joystick.directionX > 0.5 ||
         (joystick.registerDown == true &&
             joystick.registerUp == true &&
@@ -144,23 +145,25 @@ class PlayScene extends TinyDisplayObject {
       if (joystick.registerDown == true &&
           joystick.registerUp == true &&
           joystick.directionX_released > 0.5) {
-        print("------------hotX up");
+//        print("------------hotX up");
       }
       game.rightWithLevel(timeStamp, force: joystick.registerUp);
+      isMoved = true;
     } else if (joystick.directionX < -0.5 ||
         (joystick.registerDown == true &&
             joystick.registerUp == true &&
             joystick.directionX_released < -0.5)) {
       joystick.registerDown = false;
       if (joystick.registerUp == true && joystick.directionX_released < -0.5) {
-        print("------------hotX up");
+//        print("------------hotX up");
       }
       game.leftWithLevel(timeStamp, force: joystick.registerUp);
+      isMoved = true;
     }
 
     if (joystick.directionY < -0.6) {
       game.downWithLevel(timeStamp, force: joystick.registerUp);
-    } else if (joystick.directionY > 0.7) {
+    } else if (joystick.directionY > 0.83 && isMoved == false) {
       game.downPlusWithLevel(timeStamp, force: joystick.registerUp);
     }
 
