@@ -137,26 +137,18 @@ class PlayScene extends TinyDisplayObject {
   void onTickGame(TinyStage stage, int timeStamp) {
     game.onTouchStart(timeStamp);
     bool isMoved = false;
-    if (joystick.directionX > 0.5 ||
+    if (joystick.directionX > 0.55 ||
         (joystick.registerDown == true &&
             joystick.registerUp == true &&
-            joystick.directionX_released > 0.5)) {
+            joystick.directionX_released > 0.55)) {
       joystick.registerDown = false;
-      if (joystick.registerDown == true &&
-          joystick.registerUp == true &&
-          joystick.directionX_released > 0.5) {
-//        print("------------hotX up");
-      }
       game.rightWithLevel(timeStamp, force: joystick.registerUp);
       isMoved = true;
-    } else if (joystick.directionX < -0.5 ||
+    } else if (joystick.directionX < -0.55 ||
         (joystick.registerDown == true &&
             joystick.registerUp == true &&
-            joystick.directionX_released < -0.5)) {
+            joystick.directionX_released < -0.55)) {
       joystick.registerDown = false;
-      if (joystick.registerUp == true && joystick.directionX_released < -0.5) {
-//        print("------------hotX up");
-      }
       game.leftWithLevel(timeStamp, force: joystick.registerUp);
       isMoved = true;
     }
