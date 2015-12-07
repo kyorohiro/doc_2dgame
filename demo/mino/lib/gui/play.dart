@@ -70,7 +70,7 @@ class PlayScene extends TinyDisplayObject {
     joystick.mat.translate(100.0, 250.0, 0.0);
     rotateL.mat.translate(230.0, 225.0, 0.0);
     rotateR.mat.translate(300.0, 225.0, 0.0);
-    stopButton.mat.translate(300.0, 150.0, 0.0);
+    stopButton.mat.translate(300.0, 130.0, 0.0);
     nextUI.mat.translate(225.0, 153.0, 0.0);
     scoreUI.mat.translate(225.0, 50.0, 0.0);
     levelUI.mat.translate(225.0, 85.0, 0.0);
@@ -137,22 +137,25 @@ class PlayScene extends TinyDisplayObject {
   void onTickGame(TinyStage stage, int timeStamp) {
     game.onTouchStart(timeStamp);
     bool isMoved = false;
-    if (joystick.directionX > 0.55 ||
+    double mbase = 0.55;
+    if(joystick.directionY > 0.80) {
+      mbase = 0.68;
+    }
+    if (joystick.directionX > mbase ||
         (joystick.registerDown == true &&
             joystick.registerUp == true &&
-            joystick.directionX_released > 0.55)) {
+            joystick.directionX_released > mbase)) {
       joystick.registerDown = false;
       game.rightWithLevel(timeStamp, force: joystick.registerUp);
       isMoved = true;
-    } else if (joystick.directionX < -0.55 ||
+    } else if (joystick.directionX < -1*mbase||
         (joystick.registerDown == true &&
             joystick.registerUp == true &&
-            joystick.directionX_released < -0.55)) {
+            joystick.directionX_released < -1*mbase)) {
       joystick.registerDown = false;
       game.leftWithLevel(timeStamp, force: joystick.registerUp);
       isMoved = true;
     }
-
     if (joystick.directionY < -0.6) {
       game.downWithLevel(timeStamp, force: joystick.registerUp);
     } else if (joystick.directionY > 0.83 && isMoved == false) {

@@ -140,8 +140,10 @@ class MinoGame {
   bool down(int timeStamp) {
     if (false == move(0, 1)) {
       if (collision(minon2)) {
+        if(_isGmaeOver == false) {
+          updateRanking();
+        }
         _isGmaeOver = true;
-        updateRanking();
       }
       if (clearable >= levelClearable[level]) {
         clearable = 0;
