@@ -8,7 +8,68 @@ class TinyFlutterNCanvas extends TinyCanvas {
   List<Point> textureCoordinates = [];
   List<Color> colors = [];
   List<int> indicies = [];
+  int numOfCircleElm = 50;
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    if (curImage != null) {
+      flush();
+    }
+    if(paint.style == TinyPaintStyle.fill) {
+      drawFillOval(stage, rect, paint);
+    } else {
+      drawStrokeOval(stage, rect, paint);
+    }
+  }
+
+  void drawStrokeOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    if (curImage != null) {
+      flush();
+    }
+    double cx = rect.x + rect.w / 2.0;
+    double cy = rect.y + rect.h / 2.0;
+    double a = (rect.w+paint.strokeWidth)/ 2;
+    double b = (rect.h+paint.strokeWidth)/ 2;
+    double c = (rect.w-paint.strokeWidth)/ 2;
+    double d = (rect.h-paint.strokeWidth)/ 2;
+
+    Matrix4 m = calcMat();
+    Vector3 s1 = new Vector3(0.0, 0.0, 0.0);
+    Vector3 s2 = new Vector3(0.0, 0.0, 0.0);
+    Vector3 s3 = new Vector3(0.0, 0.0, 0.0);
+    Vector3 s4 = new Vector3(0.0, 0.0, 0.0);
+    Color color = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
+    for (int i = 0; i < numOfCircleElm; i++) {
+      //
+      int bbb = vertices.length;
+
+      //
+      s1.x = cx + math.cos(2 * math.PI * (i / numOfCircleElm)) * c;
+      s1.y = cy + math.sin(2 * math.PI * (i / numOfCircleElm)) * d;
+      s1.z = 0.0;
+      s1 = m * s1;
+
+      s2.x = cx + math.cos(2 * math.PI * (i / numOfCircleElm)) * a;
+      s2.y = cy + math.sin(2 * math.PI * (i / numOfCircleElm)) * b;
+      s1.z = 0.0;
+      s2 = m * s2;
+
+      s3.x = cx + math.cos(2 * math.PI * ((i + 1) / numOfCircleElm)) * a;
+      s3.y = cy + math.sin(2 * math.PI * ((i + 1) / numOfCircleElm)) * b;
+      s1.z = 0.0;
+      s3 = m * s3;
+
+      s4.x = cx + math.cos(2 * math.PI * ((i + 1) / numOfCircleElm)) * c;
+      s4.y = cy + math.sin(2 * math.PI * ((i + 1) / numOfCircleElm)) * d;
+      s1.z = 0.0;
+      s4 = m * s4;
+
+      vertices.addAll([new Point(s1.x, s1.y),new Point(s2.x, s2.y),new Point(s3.x, s3.y),new Point(s4.x, s4.y)]);
+      colors.addAll([color,color,color,color]);
+      indicies.addAll([bbb + 0, bbb + 1, bbb + 2]);
+      indicies.addAll([bbb + 0, bbb + 2, bbb + 3]);
+    }
+  }
+
+  void drawFillOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
     if (curImage != null) {
       flush();
     }
@@ -16,12 +77,11 @@ class TinyFlutterNCanvas extends TinyCanvas {
     double cy = rect.y + rect.h / 2.0;
     double a = rect.w / 2;
     double b = rect.h / 2;
-    int num = 25;
     Matrix4 m = calcMat();
     Vector3 s = new Vector3(0.0, 0.0, 0.0);
     double flZ = 0.0;
     Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
-    for (int i = 0; i < num; i++) {
+    for (int i = 0; i < numOfCircleElm; i++) {
       //
       int bbb = vertices.length;
 
@@ -34,16 +94,16 @@ class TinyFlutterNCanvas extends TinyCanvas {
       colors.add(c);
 
       //
-      s.x = cx + math.cos(2 * math.PI * (i / num)) * a;
-      s.y = cy + math.sin(2 * math.PI * (i / num)) * b;
+      s.x = cx + math.cos(2 * math.PI * (i / numOfCircleElm)) * a;
+      s.y = cy + math.sin(2 * math.PI * (i / numOfCircleElm)) * b;
       s.z = flZ;
       s = m * s;
       vertices.addAll([new Point(s.x, s.y)]);
       colors.add(c);
 
       //
-      s.x = cx + math.cos(2 * math.PI * ((i + 1) / num)) * a;
-      s.y = cy + math.sin(2 * math.PI * ((i + 1) / num)) * b;
+      s.x = cx + math.cos(2 * math.PI * ((i + 1) / numOfCircleElm)) * a;
+      s.y = cy + math.sin(2 * math.PI * ((i + 1) / numOfCircleElm)) * b;
       s.z = flZ;
       s = m * s;
       vertices.addAll([new Point(s.x, s.y)]);
@@ -66,10 +126,6 @@ class TinyFlutterNCanvas extends TinyCanvas {
     double d = math.sqrt(math.pow(p1.x-p2.x, 2)+ math.pow(p1.y-p2.y, 2));
     double dy = -1*paint.strokeWidth*(p2.x-p1.x)/(d*2);
     double dx = paint.strokeWidth*(p2.y-p1.y)/(d*2);
-    //dx = (dx==0.0?paint.strokeWidth/2:dx);
-    //dy = (dy==0.0?paint.strokeWidth/2:dy);
-    //dx = (dx<0?dx*-1:dx);
-    //dy = (dy<0?dy*-1:dy);
     double sx = p1.x;
     double sy = p1.y;
     double ex = p2.x;
@@ -119,11 +175,6 @@ class TinyFlutterNCanvas extends TinyCanvas {
     drawLine(stage, new TinyPoint(sx-dx, ey), new TinyPoint(ex+dx, ey), paint);
     drawLine(stage, new TinyPoint(ex, sy-dx), new TinyPoint(ey, ey+dx), paint);
     drawLine(stage, new TinyPoint(sx-dx, sy), new TinyPoint(ey+dx, sy), paint);
-    //print("#### ${sx} ${sy} ${ex} ${ey}");
-//    drawFillRect(stage, new TinyRect(sx, sy, paint.strokeWidth, ey-sy), paint);
-//    drawFillRect(stage, new TinyRect(sx, ey, ex-sx, paint.strokeWidth), paint);
-//    drawFillRect(stage, new TinyRect(ex, sy, paint.strokeWidth, ey-sy), paint);
-//    drawFillRect(stage, new TinyRect(sx, sy, ex-sx, paint.strokeWidth), paint);
   }
 
   void drawFillRect(TinyStage stage, TinyRect rect, TinyPaint paint) {

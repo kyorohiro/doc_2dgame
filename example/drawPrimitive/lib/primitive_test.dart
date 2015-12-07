@@ -30,7 +30,7 @@ class PrimitiveTest extends TinyDisplayObject {
 
       p.color = new TinyColor.argb(0xff, 0x00, 0xff, 0xff);
       p.style = TinyPaintStyle.stroke;
-      p.strokeWidth = 10*2.5;
+      p.strokeWidth = 5.5;
 //    canvas.drawRect(null, new TinyRect(0.0, 0.0, 100.0, 100.0), p);
       canvas.drawRect(null, new TinyRect(150.0, 150.0, 100.0, 100.0), p);
 
@@ -39,7 +39,7 @@ class PrimitiveTest extends TinyDisplayObject {
       canvas.drawOval(null, new TinyRect(150.0, 150.0, 100.0, 100.0), p);
 
       p.style = TinyPaintStyle.stroke;
-      p.strokeWidth = 20.0;
+      p.strokeWidth = 10.0;
       p.color = new TinyColor.argb(0xff, 0xff, 0xff, 0xaa);
       canvas.drawOval(null, new TinyRect(150.0, 150.0, 100.0, 100.0), p);
     }
