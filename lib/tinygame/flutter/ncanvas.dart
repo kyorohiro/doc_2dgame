@@ -9,6 +9,9 @@ class TinyFlutterNCanvas extends TinyCanvas {
   List<Color> colors = [];
   List<int> indicies = [];
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    if (curImage != null) {
+      flush();
+    }
     double cx = rect.x + rect.w / 2.0;
     double cy = rect.y + rect.h / 2.0;
     double a = rect.w / 2;
@@ -29,7 +32,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
       s = m * s;
       vertices.addAll([new Point(s.x, s.y)]);
       colors.add(c);
-//      textureCoordinates.addAll([new Point(-1.0, -1.0),
+
       //
       s.x = cx + math.cos(2 * math.PI * (i / num)) * a;
       s.y = cy + math.sin(2 * math.PI * (i / num)) * b;
@@ -37,7 +40,6 @@ class TinyFlutterNCanvas extends TinyCanvas {
       s = m * s;
       vertices.addAll([new Point(s.x, s.y)]);
       colors.add(c);
-//      textureCoordinates.addAll([new Point(-1.0, -1.0),
 
       //
       s.x = cx + math.cos(2 * math.PI * ((i + 1) / num)) * a;
@@ -61,6 +63,36 @@ class TinyFlutterNCanvas extends TinyCanvas {
     if (curImage != null) {
       flush();
     }
+    if(paint.style == TinyPaintStyle.fill) {
+      drawFillRect(stage, rect, paint);
+    } else {
+      drawStrokeRect(stage, rect, paint);
+    }
+  }
+
+  void drawStrokeRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    if (curImage != null) {
+      flush();
+    }
+    double sx = rect.x-paint.strokeWidth;
+    double sy = rect.y-paint.strokeWidth;
+    double ex = rect.x + rect.w;//+paint.strokeWidth;
+    double ey = rect.y + rect.h;//+paint.strokeWidth;
+
+    drawFillRect(stage, new TinyRect(sx, sy, paint.strokeWidth, ey-sy), paint);
+    drawFillRect(stage, new TinyRect(sx, ey, ex-sx, paint.strokeWidth), paint);
+    drawFillRect(stage, new TinyRect(ex, sy, paint.strokeWidth, ey-sy), paint);
+    drawFillRect(stage, new TinyRect(sx, sy, ex-sx, paint.strokeWidth), paint);
+//    _innerDrawFillRect(stage, sz1, sz2, ss1, ss2, colorR, colorG, colorB, colorA);
+//    drawFillRect(stage, sz2, sz4, ss2, ss4, paint);
+//    drawFillRect(stage, sz4, sz3, ss4, ss3, paint);
+//    drawFillRect(stage, sz3, sz1, ss3, ss1, paint);
+  }
+
+  void drawFillRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
+    if (curImage != null) {
+      flush();
+    }
     int bi = vertices.length;
     Matrix4 m = calcMat();
     Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
@@ -79,15 +111,9 @@ class TinyFlutterNCanvas extends TinyCanvas {
     ]);
     Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
     colors.addAll([c, c, c, c]);
-    /*  textureCoordinates.addAll([
-        new Point(-1.0, -1.0),
-        new Point(-1.0, -1.0),
-        new Point(-1.0, -1.0),
-        new Point(-1.0, -1.0)
-      ]);*/
     indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
-      //            flush();
   }
+
 
   void clipRect(TinyStage stage, TinyRect rect) {
     Matrix4 m = calcMat();
