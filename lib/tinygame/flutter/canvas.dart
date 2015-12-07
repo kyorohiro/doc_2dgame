@@ -5,7 +5,7 @@ class TinyFlutterCanvas extends TinyCanvas {
   TinyFlutterCanvas(this.canvas) {}
 
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
-    Paint p = new Paint()..color = new Color(paint.color.value);
+    Paint p = toPaint(paint);
     canvas.drawOval(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h), p);
   }
 

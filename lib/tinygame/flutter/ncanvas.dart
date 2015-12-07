@@ -57,7 +57,40 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
   }
 
-  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {}
+  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {
+    if (curImage != null) {
+      flush();
+    }
+    int bi = vertices.length;
+    Matrix4 m = calcMat();
+    double d = math.sqrt(math.pow(p1.x-p2.x, 2)+ math.pow(p1.y-p2.y, 2));
+    double dx = 5*(p2.x-p1.x)/(d*2);
+    double dy = 5*(p2.y-p1.y)/(d*2);
+    dx = (dx==0?paint.strokeWidth:dx);
+    dy = (dy==0?paint.strokeWidth:dy);
+    double sx = p1.x;
+    double sy = p1.y;
+    double ex = p2.x;
+    double ey = p2.y;
+
+    Vector3 v1 = new Vector3(sx-dx, sy-dy, 0.0);
+    Vector3 v2 = new Vector3(sx-dx, ey+dy, 0.0);
+    Vector3 v3 = new Vector3(ex+dx, ey+dy, 0.0);
+    Vector3 v4 = new Vector3(ex+dx, sy-dy, 0.0);
+    v1 = m * v1;
+    v2 = m * v2;
+    v3 = m * v3;
+    v4 = m * v4;
+    vertices.addAll([
+      new Point(v1.x, v1.y),
+      new Point(v2.x, v2.y),
+      new Point(v3.x, v3.y),
+      new Point(v4.x, v4.y)
+    ]);
+    Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
+    colors.addAll([c, c, c, c]);
+    indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
+  }
 
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
     if (curImage != null) {
