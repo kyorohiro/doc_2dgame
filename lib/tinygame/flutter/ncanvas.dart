@@ -64,19 +64,21 @@ class TinyFlutterNCanvas extends TinyCanvas {
     int bi = vertices.length;
     Matrix4 m = calcMat();
     double d = math.sqrt(math.pow(p1.x-p2.x, 2)+ math.pow(p1.y-p2.y, 2));
-    double dx = 5*(p2.x-p1.x)/(d*2);
-    double dy = 5*(p2.y-p1.y)/(d*2);
-    dx = (dx==0?paint.strokeWidth:dx);
-    dy = (dy==0?paint.strokeWidth:dy);
+    double dy = -1*paint.strokeWidth*(p2.x-p1.x)/(d*2);
+    double dx = paint.strokeWidth*(p2.y-p1.y)/(d*2);
+    //dx = (dx==0.0?paint.strokeWidth/2:dx);
+    //dy = (dy==0.0?paint.strokeWidth/2:dy);
+    //dx = (dx<0?dx*-1:dx);
+    //dy = (dy<0?dy*-1:dy);
     double sx = p1.x;
     double sy = p1.y;
     double ex = p2.x;
     double ey = p2.y;
 
     Vector3 v1 = new Vector3(sx-dx, sy-dy, 0.0);
-    Vector3 v2 = new Vector3(sx-dx, ey+dy, 0.0);
+    Vector3 v2 = new Vector3(sx+dx, sy+dy, 0.0);
     Vector3 v3 = new Vector3(ex+dx, ey+dy, 0.0);
-    Vector3 v4 = new Vector3(ex+dx, sy-dy, 0.0);
+    Vector3 v4 = new Vector3(ex-dx, ey-dy, 0.0);
     v1 = m * v1;
     v2 = m * v2;
     v3 = m * v3;
@@ -107,19 +109,21 @@ class TinyFlutterNCanvas extends TinyCanvas {
     if (curImage != null) {
       flush();
     }
-    double sx = rect.x-paint.strokeWidth;
-    double sy = rect.y-paint.strokeWidth;
+    double sx = rect.x;
+    double sy = rect.y;
     double ex = rect.x + rect.w;//+paint.strokeWidth;
     double ey = rect.y + rect.h;//+paint.strokeWidth;
+    double dx = paint.strokeWidth/2;
 
-    drawFillRect(stage, new TinyRect(sx, sy, paint.strokeWidth, ey-sy), paint);
-    drawFillRect(stage, new TinyRect(sx, ey, ex-sx, paint.strokeWidth), paint);
-    drawFillRect(stage, new TinyRect(ex, sy, paint.strokeWidth, ey-sy), paint);
-    drawFillRect(stage, new TinyRect(sx, sy, ex-sx, paint.strokeWidth), paint);
-//    _innerDrawFillRect(stage, sz1, sz2, ss1, ss2, colorR, colorG, colorB, colorA);
-//    drawFillRect(stage, sz2, sz4, ss2, ss4, paint);
-//    drawFillRect(stage, sz4, sz3, ss4, ss3, paint);
-//    drawFillRect(stage, sz3, sz1, ss3, ss1, paint);
+    drawLine(stage, new TinyPoint(sx, sy-dx), new TinyPoint(sx, ey+dx), paint);
+    drawLine(stage, new TinyPoint(sx-dx, ey), new TinyPoint(ex+dx, ey), paint);
+    drawLine(stage, new TinyPoint(ex, sy-dx), new TinyPoint(ey, ey+dx), paint);
+    drawLine(stage, new TinyPoint(sx-dx, sy), new TinyPoint(ey+dx, sy), paint);
+    //print("#### ${sx} ${sy} ${ex} ${ey}");
+//    drawFillRect(stage, new TinyRect(sx, sy, paint.strokeWidth, ey-sy), paint);
+//    drawFillRect(stage, new TinyRect(sx, ey, ex-sx, paint.strokeWidth), paint);
+//    drawFillRect(stage, new TinyRect(ex, sy, paint.strokeWidth, ey-sy), paint);
+//    drawFillRect(stage, new TinyRect(sx, sy, ex-sx, paint.strokeWidth), paint);
   }
 
   void drawFillRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
