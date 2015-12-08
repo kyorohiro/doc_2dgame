@@ -1,6 +1,7 @@
 part of tinygame_webgl;
 
 class TinyWebglCanvasTS extends TinyCanvas {
+  int numOfCircleElm = 50;
   RenderingContext GL;
   TinyWebglContext glContext;
   TinyWebglCanvasTS(TinyWebglContext c) {
@@ -112,7 +113,6 @@ class TinyWebglCanvasTS extends TinyCanvas {
     double cy = rect.y + rect.h / 2.0;
     double a = rect.w / 2;
     double b = rect.h / 2;
-    int num = 25;
 
     Matrix4 m = calcMat();
     Vector3 s = new Vector3(0.0, 0.0, 0.0);
@@ -120,7 +120,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
     double colorG = paint.color.g / 0xff;
     double colorB = paint.color.b / 0xff;
     double colorA = paint.color.a / 0xff;
-    for (int i = 0; i < num; i++) {
+
+    for (int i = 0; i < numOfCircleElm; i++) {
       //
       int bbb = flVert.length ~/ 8;
 
@@ -134,8 +135,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flVert.addAll([-1.0]);
       flTex.addAll([0.0, 0.0]);
       //
-      s.x = cx + math.cos(2 * math.PI * (i / num)) * a;
-      s.y = cy + math.sin(2 * math.PI * (i / num)) * b;
+      s.x = cx + math.cos(2 * math.PI * (i / numOfCircleElm)) * a;
+      s.y = cy + math.sin(2 * math.PI * (i / numOfCircleElm)) * b;
       s.z = flZ;
       s = m * s;
       flVert.addAll([s.x, s.y, flZ]);
@@ -144,8 +145,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flTex.addAll([0.0, 0.0]);
 
       //
-      s.x = cx + math.cos(2 * math.PI * ((i + 1) / num)) * a;
-      s.y = cy + math.sin(2 * math.PI * ((i + 1) / num)) * b;
+      s.x = cx + math.cos(2 * math.PI * ((i + 1) / numOfCircleElm)) * a;
+      s.y = cy + math.sin(2 * math.PI * ((i + 1) / numOfCircleElm)) * b;
       s.z = flZ;
       s = m * s;
       flVert.addAll([s.x, s.y, flZ]);
@@ -162,10 +163,10 @@ class TinyWebglCanvasTS extends TinyCanvas {
   void drawStrokeOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
     double cx = rect.x + rect.w / 2.0;
     double cy = rect.y + rect.h / 2.0;
-    double a = (rect.w+paint.strokeWidth) / 2;
-    double b = (rect.h+paint.strokeWidth) / 2;
-    double c = rect.w / 2;
-    double d = rect.h / 2;
+    double a = (rect.w+paint.strokeWidth)/ 2;
+    double b = (rect.h+paint.strokeWidth)/ 2;
+    double c = (rect.w-paint.strokeWidth)/ 2;
+    double d = (rect.h-paint.strokeWidth)/ 2;
     int num = 25;
 
     Matrix4 m = calcMat();
@@ -186,7 +187,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
       s1.y = cy + math.sin(2 * math.PI * (i / num)) * d;
       s1.z = flZ;
       s1 = m * s1;
-      
+
       s2.x = cx + math.cos(2 * math.PI * (i / num)) * a;
       s2.y = cy + math.sin(2 * math.PI * (i / num)) * b;
       s2.z = flZ;
@@ -232,7 +233,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
   }
 
   void _innerDrawFillRect(
-       TinyStage stage, 
+       TinyStage stage,
        Vector3 ss1, Vector3 ss2,Vector3 ss3,Vector3 ss4,
        double colorR, double colorG, double colorB, double colorA) {
     int b = flVert.length ~/ 8;
@@ -257,10 +258,10 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   void drawStrokeRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
     Matrix4 m = calcMat();
-    double sx = rect.x;
-    double sy = rect.y;
-    double ex = rect.x + rect.w;
-    double ey = rect.y + rect.h;
+    double sx = rect.x+paint.strokeWidth/2;
+    double sy = rect.y+paint.strokeWidth/2;
+    double ex = rect.x + rect.w-paint.strokeWidth/2;
+    double ey = rect.y + rect.h-paint.strokeWidth/2;
 
     Vector3 ss1 = m * new Vector3(sx, sy, 0.0);
     Vector3 sz1 = m * new Vector3(sx-paint.strokeWidth, sy-paint.strokeWidth, 0.0);
@@ -270,7 +271,6 @@ class TinyWebglCanvasTS extends TinyCanvas {
     Vector3 sz3 = m * new Vector3(ex+paint.strokeWidth, sy-paint.strokeWidth, 0.0);
     Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
     Vector3 sz4 = m * new Vector3(ex+paint.strokeWidth, ey+paint.strokeWidth, 0.0);
-    int b = flVert.length ~/ 8;
     double colorR = paint.color.r / 0xff;
     double colorG = paint.color.g / 0xff;
     double colorB = paint.color.b / 0xff;
@@ -288,7 +288,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
     GL.useProgram(programShape);
     int texLocation = 0;
 
-      
+
       texLocation = GL.getAttribLocation(programShape, "a_tex");
       Buffer texBuffer = GL.createBuffer();
       GL.bindBuffer(RenderingContext.ARRAY_BUFFER, texBuffer);

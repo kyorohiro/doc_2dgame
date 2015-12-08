@@ -204,6 +204,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
 
   void clipRect(TinyStage stage, TinyRect rect) {
+    flush();
     Matrix4 m = calcMat();
     Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
     Vector3 v2 = new Vector3(rect.x +rect.w, rect.y + rect.h, 0.0);
