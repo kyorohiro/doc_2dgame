@@ -180,7 +180,6 @@ class TinyWebglCanvasTS extends TinyCanvas {
     double colorA = paint.color.a / 0xff;
     for (int i = 0; i < num; i++) {
       //
-      int bbb = flVert.length ~/ 8;
 
       //
       s1.x = cx + math.cos(2 * math.PI * (i / num)) * c;
@@ -384,7 +383,11 @@ class TinyWebglCanvasTS extends TinyCanvas {
     _innerDrawFillRect(stage, v1, v2, v3, v4, colorR, colorG, colorB, colorA);
 
   }
-
+  void clearClip(TinyStage stage) {
+    stencilV = 1;
+    GL.clearStencil(0);
+    flush();
+  }
   void clipRect(TinyStage stage, TinyRect rect) {
     flush();
     GL.colorMask(false, false, false, false);

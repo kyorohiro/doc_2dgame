@@ -177,6 +177,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     drawLine(stage, new TinyPoint(sx-dx, sy), new TinyPoint(ey+dx, sy), paint);
   }
 
+
   void drawFillRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
     if (curImage != null) {
       flush();
@@ -202,15 +203,29 @@ class TinyFlutterNCanvas extends TinyCanvas {
     indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
   }
 
+  void clearClip(TinyStage stage) {
+    flush();
+    canvas.restore();
+  }
 
   void clipRect(TinyStage stage, TinyRect rect) {
     flush();
     Matrix4 m = calcMat();
     Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
-    Vector3 v2 = new Vector3(rect.x +rect.w, rect.y + rect.h, 0.0);
+    Vector3 v2 = new Vector3(rect.x, rect.y + rect.h, 0.0);
+    Vector3 v3 = new Vector3(rect.x +rect.w, rect.y + rect.h, 0.0);
+    Vector3 v4 = new Vector3(rect.x +rect.w, rect.y, 0.0);
     v1 = m * v1;
     v2 = m * v2;
-    canvas.clipRect(new Rect.fromLTRB(v1.x, v1.y, v2.x, v2.y));
+    v3 = m * v3;
+    v4 = m * v4;
+    Path path = new Path();
+    path.moveTo(v1.x, v1.y);
+    path.lineTo(v2.x, v2.y);
+    path.lineTo(v3.x, v3.y);
+    path.lineTo(v4.x, v4.y);
+    canvas.clipPath(path);
+//    canvas.clipRect(new Rect.fromLTRB(v1.x, v1.y, v2.x, v2.y));
   }
 
   flush() {

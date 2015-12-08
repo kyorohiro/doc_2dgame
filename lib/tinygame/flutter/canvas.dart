@@ -38,6 +38,10 @@ class TinyFlutterCanvas extends TinyCanvas {
     canvas.clipRect(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h));
   }
 
+  void clearClip(TinyStage stage) {
+    canvas.restore();
+  }
+
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
       TinyRect dst, TinyPaint paint) {
     Rect s = new Rect.fromLTWH(src.x, src.y, src.w, src.h);

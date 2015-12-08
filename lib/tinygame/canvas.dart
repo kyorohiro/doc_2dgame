@@ -5,6 +5,7 @@ abstract class TinyCanvas {
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint);
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint);
   void clipRect(TinyStage stage, TinyRect rect);
+  void clearClip(TinyStage stage);
   void drawImageRect(TinyStage stage,
     TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint);
 
@@ -14,9 +15,11 @@ abstract class TinyCanvas {
   clear(){
     ;
   }
+
   flush() {
     ;
   }
+
   pushMulMatrix(Matrix4 mat) {
     mats.add(mats.last*mat);
     updateMatrix();
@@ -37,7 +40,7 @@ abstract class TinyCanvas {
     clip.add(rect);
     clipRect(stage, rect);
   }
-  
+
   void popClipRect(TinyStage stage) {
     clip.removeLast();
     if(clip.length > 0) {
