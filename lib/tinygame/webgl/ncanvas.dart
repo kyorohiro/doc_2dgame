@@ -357,7 +357,33 @@ class TinyWebglCanvasTS extends TinyCanvas {
     GL.useProgram(null);
   }
 
-  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {}
+  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {
+
+
+    Matrix4 m = calcMat();
+    double d = math.sqrt(math.pow(p1.x-p2.x, 2)+ math.pow(p1.y-p2.y, 2));
+    double dy = -1*paint.strokeWidth*(p2.x-p1.x)/(d*2);
+    double dx = paint.strokeWidth*(p2.y-p1.y)/(d*2);
+    double sx = p1.x;
+    double sy = p1.y;
+    double ex = p2.x;
+    double ey = p2.y;
+
+    Vector3 v1 = new Vector3(sx-dx, sy-dy, 0.0);
+    Vector3 v2 = new Vector3(sx+dx, sy+dy, 0.0);
+    Vector3 v3 = new Vector3(ex+dx, ey+dy, 0.0);
+    Vector3 v4 = new Vector3(ex-dx, ey-dy, 0.0);
+    v1 = m * v1;
+    v2 = m * v2;
+    v3 = m * v3;
+    v4 = m * v4;
+    double colorR = paint.color.r / 0xff;
+    double colorG = paint.color.g / 0xff;
+    double colorB = paint.color.b / 0xff;
+    double colorA = paint.color.a / 0xff;
+    _innerDrawFillRect(stage, v1, v2, v3, v4, colorR, colorG, colorB, colorA);
+
+  }
 
   void clipRect(TinyStage stage, TinyRect rect) {
     flush();
