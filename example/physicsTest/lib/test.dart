@@ -51,13 +51,20 @@ class PhysicsTest extends TinyDisplayObject {
     }
   }
 
+  int prevTime = 0;
   void onTick(TinyStage stage, int timeStamp) {
+    if(prevTime == 0) {
+      prevTime = timeStamp;
+      return;
+    }
     w.gravity.x = 2*worldDx / 50.0;
     w.gravity.y = 2*worldDy / 50.0;
+    double a = (timeStamp-prevTime) /20;
     for (int i = 0; i < 4; i++) {
-      w.next(0.25);
+      w.next(0.25*a);
     }
     stage.markNeedsPaint();
+    prevTime = timeStamp;
   }
   bool touch(TinyStage stage, int id, String type, double x, double y) {
     worldDx =3*(x/450-0.5);
