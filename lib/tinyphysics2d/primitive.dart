@@ -45,6 +45,14 @@ class CirclePrimitive extends Primitive {
 
   bool checkCollision(Primitive p) {
     CirclePrimitive c = p;
+    // easy check
+    if(!((this.xy.x+this.radius) >= (c.xy.x-c.radius) || (c.xy.x-c.radius) <=(this.xy.x+this.radius))) {
+      return false;
+    }
+    if(!((this.xy.y+this.radius) >= (c.xy.y-c.radius) || (c.xy.y-c.radius) <=(this.xy.y+this.radius))) {
+      return false;
+    }
+    //
     double distance = calcXYDistance(p);
     double boundary = this.radius + c.radius;
     if (boundary > distance) {
