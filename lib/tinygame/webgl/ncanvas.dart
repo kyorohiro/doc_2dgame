@@ -1,7 +1,7 @@
 part of tinygame_webgl;
 
 class TinyWebglCanvasTS extends TinyCanvas {
-  int numOfCircleElm = 50;
+  int numOfCircleElm = 10;
   RenderingContext GL;
   TinyWebglContext glContext;
   TinyWebglCanvasTS(TinyWebglContext c) {

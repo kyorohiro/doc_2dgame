@@ -54,8 +54,8 @@ class PhysicsTest extends TinyDisplayObject {
   void onTick(TinyStage stage, int timeStamp) {
     w.gravity.x = 2*worldDx / 50.0;
     w.gravity.y = 2*worldDy / 50.0;
-    for (int i = 0; i < 5; i++) {
-      w.next(0.20);
+    for (int i = 0; i < 4; i++) {
+      w.next(0.25);
     }
     stage.markNeedsPaint();
   }
@@ -65,11 +65,15 @@ class PhysicsTest extends TinyDisplayObject {
   }
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     TinyPaint pa = new TinyPaint();
+    TinyRect r = new TinyRect(0.0,0.0,0.0,0.0);
     pa.color = new TinyColor.argb(0xaa, 0xff, 0xff, 0xaa);
     for (Primitive p in w.primitives) {
       CirclePrimitive c = p;
       double rd = c.radius;
-      TinyRect r = new TinyRect(c.xy.x - rd, c.xy.y - rd, rd * 2, rd * 2);
+      r.x = c.xy.x - rd;
+      r.y = c.xy.y - rd;
+      r.w = rd * 2;
+      r.h = rd * 2;
       canvas.drawOval(stage, r, pa);
     }
   }

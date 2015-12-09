@@ -1,7 +1,9 @@
 part of tinyphysics2d;
 
-class Primitive {
+abstract class Primitive {
   String kind = "none";
+  Vector3 get aabbLeftTop;
+  Vector3 get aabbRightBottom;
   Vector3 xy = new Vector3.zero();
   Vector3 dxy = new Vector3(0.0, 0.0, 0.0);
   double mass = 1.0;
@@ -20,6 +22,10 @@ class Primitive {
     if (isFixing == false) {
       xy.x += dx;
       xy.y += dy;
+      aabbLeftTop.x +=dx;
+      aabbLeftTop.y +=dy;
+      aabbRightBottom.x +=dx;
+      aabbRightBottom.y +=dy;
     }
   }
 
@@ -35,7 +41,30 @@ class Primitive {
 }
 
 class CirclePrimitive extends Primitive {
-  double radius = 10.0;
+  double _radius;
+  double get radius => _radius;
+  CirclePrimitive() {
+    radius = 10.0;
+  }
+
+  Vector3 get aabbLeftTop {
+    _aabbLeftTop.x = xy.x - radius;
+    _aabbLeftTop.y = xy.y - radius;
+    return _aabbLeftTop;
+  }
+
+  Vector3 get aabbRightBottom {
+    _aabbRightBottom.x = xy.x + radius*2;
+    _aabbRightBottom.y = xy.y + radius*2;
+    return _aabbRightBottom;
+  }
+
+  Vector3 _aabbRightBottom = new Vector3.zero();
+  Vector3 _aabbLeftTop = new Vector3.zero();
+
+  void set radius(double d) {
+    _radius = d;
+  }
 
   void next(double t) {
     move(dxy.x * t, dxy.y * t);
@@ -46,10 +75,10 @@ class CirclePrimitive extends Primitive {
   bool checkCollision(Primitive p) {
     CirclePrimitive c = p;
     // easy check
-    if(!((this.xy.x+this.radius) >= (c.xy.x-c.radius) || (c.xy.x-c.radius) <=(this.xy.x+this.radius))) {
+    if(!(this.aabbRightBottom.x >= c.aabbLeftTop.x || c.aabbLeftTop.x <=this.aabbRightBottom.x)) {
       return false;
     }
-    if(!((this.xy.y+this.radius) >= (c.xy.y-c.radius) || (c.xy.y-c.radius) <=(this.xy.y+this.radius))) {
+    if(!(this.aabbRightBottom.y >= c.aabbLeftTop.y || c.aabbLeftTop.y <=this.aabbRightBottom.y)) {
       return false;
     }
     //
