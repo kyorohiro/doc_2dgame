@@ -60,8 +60,8 @@ class PhysicsTest extends TinyDisplayObject {
     stage.markNeedsPaint();
   }
   bool touch(TinyStage stage, int id, String type, double x, double y) {
-    worldDx =x/450-0.5;
-    worldDy =y/450-0.5;
+    worldDx =3*(x/450-0.5);
+    worldDy =3*(y/450-0.5);
   }
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     TinyPaint pa = new TinyPaint();
