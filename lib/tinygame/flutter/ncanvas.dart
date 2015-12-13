@@ -1,7 +1,7 @@
 part of tinygame_flutter;
 
 class TinyFlutterNCanvas extends TinyCanvas {
-  PaintingCanvas canvas;
+  Canvas canvas;
   TinyFlutterNCanvas(this.canvas) {}
 
   List<Point> vertices = [];

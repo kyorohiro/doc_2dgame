@@ -1,7 +1,7 @@
 part of tinygame_flutter;
 
 class TinyFlutterCanvas extends TinyCanvas {
-  PaintingCanvas canvas;
+  Canvas canvas;
   TinyFlutterCanvas(this.canvas) {}
 
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {

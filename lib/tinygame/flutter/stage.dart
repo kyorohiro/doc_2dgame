@@ -73,7 +73,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     }
     animeIsStart = true;
     isInit = false;
-    animeId = scheduler.requestAnimationFrame(_innerTick);
+    animeId = scheduler.addFrameCallback(_innerTick);
   }
 
   void _innerTick(Duration timeStamp) {
@@ -81,13 +81,13 @@ class TinyFlutterStage extends RenderBox with TinyStage {
       kick(timeStamp.inMilliseconds);
     }
     if (animeIsStart == true) {
-      animeId = scheduler.requestAnimationFrame(_innerTick);
+      animeId = scheduler.addFrameCallback(_innerTick);
     }
   }
 
   void stop() {
     if (animeIsStart == true) {
-      scheduler.cancelAnimationFrame(animeId);
+      scheduler.cancelFrameCallbackWithId(animeId);
     }
     animeIsStart = false;
   }
@@ -123,32 +123,52 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     this.canvas.flush();
   }
 
+  String toEvent(PointerEvent e) {
+    if(e is PointerUpEvent) {
+      return TinyStage.TYPE_POINTER_UP_EVENT;
+    }else if(e is PointerDownEvent) {
+      return TinyStage.TYPE_POINTER_DOWN_EVENT;
+    }else if(e is PointerCancelEvent) {
+      return TinyStage.TYPE_POINTER_CANCEL_EVENT;
+    }else if(e is PointerMoveEvent) {
+      return TinyStage.TYPE_POINTER_MOVE_EVENT;
+    }else if(e is PointerUpEvent) {
+      return TinyStage.TYPE_POINTER_UP_EVENT;
+    } else {
+      return TinyStage.TYPE_POINTER_CANCEL_EVENT;
+   }
+
+  }
   @override
-  void handleEvent(InputEvent event, HitTestEntry en) {
-    if (!(event is PointerInputEvent || !(en is BoxHitTestEntry))) {
+  void handleEvent(PointerEvent event, HitTestEntry en) {
+    if (!(event is PointerEvent || !(en is BoxHitTestEntry))) {
       return;
     }
 
     BoxHitTestEntry entry = en;
-    PointerInputEvent e = event;
+    PointerEvent e = event;
     if (!touchPoints.containsKey(e.pointer)) {
       touchPoints[e.pointer] = new TouchPoint(-1.0, -1.0);
     }
 
-    if (event.type == "pointerdown") {
+//"pointerdown"
+    if (event is PointerDownEvent) {
       touchPoints[e.pointer].x = entry.localPosition.x;
       touchPoints[e.pointer].y = entry.localPosition.y;
     } else {
-      touchPoints[e.pointer].x += (e.dx == null ? 0 : e.dx);
-      touchPoints[e.pointer].y += (e.dy == null ? 0 : e.dy);
+      touchPoints[e.pointer].x = e.position.x;
+      touchPoints[e.pointer].y = e.position.y;
     }
-    kickTouch(this, e.pointer, event.type, touchPoints[e.pointer].x,
-        touchPoints[e.pointer].y);
+    //print("#### ${toEvent(event)} ${touchPoints[e.pointer].x}, ${touchPoints[e.pointer].y}");
+    kickTouch(this, e.pointer, toEvent(event),
+     touchPoints[e.pointer].x, touchPoints[e.pointer].y);
 
-    if (event.type == "pointerup") {
+//== "pointerup"
+    if (event is PointerUpEvent) {
       touchPoints.remove(e.pointer);
     }
-    if (event.type == "pointercancel") {
+//"pointercancel"
+    if (event is PointerCancelEvent) {
       touchPoints.clear();
     }
   }

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/scheduler.dart';
 import 'dart:ui' as sky;
 import 'dart:async';
 import 'dart:math'as math;
