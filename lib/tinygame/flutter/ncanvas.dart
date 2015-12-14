@@ -206,6 +206,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   void clearClip(TinyStage stage) {
     flush();
     canvas.restore();
+    canvas.save();
   }
 
   void clipRect(TinyStage stage, TinyRect rect) {
@@ -228,6 +229,9 @@ class TinyFlutterNCanvas extends TinyCanvas {
 //    canvas.clipRect(new Rect.fromLTRB(v1.x, v1.y, v2.x, v2.y));
   }
 
+  clear() {
+    canvas.save();
+  }
   flush() {
     Paint p = new Paint()..style = sky.PaintingStyle.fill;
     if (curImage != null) {

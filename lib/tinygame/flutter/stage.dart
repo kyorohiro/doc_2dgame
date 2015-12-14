@@ -58,7 +58,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   TinyGameBuilder _builder;
   TinyGameBuilder get builder => _builder;
   TinyCanvas canvas;
-  bool isNCanvas = false;
+  bool isNCanvas = true;// use drawVertex
   TinyFlutterStage(this._builder, TinyDisplayObject root) {
     this.root = root;
     this.canvas = null;
