@@ -17,7 +17,7 @@ class PrimitiveTest extends TinyDisplayObject {
     }
     {
       TinyPaint p = new TinyPaint();
-      canvas.clipRect(null, new TinyRect(50.0, 100.0, 150.0, 280.0));
+     // canvas.clipRect(null, new TinyRect(50.0, 100.0, 150.0, 280.0));
       canvas.drawRect(null, new TinyRect(50.0, 50.0, 100.0, 100.0), p);
     }
     canvas.pushMulMatrix(
