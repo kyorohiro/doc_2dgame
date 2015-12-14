@@ -1,23 +1,21 @@
-# Memo: 2d game math x physics
+# Memo: 2d game math x physics (pre now making)
 
-本書では、2Dゲーム用の数学と物理を紹介してきます。
-文献をあたるなどして、得た知識を体系的に解説するスタイルはとりません。実際にライブラリを作成して、得た知見を、随時、紹介していきます。
+This Book write about 2dgame physics and math. I am making a 2d game library to get this knowledge now.
 
-
-
-## 開発環境はDartにした
-#### Dartを使う
-開発環境として、"Flutter x Dart" or "WebGL x Dart" を選択しました。
-
-#### マルチプラットフォーム対応できる
-PCのブラウザーと、Android、iOS、Linux、Macで動作するアプリを作成することができます。　
-
-モバイル端末上でも、DartVMを使うことで、モバイルブラウザー上で動作するよりも高速に動作することができます。
+This Book follow these concept.
 
 
 ## Umiuni2D
-Umiuni2D is 2D Gmae Library for writing this book.
+Umiuni2D is 2D Game Library for writing this book.
 https://github.com/kyorohiro/doc_2dgame
+
+
+#### Use Dart
+Umiuni2D use flutter and Dart and WebGL as Develop Environment.
+
+#### Multiplatform library
+Umiuni2D's game is executable on android and iOS and modern browser.
+
 
 ## Index
 * Math & Sprite
