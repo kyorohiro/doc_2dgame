@@ -13,7 +13,7 @@ https://github.com/kyorohiro/doc_2dgame
 #### Use Dart
 Umiuni2D use flutter and Dart and WebGL as Develop Environment.
 
-#### Multiplatform library
+#### multiple-platform library
 Umiuni2D's game is executable on android and iOS and modern browser.
 
 
