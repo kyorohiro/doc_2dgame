@@ -43,7 +43,7 @@ class SpriteSheetTest extends TinyDisplayObject {
     }
   }
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     return false;
   }

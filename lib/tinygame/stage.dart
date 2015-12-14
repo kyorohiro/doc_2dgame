@@ -1,11 +1,12 @@
 part of tinygame;
 
+enum TinyStagePointerType {
+  TYPE_POINTER_CANCEL_EVENT,
+  TYPE_POINTER_UP_EVENT,
+  TYPE_POINTER_DOWN_EVENT,
+  TYPE_POINTER_MOVE_EVENT
+}
 abstract class TinyStage {
-  static const String TYPE_POINTER_CANCEL_EVENT = "pointercancel";
-  static const String TYPE_POINTER_UP_EVENT = "pointerup";
-  static const String TYPE_POINTER_DOWN_EVENT = "pointerdown";
-  static const String TYPE_POINTER_MOVE_EVENT = "pointermove";
-
   double get x;
   double get y;
   double get w;
@@ -43,7 +44,7 @@ abstract class TinyStage {
       root.paint(stage, canvas);
       canvas.popMatrix();
   }
-  bool kickTouch(TinyStage stage, int id, String type, double x, double y) {
+  bool kickTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
     stage.pushMulMatrix(root.mat);
     root.touch(stage, id, type, x, y);
     stage.popMatrix();
@@ -63,5 +64,20 @@ abstract class TinyStage {
 
   Matrix4 getMatrix() {
     return mats.last;
+  }
+ 
+  static String toStringPointerType(TinyStagePointerType type) {
+    switch(type) {
+      case TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT:
+        return "pointercancel";
+      case TinyStagePointerType.TYPE_POINTER_UP_EVENT:
+        return "pointerup";
+      case TinyStagePointerType.TYPE_POINTER_DOWN_EVENT:
+       return "pointerdown";
+      case TinyStagePointerType.TYPE_POINTER_MOVE_EVENT:
+       return "pointermove";
+      default:
+       return "";
+    }
   }
 }

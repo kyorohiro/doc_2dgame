@@ -34,7 +34,7 @@ class Keyboard extends TinyDisplayObject {
   }
 
   bool isTouch = false;
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     if ((type == "pointerdown" || type == "pointermove") && isIn(x, y)) {
       if (isTouch == false && source != null) {

@@ -18,15 +18,11 @@ class GameWidget extends OneChildRenderObjectWidget {
     root = new TinyGameRoot(800.0, 600.0);
     stage = builder.createStage(root);
     stage.start();
-    TinyScrollView scroll = new TinyScrollView(400.0, 400.0, 1050.0, 1050.0);
-    scroll.addChild(new SScreen());
-    stage.root.child.add(scroll);
-
-    //
-    TinyButton button = new TinyButton("test", 100.0, 100.0, (String b){print("---push sButton ${b}");});
-    button.mat.translate(100.0,100.0,0.0);
-    //stage.root.child.add(button);
-    scroll.child.add(button);
+    TinySeekbar s1 = new TinySeekbar(400.0, 100.0);
+    TinySeekbar s2 = new TinySeekbar(100.0, 400.0);
+    s2.mat.translate(450.0, 0.0);
+    stage.root.child.add(s1);
+    stage.root.child.add(s2);
     return (stage as TinyFlutterStage);
   }
 }
@@ -34,7 +30,7 @@ class GameWidget extends OneChildRenderObjectWidget {
 class SScreen extends TinyDisplayObject {
   SScreen() {
   }
-  bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY){
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY){
     return false;
   }
 

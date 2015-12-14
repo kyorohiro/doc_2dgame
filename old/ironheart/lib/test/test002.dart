@@ -18,19 +18,23 @@ class GameWidget extends OneChildRenderObjectWidget {
     root = new TinyGameRoot(800.0, 600.0);
     stage = builder.createStage(root);
     stage.start();
-    TinySeekbar s1 = new TinySeekbar(400.0, 100.0);
-    TinySeekbar s2 = new TinySeekbar(100.0, 400.0);
-    s2.mat.translate(450.0, 0.0);
-    stage.root.child.add(s1);
-    stage.root.child.add(s2);
+    stage.root.child.add(new TinyCircleDirection("test",300.0, 100.0,100.0, onTinyCircleDirectionCallback));
     return (stage as TinyFlutterStage);
   }
+
+  onTinyCircleDirectionCallback(
+    String id,
+    double angle,
+    double range,
+    double distance) {
+
+    }
 }
 
 class SScreen extends TinyDisplayObject {
   SScreen() {
   }
-  bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY){
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY){
     return false;
   }
 

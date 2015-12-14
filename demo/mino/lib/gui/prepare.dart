@@ -125,7 +125,7 @@ class PrepareScene extends TinyDisplayObject {
     });
   }
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY) {
     return false;
   }
 

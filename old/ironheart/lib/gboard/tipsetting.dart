@@ -43,7 +43,7 @@ class ShootTipSetting extends TinyScrollView {
     canvas.drawRect(stage, rect, p);
   }
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     if (type == "pointerup" && (x < 0.0 || 600 < x)) {
       parent.rmChild(this);

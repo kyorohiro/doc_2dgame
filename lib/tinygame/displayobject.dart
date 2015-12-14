@@ -75,7 +75,7 @@ class TinyDisplayObject {
     }
   }
 
-  bool touch(TinyStage stage, int id, String type, double x, double y) {
+  bool touch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
     connectCheck();
     onTouchStart(stage, id, type, x, y);
     for(int i=0;i<child.length;i++) {
@@ -101,12 +101,12 @@ class TinyDisplayObject {
     }
   }
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY) {
     return false;
   }
-  void onTouchStart(TinyStage stage, int id, String type, double x, double y) {
+  void onTouchStart(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
   }
-  void onTouchEnd(TinyStage stage, int id, String type, double x, double y) {
+  void onTouchEnd(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
     ;
   }
   void onUnattach() {}

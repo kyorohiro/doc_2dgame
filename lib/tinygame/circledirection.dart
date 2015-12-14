@@ -20,7 +20,7 @@ class TinyCircleDirection extends TinyDisplayObject {
   TinyCircleDirection(this.id, this.circleSize,
     this.rangeWidth, this.distanceWidth, this.callback) {}
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     bool ret1 = onTouchCircle(stage, id, type, x, y, globalX, globalY);
     bool ret2 = onTouchRange(stage, id, type, x, y, globalX, globalY);
@@ -29,7 +29,7 @@ class TinyCircleDirection extends TinyDisplayObject {
     return (ret1 || ret2 || ret3);
   }
 
-  bool onTouchCircle(TinyStage stage, int id, String type, double x, double y,
+  bool onTouchCircle(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     double cx = circleSize / 2.0;
     double cy = circleSize / 2.0;
@@ -42,7 +42,7 @@ class TinyCircleDirection extends TinyDisplayObject {
     return false;
   }
 
-  bool onTouchRange(TinyStage stage, int id, String type, double x, double y,
+  bool onTouchRange(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     double cx = circleSize + rangeWidth / 2;
     double cy = 0.0;
@@ -56,7 +56,7 @@ class TinyCircleDirection extends TinyDisplayObject {
     return false;
   }
 
-  bool onTouchDistance(TinyStage stage, int id, String type, double x, double y,
+  bool onTouchDistance(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     double cx = circleSize + rangeWidth + rangeWidth / 2;
     double cy = 0.0;

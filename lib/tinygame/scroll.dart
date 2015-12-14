@@ -41,16 +41,15 @@ class TinyScrollView extends TinyDisplayObject {
 
   double px = 0.0;
   double py = 0.0;
-  void onTouchEnd(TinyStage stage, int id, String type, double x, double y){
+  void onTouchEnd(TinyStage stage, int id, TinyStagePointerType type, double x, double y){
     Matrix4 tmp = stage.getMatrix().clone();
     tmp.invert();
-    Vector3 a = tmp * new Vector3(x, y, 0.0);
     switch(type) {
-      case "pointerdown":
+      case TinyStagePointerType.TYPE_POINTER_DOWN_EVENT:
         px = x;
         py = y;
       break;
-      case "pointermove":
+      case TinyStagePointerType.TYPE_POINTER_MOVE_EVENT:
         dx = (x-px)*2.2;
         dy = (y-py)*2.2;
         //currentLeft += dx;
@@ -58,9 +57,12 @@ class TinyScrollView extends TinyDisplayObject {
         px = x;
         py = y;
       break;
+      default:
+      break;
     }
   }
-  bool touch(TinyStage stage, int id, String type, double x, double y) {
+
+  bool touch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
 
     Matrix4 mat = new Matrix4.identity();
     mat.translate(currentLeft, currentTop, 0.0);

@@ -123,19 +123,19 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     this.canvas.flush();
   }
 
-  String toEvent(PointerEvent e) {
+  TinyStagePointerType toEvent(PointerEvent e) {
     if(e is PointerUpEvent) {
-      return TinyStage.TYPE_POINTER_UP_EVENT;
+      return TinyStagePointerType.TYPE_POINTER_UP_EVENT;
     }else if(e is PointerDownEvent) {
-      return TinyStage.TYPE_POINTER_DOWN_EVENT;
+      return TinyStagePointerType.TYPE_POINTER_DOWN_EVENT;
     }else if(e is PointerCancelEvent) {
-      return TinyStage.TYPE_POINTER_CANCEL_EVENT;
+      return TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT;
     }else if(e is PointerMoveEvent) {
-      return TinyStage.TYPE_POINTER_MOVE_EVENT;
+      return TinyStagePointerType.TYPE_POINTER_MOVE_EVENT;
     }else if(e is PointerUpEvent) {
-      return TinyStage.TYPE_POINTER_UP_EVENT;
+      return TinyStagePointerType.TYPE_POINTER_UP_EVENT;
     } else {
-      return TinyStage.TYPE_POINTER_CANCEL_EVENT;
+      return TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT;
    }
 
   }

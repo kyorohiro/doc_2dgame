@@ -10,10 +10,10 @@ class PrimitiveTest extends TinyDisplayObject {
 
   Map<int, List<double>> touches = {};
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     touches[id] = [x, y];
-    if (type == "pointerup" || type == "pointercancel") {
+    if (type == TinyStagePointerType.TYPE_POINTER_UP_EVENT || type == TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT) {
       touches.remove(id);
     }
     return false;

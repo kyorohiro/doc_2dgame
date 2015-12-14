@@ -66,7 +66,7 @@ class PhysicsTest extends TinyDisplayObject {
     stage.markNeedsPaint();
     prevTime = timeStamp;
   }
-  bool touch(TinyStage stage, int id, String type, double x, double y) {
+  bool touch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
     worldDx =3*(x/450-0.5);
     worldDy =3*(y/450-0.5);
   }

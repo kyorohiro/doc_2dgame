@@ -191,7 +191,7 @@ class PlayScene extends TinyDisplayObject {
     rotateR.registerUp = false;
   }
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY) {
     if (isStart == false) {
       if (rotateL.isTouch) {
         rotateL.mat.translate(rotateL.dx, rotateL.dy, 0.0);

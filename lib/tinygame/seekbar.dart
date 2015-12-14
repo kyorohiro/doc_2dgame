@@ -9,7 +9,7 @@ class TinySeekbar extends TinyDisplayObject {
   TinyColor fgColor = new TinyColor.argb(0xaa, 0xaa, 0xaa, 0xff);
   TinySeekbar(this.viewWidth, this.viewHeight) {}
 
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     if (isVertical) {
       return onTouchVertical(stage, id, type, x, y, globalX, globalY);
@@ -26,7 +26,7 @@ class TinySeekbar extends TinyDisplayObject {
     }
   }
 
-  bool onTouchHorizontal(TinyStage stage, int id, String type, double x,
+  bool onTouchHorizontal(TinyStage stage, int id, TinyStagePointerType type, double x,
       double y, double globalX, globalY) {
     if (0 <= x && x <= viewWidth) {
       if (0 <= y && y <= viewHeight) {
@@ -37,7 +37,7 @@ class TinySeekbar extends TinyDisplayObject {
     return false;
   }
 
-  bool onTouchVertical(TinyStage stage, int id, String type, double x, double y,
+  bool onTouchVertical(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     if (0 <= x && x <= viewWidth) {
       if (0 <= y && y <= viewHeight) {

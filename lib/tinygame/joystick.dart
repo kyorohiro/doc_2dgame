@@ -58,7 +58,7 @@ class TinyJoystick extends TinyDisplayObject {
   }
 
   @override
-  bool onTouch(TinyStage stage, int id, String type, double x, double y, double globalX, globalY) {
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY) {
     if (isTouch == false) {
       if (distance(x, y, 0.0, 0.0) < size) {
         registerDown = true;
@@ -71,7 +71,7 @@ class TinyJoystick extends TinyDisplayObject {
       }
     } else {
       if (id == touchId) {
-        if (type == "pointerup"|| type == "pointercancel") {
+        if (type == TinyStagePointerType.TYPE_POINTER_UP_EVENT || type == TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT) {
           //print("--up");
           if(isTouch) {
             registerUp = true;

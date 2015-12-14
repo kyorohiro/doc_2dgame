@@ -23,14 +23,14 @@ class StartScene extends TinyDisplayObject {
     }
   }
   bool isTouch = false;
-  bool onTouch(TinyStage stage, int id, String type, double x, double y,
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
-    if (isTouch == true && type == TinyStage.TYPE_POINTER_UP_EVENT) {
+    if (isTouch == true && type == TinyStagePointerType.TYPE_POINTER_UP_EVENT) {
       isTouch = false;
       this.root.clearChild().then((_) {
         this.root.addChild(root.prepareScene);
       });
-    } else if (type == TinyStage.TYPE_POINTER_DOWN_EVENT) {
+    } else if (type == TinyStagePointerType.TYPE_POINTER_DOWN_EVENT) {
       isTouch = true;
     }
     return false;
