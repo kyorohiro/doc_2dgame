@@ -1,2 +1,2 @@
 [English](doc/en)
-[Japanese(doc/jp)
+[Japanese(doc/ja)
