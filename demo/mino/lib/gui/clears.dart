@@ -74,13 +74,13 @@ class ClearScene extends TinyDisplayObject {
   bool isTouch = false;
   bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
-    if(isTouch == true && type == TinyStagePointerType.TYPE_POINTER_UP_EVENT) {
+    if(isTouch == true && type == TinyStagePointerType.UP) {
       isTouch = false;
     this.root.clearChild().then((_) {
       this.root.addChild(root.prepareScene);
     });
     }
-    else if(type == TinyStagePointerType.TYPE_POINTER_DOWN_EVENT) {
+    else if(type == TinyStagePointerType.DOWN) {
       isTouch = true;
     }
     return false;

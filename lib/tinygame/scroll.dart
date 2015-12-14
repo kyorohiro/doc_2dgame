@@ -45,11 +45,11 @@ class TinyScrollView extends TinyDisplayObject {
     Matrix4 tmp = stage.getMatrix().clone();
     tmp.invert();
     switch(type) {
-      case TinyStagePointerType.TYPE_POINTER_DOWN_EVENT:
+      case TinyStagePointerType.DOWN:
         px = x;
         py = y;
       break;
-      case TinyStagePointerType.TYPE_POINTER_MOVE_EVENT:
+      case TinyStagePointerType.MOVE:
         dx = (x-px)*2.2;
         dy = (y-py)*2.2;
         //currentLeft += dx;

@@ -37,7 +37,7 @@ class TinyButton extends TinyDisplayObject {
   bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
     switch (type) {
-      case TinyStagePointerType.TYPE_POINTER_DOWN_EVENT:
+      case TinyStagePointerType.DOWN:
         if (checkFocus(x, y)) {
           isTouch = true;
           isFocus = true;
@@ -46,7 +46,7 @@ class TinyButton extends TinyDisplayObject {
           registerDown = true;
         }
         break;
-      case TinyStagePointerType.TYPE_POINTER_MOVE_EVENT:
+      case TinyStagePointerType.MOVE:
         if (checkFocus(x, y)) {
           isFocus = true;
           dx = globalX -prevGX;
@@ -61,7 +61,7 @@ class TinyButton extends TinyDisplayObject {
           registerUp = true;
         }
         break;
-      case TinyStagePointerType.TYPE_POINTER_UP_EVENT:
+      case TinyStagePointerType.UP:
         if (isTouch == true && onTouchCallback != null) {
           registerUp = true;
           new Future(() {

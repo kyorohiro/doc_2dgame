@@ -99,12 +99,12 @@ class TinyWebglStage extends Object with TinyStage {
         int x = t.page.x-glContext._canvasElement.offsetLeft;
         int y = t.page.y-glContext._canvasElement.offsetTop;
           if (touchs.containsKey(t.identifier)) {
-            kickTouch(this, t.identifier+1, TinyStagePointerType.TYPE_POINTER_MOVE_EVENT,
+            kickTouch(this, t.identifier+1, TinyStagePointerType.MOVE,
                 x.toDouble(),
                 y.toDouble());
           } else {
             touchs[t.identifier] = t;
-            kickTouch(this, t.identifier+1, TinyStagePointerType.TYPE_POINTER_DOWN_EVENT,
+            kickTouch(this, t.identifier+1, TinyStagePointerType.DOWN,
                 x.toDouble(),
                 y.toDouble());
           }
@@ -117,7 +117,7 @@ class TinyWebglStage extends Object with TinyStage {
             int x = t.page.x-glContext._canvasElement.offsetLeft;
             int y = t.page.y-glContext._canvasElement.offsetTop;
             touchs.remove(t.identifier);
-            kickTouch(this, t.identifier+1, TinyStagePointerType.TYPE_POINTER_UP_EVENT,
+            kickTouch(this, t.identifier+1, TinyStagePointerType.UP,
                 x.toDouble(),
                 y.toDouble());
           }
@@ -138,14 +138,14 @@ class TinyWebglStage extends Object with TinyStage {
        //print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       isTap = true;
       kickTouch(
-          this, 0, TinyStagePointerType.TYPE_POINTER_DOWN_EVENT, e.offset.x.toDouble(), e.offset.y.toDouble());
+          this, 0, TinyStagePointerType.DOWN, e.offset.x.toDouble(), e.offset.y.toDouble());
     }});
     glContext.canvasElement.onMouseUp.listen((MouseEvent e) {
       if(tappedEventTime + 500 < lastUpdateTime) {
       //print("up offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
         kickTouch(
-            this, 0, TinyStagePointerType.TYPE_POINTER_UP_EVENT, e.offset.x.toDouble(), e.offset.y.toDouble());
+            this, 0, TinyStagePointerType.UP, e.offset.x.toDouble(), e.offset.y.toDouble());
         isTap = false;
       }
     }});
@@ -160,7 +160,7 @@ class TinyWebglStage extends Object with TinyStage {
       if(tappedEventTime + 500 < lastUpdateTime) {
      //  print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
-        kickTouch(this, 0, TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT, e.offset.x.toDouble(),
+        kickTouch(this, 0, TinyStagePointerType.CANCEL, e.offset.x.toDouble(),
             e.offset.y.toDouble());
         isTap = false;
       }
@@ -169,7 +169,7 @@ class TinyWebglStage extends Object with TinyStage {
       if(tappedEventTime + 500 < lastUpdateTime) {
       //print("move offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
-        kickTouch(this, 0, TinyStagePointerType.TYPE_POINTER_MOVE_EVENT, e.offset.x.toDouble(),
+        kickTouch(this, 0, TinyStagePointerType.MOVE, e.offset.x.toDouble(),
             e.offset.y.toDouble());
       }
     }});
@@ -178,7 +178,7 @@ class TinyWebglStage extends Object with TinyStage {
       if(tappedEventTime + 500 < lastUpdateTime) {
      // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
       if (isTap == true) {
-        kickTouch(this, 0, TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT, e.offset.x.toDouble(),
+        kickTouch(this, 0, TinyStagePointerType.CANCEL, e.offset.x.toDouble(),
             e.offset.y.toDouble());
         isTap = false;
       }

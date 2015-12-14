@@ -71,7 +71,7 @@ class TinyJoystick extends TinyDisplayObject {
       }
     } else {
       if (id == touchId) {
-        if (type == TinyStagePointerType.TYPE_POINTER_UP_EVENT || type == TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT) {
+        if (type == TinyStagePointerType.UP || type == TinyStagePointerType.CANCEL) {
           //print("--up");
           if(isTouch) {
             registerUp = true;

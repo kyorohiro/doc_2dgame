@@ -1,10 +1,10 @@
 part of tinygame;
 
 enum TinyStagePointerType {
-  TYPE_POINTER_CANCEL_EVENT,
-  TYPE_POINTER_UP_EVENT,
-  TYPE_POINTER_DOWN_EVENT,
-  TYPE_POINTER_MOVE_EVENT
+  CANCEL,
+  UP,
+  DOWN,
+  MOVE
 }
 abstract class TinyStage {
   double get x;
@@ -68,13 +68,13 @@ abstract class TinyStage {
  
   static String toStringPointerType(TinyStagePointerType type) {
     switch(type) {
-      case TinyStagePointerType.TYPE_POINTER_CANCEL_EVENT:
+      case TinyStagePointerType.CANCEL:
         return "pointercancel";
-      case TinyStagePointerType.TYPE_POINTER_UP_EVENT:
+      case TinyStagePointerType.UP:
         return "pointerup";
-      case TinyStagePointerType.TYPE_POINTER_DOWN_EVENT:
+      case TinyStagePointerType.DOWN:
        return "pointerdown";
-      case TinyStagePointerType.TYPE_POINTER_MOVE_EVENT:
+      case TinyStagePointerType.MOVE:
        return "pointermove";
       default:
        return "";
