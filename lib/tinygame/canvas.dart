@@ -1,5 +1,16 @@
 part of tinygame;
 
+enum TinyCanvasTransform {
+  NONE,
+  ROT90,
+  ROT180,
+  ROT270,
+  MIRROR,
+  MIRROR_ROT90,
+  MIRROR_ROT180,
+  MIRROR_ROT270,
+}
+
 abstract class TinyCanvas {
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint);
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint);
@@ -7,7 +18,7 @@ abstract class TinyCanvas {
   void clipRect(TinyStage stage, TinyRect rect);
   void clearClip(TinyStage stage);
   void drawImageRect(TinyStage stage,
-    TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint);
+    TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform});
 
   List<Matrix4> mats = [new Matrix4.identity()];
   List<TinyRect> clip = [];

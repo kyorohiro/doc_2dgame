@@ -43,7 +43,7 @@ class TinyFlutterCanvas extends TinyCanvas {
   }
 
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
-      TinyRect dst, TinyPaint paint) {
+      TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform:TinyCanvasTransform.NONE}) {
     Rect s = new Rect.fromLTWH(src.x, src.y, src.w, src.h);
     Rect d = new Rect.fromLTWH(dst.x, dst.y, dst.w, dst.h);
     sky.Image i = (image as TinyFlutterImage).rawImage;

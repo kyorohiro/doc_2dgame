@@ -2,6 +2,7 @@ part of tinygame;
 
 typedef void TinyButtonCallback(String id);
 
+
 class TinyButton extends TinyDisplayObject {
   double w;
   double h;
@@ -20,11 +21,16 @@ class TinyButton extends TinyDisplayObject {
   TinyColor bgcolorOn = new TinyColor.argb(0xaa, 0xcc, 0xaa, 0xff);
   TinyColor bgcolorFocus = new TinyColor.argb(0xaa, 0xcc, 0xff, 0xaa);
   TinyButtonCallback onTouchCallback;
-  TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback) {}
+
   // if release joystickm input ture;
   bool registerUp = false;
   // if down joystickm input ture;
   bool registerDown = false;
+  
+  
+  TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback) {}
+
+
   bool checkFocus(double x, double y) {
     if (x > 0 && y > 0 && y < h && x < w) {
       return true;

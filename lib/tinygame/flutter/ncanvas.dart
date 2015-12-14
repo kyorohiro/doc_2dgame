@@ -248,7 +248,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
   TinyImage curImage = null;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
-      TinyRect dst, TinyPaint paint) {
+      TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform:TinyCanvasTransform.NONE}) {
         if(curImage == null && indicies.length > 0) {
           flush();
         }
@@ -262,8 +262,9 @@ class TinyFlutterNCanvas extends TinyCanvas {
         Matrix4 m = calcMat();
         Vector3 v1 = new Vector3(dst.x, dst.y, 0.0);
         Vector3 v2 = new Vector3(dst.x, dst.y + dst.h, 0.0);
-        Vector3 v3 = new Vector3(dst.x + dst.w, dst.y + dst.h, 0.0);
-        Vector3 v4 = new Vector3(dst.x + dst.w, dst.y, 0.0);
+        Vector3 v3 = new Vector3(dst.x + dst.w, dst.y, 0.0);
+        Vector3 v4 = new Vector3(dst.x + dst.w, dst.y + dst.h, 0.0);
+
         v1 = m * v1;
         v2 = m * v2;
         v3 = m * v3;
@@ -276,13 +277,59 @@ class TinyFlutterNCanvas extends TinyCanvas {
         ]);
         Color c = new Color.fromARGB(0x00, 0x00, 0x00, 0x00);
         colors.addAll([c,c,c,c]);
-        textureCoordinates.addAll([
-          new Point(src.x, src.y),
-          new Point(src.x, src.y+src.h),
-          new Point(src.x+src.w, src.y+src.h),
-          new Point(src.x+src.w, src.y)
-        ]);
-        indicies.addAll([bi+0,bi+1,bi+2, bi+0,bi+2,bi+3]);
+        {
+          double xs = src.x;
+          double ys = src.y;
+          double xe = src.x+src.w;
+          double ye = src.y+src.h;
+          switch(transform) {
+            case TinyCanvasTransform.NONE:
+              textureCoordinates.addAll(
+                [new Point(xs, ys),new Point(xs, ye),
+                 new Point(xe, ys),new Point(xe, ye)]);
+            break;
+            case TinyCanvasTransform.ROT90:
+              textureCoordinates.addAll(
+              [new Point(xs, ye),new Point(xe, ye),
+               new Point(xs, ys),new Point(xe, ys)]);
+            break;
+            case TinyCanvasTransform.ROT180:
+              textureCoordinates.addAll(
+              [new Point(xe, ye),new Point(xe, ys),
+               new Point(xs, ye),new Point(xs, ys)]);
+            break;
+            case TinyCanvasTransform.ROT270:
+              textureCoordinates.addAll(
+              [new Point(xe, ys),new Point(xs, ys),
+               new Point(xe, ye),new Point(xs, ye)]);
+            break;
+            case TinyCanvasTransform.MIRROR:
+              textureCoordinates.addAll(
+              [new Point(xe, ys),new Point(xe, ye),
+               new Point(xs, ys),new Point(xs, ye)]);
+            break;
+            case TinyCanvasTransform.MIRROR_ROT90:
+              textureCoordinates.addAll(
+              [new Point(xs, ys),new Point(xe, ys),
+               new Point(xs, ye),new Point(xe, ye)]);
+            break;
+            case TinyCanvasTransform.MIRROR_ROT180:
+              textureCoordinates.addAll(
+              [new Point(xs, ye),new Point(xs, ys),
+               new Point(xe, ye),new Point(xe, ys)]);
+            break;
+            case TinyCanvasTransform.MIRROR_ROT270:
+              textureCoordinates.addAll(
+              [new Point(xe, ye),new Point(xs, ye),
+               new Point(xe, ys),new Point(xs, ys)]);
+            break;
+            default:
+              textureCoordinates.addAll(
+                [new Point(xs, ys),new Point(xs, ye),
+                 new Point(xe, ys),new Point(xe, ye)]);
+          }
+        }
+        indicies.addAll([bi+0,bi+1,bi+2, bi+2,bi+1,bi+3]);
   }
 
   void updateMatrix() {

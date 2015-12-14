@@ -384,10 +384,11 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   }
   void clearClip(TinyStage stage) {
+    flush();
     stencilV = 1;
     GL.clearStencil(0);
-    flush();
   }
+
   void clipRect(TinyStage stage, TinyRect rect) {
     flush();
     GL.colorMask(false, false, false, false);
@@ -418,7 +419,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   //bool a = false;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
-      TinyRect dst, TinyPaint paint) {
+      TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform:TinyCanvasTransform.NONE}) {
     //flush();
     //
     //
@@ -434,7 +435,34 @@ class TinyWebglCanvasTS extends TinyCanvas {
     double ys = src.y / flImg.h;
     double xe = (src.x + src.w) / flImg.w;
     double ye = (src.y + src.h) / flImg.h;
-    flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
+    switch(transform) {
+      case TinyCanvasTransform.NONE:
+        flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
+      break;
+      case TinyCanvasTransform.ROT90:
+        flTex.addAll([xs, ye, xe, ye, xs, ys, xe, ys]);
+      break;
+      case TinyCanvasTransform.ROT180:
+        flTex.addAll([xe, ye, xe, ys, xs, ye, xs, ys]);
+      break;
+      case TinyCanvasTransform.ROT270:
+        flTex.addAll([xe, ys, xs, ys, xe, ye, xs, ye]);
+      break;
+      case TinyCanvasTransform.MIRROR:
+        flTex.addAll([ xe, ys, xe, ye, xs, ys, xs, ye]);
+      break;
+      case TinyCanvasTransform.MIRROR_ROT90:
+        flTex.addAll([xs, ys, xe, ys, xs, ye, xe, ye]);
+      break;
+      case TinyCanvasTransform.MIRROR_ROT180:
+        flTex.addAll([xs, ye, xs, ys, xe, ye, xe, ys]);
+      break;
+      case TinyCanvasTransform.MIRROR_ROT270:
+        flTex.addAll([xe, ye, xs, ye, xe, ys, xs, ys]);
+      break;
+      default:
+        flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
+    }
 
     //
     //

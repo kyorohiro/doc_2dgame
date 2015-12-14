@@ -18,6 +18,8 @@ class TinySprite extends TinyDisplayObject {
   double get scaleY => _scaleY;
 
   bool _update = true;
+  int currentFrameID = 0;
+  int get numOfFrameID => _src.length;
 
   void set x(double v) {
     _x = v;
@@ -39,19 +41,25 @@ class TinySprite extends TinyDisplayObject {
     _scaleY = v;
     _update = true;
   }
-  TinyRect _src;
-  TinyRect _dst;
+
+  List<TinyRect> _src = [];
+  List<TinyRect> _dst = [];
   TinyPaint _paint;
   
-  TinySprite.simple(this.image, {this.centerX, this.centerY}) {
+  TinySprite.simple(this.image, {this.centerX, this.centerY, List<TinyRect> srcs, List<TinyRect> dsts}) {
     if (centerX == null) {
       centerX = image.w / 2;
     }
     if (centerY == null) {
       centerY = image.h / 2;
     }
-    _src = new TinyRect(0.0, 0.0, image.w.toDouble(), image.h.toDouble());
-    _dst = new TinyRect(0.0, 0.0, image.w.toDouble(), image.h.toDouble());
+    if(srcs != null && dsts != null && srcs.length == dsts.length && srcs.length > 0) {
+      _src.addAll(srcs);
+      _dst.addAll(dsts);
+    } else {
+      _src.add(new TinyRect(0.0, 0.0, image.w.toDouble(), image.h.toDouble()));
+      _dst.add(new TinyRect(0.0, 0.0, image.w.toDouble(), image.h.toDouble()));
+    }
     _paint = new TinyPaint();
   }
 
@@ -67,6 +75,10 @@ class TinySprite extends TinyDisplayObject {
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
-    canvas.drawImageRect(stage, image, _src, _dst, _paint);
+    int id= currentFrameID;
+    if(id >= _src.length) {
+      id = _src.length-1;
+    }
+    canvas.drawImageRect(stage, image, _src[id], _dst[id], _paint);
   }
 }
