@@ -101,27 +101,3 @@ class TinyButton extends TinyDisplayObject {
   }
 }
 
-class TinyImageButton extends TinyButton {
-  TinyImage img = null;
-  TinyGameBuilder builder;
-  TinyImageButton(this.builder, String buttonName, String resPath,
-      double buttonW, double buttonH, TinyButtonCallback onTouchCallback)
-      : super(buttonName, buttonW, buttonH, onTouchCallback) {
-    bgcolorOff = new TinyColor.argb(0xff, 0xaa, 0xaa, 0xaa);
-    builder.loadImage(resPath).then((TinyImage i) {
-      img = i;
-    });
-  }
-
-  void onPaint(TinyStage stage, TinyCanvas canvas) {
-    super.onPaint(stage, canvas);
-    TinyPaint p = new TinyPaint();
-    p.color = new TinyColor.argb(0x66, 0xaa, 0xaa, 0xaa);
-    TinyRect rect = new TinyRect(100.0, 0.0, 600.0, 600.0);
-    canvas.drawRect(stage, rect, p);
-
-    TinyRect src = new TinyRect(0.0, 0.0, img.w.toDouble(), img.h.toDouble());
-    TinyRect dst = new TinyRect(0.0, 0.0, w, h);
-    canvas.drawImageRect(stage, img, src, dst, p);
-  }
-}
