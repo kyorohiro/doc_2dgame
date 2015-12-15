@@ -4,44 +4,50 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:umiuni2d/tinygame.dart';
 
-class CharaUmi extends TinySprite {
-  CharaUmi(TinyImage image, List<TinyRect> srcs, List<TinyRect> dsts,List<TinyCanvasTransform> transforms) 
-  : super.simple(image,srcs:srcs,dsts:dsts,transforms:transforms) {
-    ;
+class CharaGameRoot extends TinyGameRoot {
+  TinyGameBuilder builder;
+  TinySprite chara;
+  CharaGameRoot(this.builder) : super(400.0, 300.0) {
+    gameLoop();
   }
 
-  static Future<CharaUmi> createChara(TinyGameBuilder builder) async {
-    TinyImage img = await builder.loadImage("assets/chara.png");
-    return new CharaUmi(img,
-        [new TinyRect(0.0,0.0,200.0,200.0),new TinyRect(200.0,0.0,200.0,200.0),new TinyRect(0.0,200.0,200.0,200.0)],
-        [new TinyRect(0.0,0.0,200.0,200.0),new TinyRect(0.0,0.0,200.0,200.0),new TinyRect(0.0,0.0,200.0,200.0)],
-        [TinyCanvasTransform.NONE,TinyCanvasTransform.NONE,TinyCanvasTransform.NONE]);
-  }
+  gameLoop() async {
+    TinySprite chara = await createChara(builder);
+    addChild(chara);
+    chara.x = 200.0;
+    chara.y = 150.0;
+    chara.centerX = 100.0;
+    chara.centerY = 100.0;
+    chara.scaleX = 0.8;
+    chara.scaleY = 0.8;
 
-  int prevTime = 0;
-  int time = 0;
-  void onTick(TinyStage stage, int timeStamp) {
-    super.onTick(stage, timeStamp);
-    if (prevTime != 0.0) {
-      // 1 sec , half rotate
-      rotation -= math.PI * ((timeStamp - prevTime) / 1000);
-      x = 200.0;
-      y = 150.0;
-      centerX = 100.0;
-      centerY = 100.0;
-      scaleX = 0.8;
-      scaleY = 0.8;
-      
-      time += timeStamp-prevTime;
-      if(time > 100) {
-        time = 0;
-      currentFrameID++;
-      if(currentFrameID >= numOfFrameID) {
-        currentFrameID=0;
+    int prevTime = 0;
+    while (true) {
+      int timeStamp = new DateTime.now().millisecondsSinceEpoch;
+      chara.rotation -= math.PI * ((timeStamp - prevTime) / 1000);
+      prevTime = timeStamp;
+      chara.currentFrameID++;
+      if (chara.currentFrameID >= chara.numOfFrameID) {
+        chara.currentFrameID = 0;
       }
-      }
+      await new Future.delayed(new Duration(milliseconds: 50));
     }
+  }
 
-    prevTime = timeStamp;
+  Future<TinySprite> createChara(TinyGameBuilder builder) async {
+    TinyImage img = await builder.loadImage("assets/chara.png");
+    return new TinySprite.simple(img, srcs: [
+      new TinyRect(0.0, 0.0, 200.0, 200.0),
+      new TinyRect(200.0, 0.0, 200.0, 200.0),
+      new TinyRect(0.0, 200.0, 200.0, 200.0)
+    ], dsts: [
+      new TinyRect(0.0, 0.0, 200.0, 200.0),
+      new TinyRect(0.0, 0.0, 200.0, 200.0),
+      new TinyRect(0.0, 0.0, 200.0, 200.0)
+    ], transforms: [
+      TinyCanvasTransform.NONE,
+      TinyCanvasTransform.NONE,
+      TinyCanvasTransform.NONE
+    ]);
   }
 }

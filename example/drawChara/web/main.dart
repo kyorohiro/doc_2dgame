@@ -4,10 +4,7 @@ import 'package:charatest/test.dart';
 
 main() async {
   TinyGameBuilder builder = new TinyGameBuilderForWebgl();
-  TinyGameRoot root = new TinyGameRoot(400.0,300.0);
-  TinyStage stage = builder.createStage(root);
+  TinyStage stage = builder.createStage(new CharaGameRoot(builder));
   (stage as TinyWebglStage).isTMode = true;
   stage.start();
-  CharaUmi chara = await CharaUmi.createChara(builder);
-  root.addChild(chara);
 }
