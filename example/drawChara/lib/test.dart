@@ -7,8 +7,17 @@ import 'package:umiuni2d/tinygame.dart';
 class CharaGameRoot extends TinyGameRoot {
   TinyGameBuilder builder;
   TinySprite chara;
+  TinyStage _stage = null;
   CharaGameRoot(this.builder) : super(400.0, 300.0) {
+  }
+
+  void onInit(TinyStage stage) {
+    _stage = stage;
     gameLoop();
+  }
+
+  void onUnattach() {
+    _stage = null;
   }
 
   gameLoop() async {
@@ -22,7 +31,7 @@ class CharaGameRoot extends TinyGameRoot {
     chara.scaleY = 0.8;
 
     int prevTime = 0;
-    while (true) {
+    while (_stage != null) {
       int timeStamp = new DateTime.now().millisecondsSinceEpoch;
       chara.rotation -= math.PI * ((timeStamp - prevTime) / 1000);
       prevTime = timeStamp;
