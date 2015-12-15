@@ -39,6 +39,7 @@ class CharaGameRoot extends TinyGameRoot {
       if (chara.currentFrameID >= chara.numOfFrameID) {
         chara.currentFrameID = 0;
       }
+      _stage.markNeedsPaint();
       await new Future.delayed(new Duration(milliseconds: 50));
     }
   }
