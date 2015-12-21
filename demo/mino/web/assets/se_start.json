@@ -9,12 +9,21 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-  "filename": "S001.png",
-  "frame": {"x":110,"y":330,"w":290,"h":110},
+  "filename": "VOFF.png",
+  "frame": {"x":0,"y":300,"w":145,"h":145},
   "rotated": false,
   "trimmed": false,
-  "spriteSourceSize": {"x":0,"y":0,"w":290,"h":110},
-  "sourceSize": {"w":290,"h":110},
+  "spriteSourceSize": {"x":0,"y":0,"w":145,"h":145},
+  "sourceSize": {"w":145,"h":145},
+  "pivot": {"x":0.5,"y":0.5}
+},
+{
+  "filename": "VON.png",
+  "frame": {"x":145,"y":300,"w":145,"h":145},
+  "rotated": false,
+  "trimmed": false,
+  "spriteSourceSize": {"x":0,"y":0,"w":145,"h":145},
+  "sourceSize": {"w":145,"h":145},
   "pivot": {"x":0.5,"y":0.5}
 },
 {

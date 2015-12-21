@@ -26,10 +26,12 @@ class TinyButton extends TinyDisplayObject {
   bool registerUp = false;
   // if down joystickm input ture;
   bool registerDown = false;
-  
-  
-  TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback) {}
 
+  TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback,{TinyDisplayObject child}) {
+    if(child != null) {
+      this.addChild(child);
+    }
+  }
 
   bool checkFocus(double x, double y) {
     if (x > 0 && y > 0 && y < h && x < w) {
@@ -42,9 +44,11 @@ class TinyButton extends TinyDisplayObject {
 
   bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
       double globalX, globalY) {
+    bool ret = false;
     switch (type) {
       case TinyStagePointerType.DOWN:
         if (checkFocus(x, y)) {
+          ret = true;
           isTouch = true;
           isFocus = true;
           prevGX = globalX;
@@ -54,6 +58,7 @@ class TinyButton extends TinyDisplayObject {
         break;
       case TinyStagePointerType.MOVE:
         if (checkFocus(x, y)) {
+          ret = true;
           isFocus = true;
           dx = globalX -prevGX;
           dy = globalY -prevGY;
@@ -86,7 +91,7 @@ class TinyButton extends TinyDisplayObject {
         dy = 0.0;
     }
 
-    return false;
+    return ret;
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
@@ -106,4 +111,3 @@ class TinyButton extends TinyDisplayObject {
     }
   }
 }
-

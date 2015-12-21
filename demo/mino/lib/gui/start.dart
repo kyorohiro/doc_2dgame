@@ -7,6 +7,7 @@ class StartScene extends TinyDisplayObject {
   TinyGameBuilder builder;
   TinyPaint p = new TinyPaint();
   Snows snows = new Snows();
+  TinyButton sound = null;
   StartScene(this.builder, this.root) {
     builder.loadImage("assets/se_start.gif").then((v) {
       bgimg = v;
@@ -21,10 +22,15 @@ class StartScene extends TinyDisplayObject {
         snows.addIdName("B00${i}.png", 0.35);
       }
     }
-    TinyButton sound = new TinyButton("a", 100.0, 100.0, (String id) {
-      this.root.startBGM();
+    sound = new TinyButton("a", 100.0, 100.0, (String id) {
+      if(this.root.isStartBGM) {
+        this.root.stopBGM();
+      } else {
+        this.root.startBGM();
+      }
     });
     sound.mat.translate(250.0,50.0,0.0);
+    sound.bgcolorOff = new TinyColor.argb(0x00, 0x00, 0x00, 0x00);
     addChild(sound);
   }
   bool isTouch = false;
@@ -39,12 +45,19 @@ class StartScene extends TinyDisplayObject {
     }
     return false;
   }
-
+ TinyRect t = new TinyRect(0.0, 0.0, 100.0, 100.0);
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     if (bgimg != null && info != null) {
       canvas.drawImageRect(stage, bgimg, info.frameFromFileName("BG001.png").srcRect, info.frameFromFileName("BG001.png").dstRect, p);
-
       snows.onPaint(stage, canvas);
+
+      sound.bgImg = bgimg;
+      sound.bgImgDstRect = t;
+      if(this.root.isStartBGM) {
+        sound.bgImgSrcRect = info.frameFromFileName("VON.png").srcRect;
+      } else {
+        sound.bgImgSrcRect = info.frameFromFileName("VOFF.png").srcRect;
+      }
     }
   }
 }

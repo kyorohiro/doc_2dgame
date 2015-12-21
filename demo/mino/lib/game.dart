@@ -50,16 +50,25 @@ class MinoRoot extends TinyGameRoot {
   TinyAudioSource r2 = null;
   TinyAudioSource r3 = null;
   TinyAudioSource bgm = null;
-  bool startLoad = false;
+  bool _isStartBGM = false;
+  bool get isStartBGM => _isStartBGM;
+
   startBGM() async {
-    if (startLoad == false && bgm == null) {
-      startLoad = true;
+    if (_isStartBGM == false && bgm == null) {
       bgm  = await builder.loadAudio("assets/greendog.mp3");
       r2 = await builder.loadAudio("assets/se_maoudamashii_se_syber04.mp3");
       r3 = await builder.loadAudio("assets/se_maoudamashii_se_syber08.mp3");
       r1 = await builder.loadAudio("assets/se_maoudamashii_se_syber09.mp3");
     }
+    _isStartBGM = true;
     bgm.start(looping: true);
+  }
+
+  stopBGM() async {
+    if(bgm != null){
+      _isStartBGM = false;
+      bgm.pause();
+    }
   }
 
   startA() async {
