@@ -13,19 +13,28 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
   }
 
   Future<TinyAudioSource> loadAudio(String path) async {
+    print("--A--");
     Completer<TinyAudioSource> c = new Completer();
     AudioContext context = new AudioContext();
     HttpRequest request = new HttpRequest();
     request.open("GET", path);
     request.responseType = "arraybuffer";
     request.onLoad.listen((ProgressEvent e) async {
-      AudioBuffer buffer = await context.decodeAudioData(request.response);
-      c.complete(new TinyWebglAudioSource(context, buffer));
+      print("--B--");
+      try {
+        AudioBuffer buffer = await context.decodeAudioData(request.response);
+        c.complete(new TinyWebglAudioSource(context, buffer));
+      } catch(e) {
+        print("--D-${path}- ${e}");
+        c.completeError(e);
+      }
     });
     request.onError.listen((ProgressEvent e) {
+      print("--C--");
       c.completeError(e);
     });
     request.send();
+    print("--D--");
     return c.future;
   }
 
