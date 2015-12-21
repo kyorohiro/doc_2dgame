@@ -50,12 +50,6 @@ abstract class TinyFile {
   Future<int> truncate(int fileSize);
 }
 
-abstract class TinyAudioSource {
-  Future prepare();
-  //Future seek(int msec);
-  Future start();
-  Future pause();
-}
 
 class TinyRect {
   double x;

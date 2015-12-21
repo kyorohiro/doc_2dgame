@@ -1,3 +1,6 @@
+# Warning
+Umiuni2d use master branch now!!
+
 # Memo: 2d game math x physics (pre now making)
 
 This Book write about 2dgame physics and math. I am making a 2d game library to get this knowledge now.

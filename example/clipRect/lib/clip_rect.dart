@@ -6,15 +6,9 @@ class PrimitiveTest extends TinyDisplayObject {
   TinyGameBuilder builder;
   TinyImage image = null;
   PrimitiveTest(this.builder) {
-    builder.loadImage("assets/test.jpg").then((TinyImage i) {
-      image = i;
-    });
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
-    if(image == null) {
-      return;
-    }
     {
       TinyPaint p = new TinyPaint();
       p.color = new TinyColor.argb(0x55, 0xff, 0x44, 0x44);

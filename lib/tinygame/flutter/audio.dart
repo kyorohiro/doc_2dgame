@@ -3,9 +3,7 @@ part of tinygame_flutter;
 class TinyFlutterAudioSource extends TinyAudioSource {
   MediaPlayerProxy player;
   MojoDataPipeConsumer data;
-  TinyFlutterAudioSource(this.player, this.data) {
-
-  }
+  TinyFlutterAudioSource(this.player, this.data) {}
 
   static Future<TinyFlutterAudioSource> create(
       MediaServiceProxy service, MojoDataPipeConsumer data) async {
@@ -21,12 +19,12 @@ class TinyFlutterAudioSource extends TinyAudioSource {
   Future start() async {
     //print("-start");
     //await pause();
-   // await player.ptr.prepare(data);
+    // await player.ptr.prepare(data);
     if (isPlayerOpen) {
 //    new Future.delayed(new Duration(milliseconds:10));
-    await player.ptr.seekTo(0);
-  //  new Future.delayed(new Duration(milliseconds:10));
-    await player.ptr.start();
+      await player.ptr.seekTo(0);
+      //  new Future.delayed(new Duration(milliseconds:10));
+      await player.ptr.start();
     }
     //print("/start");
   }

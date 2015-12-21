@@ -23,6 +23,10 @@ class TinyWebglAudioSource extends TinyAudioSource {
       s = null;
     }
   }
+
+  double _volume = 0.5;
+  double get volume => _volume;
+  void set volume(double v) {_volume = v;}
 }
 
 class TinyWebglImage extends TinyImage {

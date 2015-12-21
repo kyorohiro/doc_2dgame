@@ -20,3 +20,4 @@ part 'tinygame/sprite.dart';
 part 'tinygame/spritesheet.dart';
 part 'tinygame/joystick.dart';
 part 'tinygame/bitmapfont.dart';
+part 'tinygame/audio.dart';
