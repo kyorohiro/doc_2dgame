@@ -16,13 +16,15 @@ class TinyFlutterAudioSource extends TinyAudioSource {
   bool get isPlayerOpen => player != null && player.impl.isOpen;
   Future prepare() async {}
 
-  Future start() async {
+  Future start({double volume:1.0, bool looping:false}) async {
     //print("-start");
     //await pause();
     // await player.ptr.prepare(data);
     if (isPlayerOpen) {
 //    new Future.delayed(new Duration(milliseconds:10));
       await player.ptr.seekTo(0);
+      player.ptr.setVolume(volume);
+      player.ptr.setLooping(looping);
       //  new Future.delayed(new Duration(milliseconds:10));
       await player.ptr.start();
     }

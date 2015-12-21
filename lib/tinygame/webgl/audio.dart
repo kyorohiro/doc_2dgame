@@ -9,7 +9,7 @@ class TinyWebglAudioSource extends TinyAudioSource {
   }
 
   Future prepare() async {}
-  Future start() async {
+  Future start({double volume:1.0, bool looping:false}) async {
     await pause();
     s = context.createBufferSource();
     s.buffer = buffer;

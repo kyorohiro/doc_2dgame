@@ -19,6 +19,7 @@ class Keyboard extends TinyDisplayObject {
       p.style = TinyPaintStyle.fill;
     } else {
       p.style = TinyPaintStyle.stroke;
+      p.strokeWidth = 10.0;
     }
     canvas.drawRect(stage, new TinyRect(0.0, 0.0, 100.0, 200.0), p);
   }

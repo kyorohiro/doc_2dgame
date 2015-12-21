@@ -172,9 +172,9 @@ class TinyFlutterNCanvas extends TinyCanvas {
     double dx = paint.strokeWidth/2;
 
     drawLine(stage, new TinyPoint(sx, sy-dx), new TinyPoint(sx, ey+dx), paint);
-    drawLine(stage, new TinyPoint(sx-dx, ey), new TinyPoint(ex+dx, ey), paint);
-    drawLine(stage, new TinyPoint(ex, sy-dx), new TinyPoint(ey, ey+dx), paint);
-    drawLine(stage, new TinyPoint(sx-dx, sy), new TinyPoint(ey+dx, sy), paint);
+    drawLine(stage, new TinyPoint(sx+dx, ey), new TinyPoint(ex-dx, ey), paint);
+    drawLine(stage, new TinyPoint(ex, sy-dx), new TinyPoint(ex, ey+dx), paint);
+    drawLine(stage, new TinyPoint(sx+dx, sy), new TinyPoint(ex-dx, sy), paint);
   }
 
 
