@@ -31,8 +31,8 @@ class PlayScene extends TinyDisplayObject {
 
   Snows snows = new Snows();
   PlayScene(this.builder, this.root, this.game, {int level: 1}) {
-    rotateR = new TinyButton("r", 50.0, 50.0, onTouchCallback);
-    rotateL = new TinyButton("l", 50.0, 50.0, onTouchCallback);
+    rotateR = new TinyButton("r", 50.0, 50.0, onTouchCallback, exclusiveTouch: false);
+    rotateL = new TinyButton("l", 50.0, 50.0, onTouchCallback, exclusiveTouch: false);
     stopButton = new TinyButton("s", 50.0, 50.0, onTouchCallback);
     rotateR.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     rotateL.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);

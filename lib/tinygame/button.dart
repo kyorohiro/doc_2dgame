@@ -26,8 +26,9 @@ class TinyButton extends TinyDisplayObject {
   bool registerUp = false;
   // if down joystickm input ture;
   bool registerDown = false;
+  bool exclusiveTouch;
 
-  TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback,{TinyDisplayObject child}) {
+  TinyButton(this.buttonName, this.w, this.h, this.onTouchCallback,{TinyDisplayObject child,this.exclusiveTouch:true}) {
     if(child != null) {
       this.addChild(child);
     }
@@ -90,8 +91,11 @@ class TinyButton extends TinyDisplayObject {
         dx = 0.0;
         dy = 0.0;
     }
-
-    return ret;
+    if(exclusiveTouch == true) {
+      return ret;
+    } else {
+      return false;
+    }
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {

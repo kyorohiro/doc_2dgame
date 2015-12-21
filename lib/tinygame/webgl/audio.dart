@@ -12,7 +12,13 @@ class TinyWebglAudioSource extends TinyAudioSource {
   Future start({double volume:1.0, bool looping:false}) async {
     await pause();
     s = context.createBufferSource();
+    GainNode gain = context.createGain();
+    s.connectNode(gain);
+    gain.connectNode(context.destination);
     s.buffer = buffer;
+    s.loop = looping;
+    gain.gain.value = volume;
+
     s.connectNode(context.destination);
     s.start(0);
   }
