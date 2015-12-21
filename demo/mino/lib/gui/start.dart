@@ -17,14 +17,18 @@ class StartScene extends TinyDisplayObject {
       snows.info = info;
     });
     {
-    for(int i=1;i<=7;i++) {
-      snows.addIdName("B00${i}.png", 0.35);
+      for (int i = 1; i <= 7; i++) {
+        snows.addIdName("B00${i}.png", 0.35);
+      }
     }
-    }
+    TinyButton sound = new TinyButton("a", 100.0, 100.0, (String id) {
+      this.root.startBGM();
+    });
+    sound.mat.translate(250.0,50.0,0.0);
+    addChild(sound);
   }
   bool isTouch = false;
-  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y,
-      double globalX, globalY) {
+  bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY) {
     if (isTouch == true && type == TinyStagePointerType.UP) {
       isTouch = false;
       this.root.clearChild().then((_) {
@@ -38,12 +42,7 @@ class StartScene extends TinyDisplayObject {
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     if (bgimg != null && info != null) {
-      canvas.drawImageRect(
-          stage,
-          bgimg,
-          info.frameFromFileName("BG001.png").srcRect,
-          info.frameFromFileName("BG001.png").dstRect,
-          p);
+      canvas.drawImageRect(stage, bgimg, info.frameFromFileName("BG001.png").srcRect, info.frameFromFileName("BG001.png").dstRect, p);
 
       snows.onPaint(stage, canvas);
     }

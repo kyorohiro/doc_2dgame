@@ -18,7 +18,6 @@ part 'gui/clears.dart';
 part 'gui/resource.dart';
 part 'gui/snow.dart';
 
-
 class MinoRoot extends TinyGameRoot {
   TinyGameBuilder builder;
   MinoGame game = new MinoGame();
@@ -28,13 +27,13 @@ class MinoRoot extends TinyGameRoot {
   ClearScene clearScene;
   PlayScene playScene;
   Database database;
-  MinoRoot(this.builder) : super(400.0, 300.0,isClipRect:false) {
+  MinoRoot(this.builder) : super(400.0, 300.0, isClipRect: false) {
     database = new Database(builder);
     loaderScene = new ResourceLoader(builder, this);
     startScene = new StartScene(builder, this);
     prepareScene = new PrepareScene(builder, this);
     clearScene = new ClearScene(builder, this, 0);
-    playScene = new PlayScene(builder, this, this.game, level:1);
+    playScene = new PlayScene(builder, this, this.game, level: 1);
     addChild(loaderScene);
     loadScore();
   }
@@ -44,6 +43,39 @@ class MinoRoot extends TinyGameRoot {
     List<int> r = await database.getRank();
     for (int i in r) {
       game.updateRanking(currentScore: i);
+    }
+  }
+
+  TinyAudioSource r1 = null;
+  TinyAudioSource r2 = null;
+  TinyAudioSource r3 = null;
+  TinyAudioSource bgm = null;
+  bool startLoad = false;
+  startBGM() async {
+    if (startLoad == false && bgm == null) {
+      startLoad = true;
+      bgm  = await builder.loadAudio("assets/greendog.mp3");
+      r2 = await builder.loadAudio("assets/se_maoudamashii_se_syber04.mp3");
+      r3 = await builder.loadAudio("assets/se_maoudamashii_se_syber08.mp3");
+      r1 = await builder.loadAudio("assets/se_maoudamashii_se_syber09.mp3");
+    }
+    bgm.start(looping: true);
+  }
+
+  startA() async {
+    if (r1 != null) {
+      r1.start();
+    }
+  }
+
+  startB() async {
+    if (r2 != null) {
+      r2.start();
+    }
+  }
+  startC() async {
+    if (r3 != null) {
+      r3.start();
     }
   }
 }
@@ -89,7 +121,7 @@ class Database {
     TinyFile f = await builder.loadFile("database.dat");
     try {
       await f.truncate(0);
-    } catch(e) {
+    } catch (e) {
       print("e: truncate ${e}");
     }
     f.write(conv.UTF8.encode(await createData()), 0);

@@ -42,6 +42,8 @@ class MinoGame {
 
   int countOfMinon = 0;
 
+  bool registerNext = false;
+  bool registerClear = false;
   MinoGame() {
     nextMinon();
   }
@@ -55,6 +57,7 @@ class MinoGame {
   }
 
   nextMinon() {
+    registerNext = true;
     if (nexts.length > 0) {
       nexts.removeAt(0);
     }
@@ -95,16 +98,20 @@ class MinoGame {
 
   onTouchEnd(int timeStamp) {}
 
-  downWithLevel(int timeStamp, {force: false}) {
+  bool downWithLevel(int timeStamp, {force: false}) {
     if (force == true || lastMoveDTimeStamp + moveDInterval  < timeStamp) {
       lastMoveDTimeStamp = timeStamp;
-      down(timeStamp);
+      return down(timeStamp);
+    } else {
+      return false;
     }
   }
 
-  downPlusWithLevel(int timeStamp, {force: false}) {
+  bool downPlusWithLevel(int timeStamp, {force: false}) {
     if (force == true || lastNextTimeStamp + moveDPlusInterval < timeStamp) {
-      down(timeStamp);
+      return down(timeStamp);
+    } else {
+      return false;
     }
   }
 
@@ -122,17 +129,23 @@ class MinoGame {
     }
   }
 
-  rotateRWithLevel(int timeStamp, {bool force: false}) {
+  bool rotateRWithLevel(int timeStamp, {bool force: false}) {
     if (force == true || lastRotateTimeStamp + rotateInterval < timeStamp) {
       lastRotateTimeStamp = timeStamp;
       rotateR();
+      return true;
+    } else {
+      return false;
     }
   }
 
-  rotateLWithLevel(int timeStamp, {bool force: false}) {
+  bool rotateLWithLevel(int timeStamp, {bool force: false}) {
     if (force == true || lastRotateTimeStamp + rotateInterval < timeStamp) {
       lastRotateTimeStamp = timeStamp;
       rotateL();
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -150,7 +163,10 @@ class MinoGame {
         nextMinon();
         List<int> t = table.clearableLines();
         updateScore(t.length);
-        table.clearLines(t);
+        if(t.length > 0) {
+          registerClear = true;
+          table.clearLines(t);
+        }
         lastNextTimeStamp = timeStamp;
       } else {
         clearable += 1;

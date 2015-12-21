@@ -138,20 +138,14 @@ class PlayScene extends TinyDisplayObject {
     game.onTouchStart(timeStamp);
     bool isMoved = false;
     double mbase = 0.55;
-    if(joystick.directionY > 0.80) {
+    if (joystick.directionY > 0.80) {
       mbase = 0.68;
     }
-    if (joystick.directionX > mbase ||
-        (joystick.registerDown == true &&
-            joystick.registerUp == true &&
-            joystick.directionX_released > mbase)) {
+    if (joystick.directionX > mbase || (joystick.registerDown == true && joystick.registerUp == true && joystick.directionX_released > mbase)) {
       joystick.registerDown = false;
       game.rightWithLevel(timeStamp, force: joystick.registerUp);
       isMoved = true;
-    } else if (joystick.directionX < -1*mbase||
-        (joystick.registerDown == true &&
-            joystick.registerUp == true &&
-            joystick.directionX_released < -1*mbase)) {
+    } else if (joystick.directionX < -1 * mbase || (joystick.registerDown == true && joystick.registerUp == true && joystick.directionX_released < -1 * mbase)) {
       joystick.registerDown = false;
       game.leftWithLevel(timeStamp, force: joystick.registerUp);
       isMoved = true;
@@ -162,15 +156,17 @@ class PlayScene extends TinyDisplayObject {
       game.downPlusWithLevel(timeStamp, force: joystick.registerUp);
     }
 
-    if (rotateR.isTouch ||
-        (rotateR.registerDown == true && rotateR.registerUp == true)) {
+    if (rotateR.isTouch || (rotateR.registerDown == true && rotateR.registerUp == true)) {
       rotateR.registerDown = false;
-      game.rotateRWithLevel(timeStamp, force: rotateR.registerUp);
+      if(game.rotateRWithLevel(timeStamp, force: rotateR.registerUp)) {
+        this.root.startB();
+      }
     }
-    if (rotateL.isTouch ||
-        (rotateL.registerDown == true && rotateL.registerUp == true)) {
+    if (rotateL.isTouch || (rotateL.registerDown == true && rotateL.registerUp == true)) {
       rotateL.registerDown = false;
-      game.rotateLWithLevel(timeStamp, force: rotateL.registerUp);
+      if(game.rotateLWithLevel(timeStamp, force: rotateL.registerUp)) {
+        this.root.startB();
+      }
     }
 
     if (game.isGameOver) {
@@ -186,9 +182,17 @@ class PlayScene extends TinyDisplayObject {
       });
     }
     game.onTouchEnd(timeStamp);
+    if(game.registerNext == true) {
+      this.root.startA();
+    }
+    if(game.registerClear == true) {
+      this.root.startC();
+    }
     joystick.registerUp = false;
     rotateL.registerUp = false;
     rotateR.registerUp = false;
+    game.registerNext = false;
+    game.registerClear = false;
   }
 
   bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y, double globalX, globalY) {

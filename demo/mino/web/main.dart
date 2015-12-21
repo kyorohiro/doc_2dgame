@@ -5,6 +5,5 @@ import 'package:mino/game.dart';
 main() async {
   TinyGameBuilder builder = new TinyGameBuilderForWebgl();
   TinyStage stage = builder.createStage(new MinoRoot(builder));
-  (stage as TinyWebglStage).isTMode = true;
   stage.start();
 }
