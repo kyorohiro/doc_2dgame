@@ -1,8 +1,9 @@
 part of tinygame;
 
-class SpriteSheetInfo {
+class SpriteSheetInfo extends SpriteSheet {
   String json;
   List<SpriteSheetInfoFrame> frames = [];
+  Map<String,SpriteSheetData> mmaps = {};
 
   SpriteSheetInfoFrame frameFromFileName(String fileName) {
     for (SpriteSheetInfoFrame f in frames) {
@@ -21,20 +22,25 @@ class SpriteSheetInfo {
     conv.JsonDecoder d = new conv.JsonDecoder();
     Map root = d.convert(input);
     for (Map frame in (root["frames"] as List<Map>)) {
-      frames.add(new SpriteSheetInfoFrame.fromMap(frame));
+      SpriteSheetInfoFrame f = new SpriteSheetInfoFrame.fromMap(frame);
+      frames.add(f);
+      mmaps[f.name] = f;
     }
   }
 
+  Iterable<String> get keys => mmaps.keys;
+
+  int get length => mmaps.length;
+
+  SpriteSheetData operator [](String key) => mmaps[key];
+
+  bool containsKey(String key) => mmaps.containsKey(key);
+
   draw(double x, double y, SpriteSheetInfoFrame f) {
-//    TinyRect srcRect = f.frame;
-//    if (f.rotated) {} else {
-//      TinyRect dstRect = new TinyRect(x + f.spriteSourceSize.x,
-//          y + f.spriteSourceSize.y, f.spriteSourceSize.w, f.spriteSourceSize.h);
-//    }
   }
 }
 
-class SpriteSheetInfoFrame {
+class SpriteSheetInfoFrame extends SpriteSheetData {
   String fileName;
   bool rotated;
   bool trimmed;
@@ -42,7 +48,7 @@ class SpriteSheetInfoFrame {
   TinySize sourceSize;
   TinyPoint pivot;
   TinyRect frame;
-
+  String get name => fileName;
   TinyRect get dstRect {
     if (rotated) {
       double x = -1.0 * spriteSourceSize.y - (spriteSourceSize.h);

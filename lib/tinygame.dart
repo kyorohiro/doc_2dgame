@@ -13,10 +13,12 @@ part 'tinygame/gameroot.dart';
 part 'tinygame/button.dart';
 part 'tinygame/canvas.dart';
 part 'tinygame/stage.dart';
-part 'tinygame/scroll.dart';
-part 'tinygame/seekbar.dart';
 part 'tinygame/sprite.dart';
-part 'tinygame/spritesheet.dart';
 part 'tinygame/joystick.dart';
-part 'tinygame/bitmapfont.dart';
 part 'tinygame/audio.dart';
+
+part 'tinygame/tool/scroll.dart';
+part 'tinygame/tool/seekbar.dart';
+part 'tinygame/tool/texture_atlas/spritesheet.dart';
+part 'tinygame/tool/texture_atlas/spritesheetinfo.dart';
+part 'tinygame/tool/texture_atlas/bitmapfont.dart';
