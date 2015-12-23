@@ -2,13 +2,30 @@ part of tinygame_flutter;
 
 class TinyFlutterNCanvas extends TinyCanvas {
   Canvas canvas;
-  TinyFlutterNCanvas(this.canvas) {}
+
 
   List<Point> vertices = [];
   List<Point> textureCoordinates = [];
   List<Color> colors = [];
   List<int> indicies = [];
-  int numOfCircleElm = 12;
+
+  int _numOfCircleElm;
+  int get numOfCircleElm => _numOfCircleElm;
+  TinyFlutterNCanvas(this.canvas) {
+    numOfCircleElm = 25;
+  }
+  List<double> circleCash = [];
+  void set numOfCircleElm(int v) {
+    if(circleCash.length ==0 || _numOfCircleElm != v){
+      _numOfCircleElm = v;
+      circleCash.clear();
+      for (int i = 0; i < _numOfCircleElm+1; i++) {
+        circleCash.add(math.cos(2 * math.PI * (i / _numOfCircleElm)));
+        circleCash.add(math.sin(2 * math.PI * (i / _numOfCircleElm)));
+      }
+    }
+  }
+
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
     if (curImage != null) {
       flush();
@@ -42,23 +59,23 @@ class TinyFlutterNCanvas extends TinyCanvas {
       int bbb = vertices.length;
 
       //
-      s1.x = cx + math.cos(2 * math.PI * (i / numOfCircleElm)) * c;
-      s1.y = cy + math.sin(2 * math.PI * (i / numOfCircleElm)) * d;
+      s1.x = cx + circleCash[i*2+0] * c;
+      s1.y = cy + circleCash[i*2+1] * d;
       s1.z = 0.0;
       s1 = m * s1;
 
-      s2.x = cx + math.cos(2 * math.PI * (i / numOfCircleElm)) * a;
-      s2.y = cy + math.sin(2 * math.PI * (i / numOfCircleElm)) * b;
+      s2.x = cx + circleCash[i*2+0] * a;
+      s2.y = cy + circleCash[i*2+1] * b;
       s1.z = 0.0;
       s2 = m * s2;
 
-      s3.x = cx + math.cos(2 * math.PI * ((i + 1) / numOfCircleElm)) * a;
-      s3.y = cy + math.sin(2 * math.PI * ((i + 1) / numOfCircleElm)) * b;
+      s3.x = cx + circleCash[i*2+2] * a;
+      s3.y = cy + circleCash[i*2+3] * b;
       s1.z = 0.0;
       s3 = m * s3;
 
-      s4.x = cx + math.cos(2 * math.PI * ((i + 1) / numOfCircleElm)) * c;
-      s4.y = cy + math.sin(2 * math.PI * ((i + 1) / numOfCircleElm)) * d;
+      s4.x = cx + circleCash[i*2+2] * c;
+      s4.y = cy + circleCash[i*2+3] * d;
       s1.z = 0.0;
       s4 = m * s4;
 
@@ -94,16 +111,16 @@ class TinyFlutterNCanvas extends TinyCanvas {
       colors.add(c);
 
       //
-      s.x = cx + math.cos(2 * math.PI * (i / numOfCircleElm)) * a;
-      s.y = cy + math.sin(2 * math.PI * (i / numOfCircleElm)) * b;
+      s.x = cx + circleCash[i*2] * a;
+      s.y = cy + circleCash[i*2+1] * b;
       s.z = flZ;
       s = m * s;
       vertices.addAll([new Point(s.x, s.y)]);
       colors.add(c);
 
       //
-      s.x = cx + math.cos(2 * math.PI * ((i + 1) / numOfCircleElm)) * a;
-      s.y = cy + math.sin(2 * math.PI * ((i + 1) / numOfCircleElm)) * b;
+      s.x = cx + circleCash[i*2+2] * a;
+      s.y = cy + circleCash[i*2+3] * b;
       s.z = flZ;
       s = m * s;
       vertices.addAll([new Point(s.x, s.y)]);

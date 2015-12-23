@@ -59,7 +59,7 @@ class PhysicsTest extends TinyDisplayObject {
     }
     w.gravity.x = 2*worldDx / 50.0;
     w.gravity.y = 2*worldDy / 50.0;
-    double a = (timeStamp-prevTime) /20;
+    double a = (timeStamp-prevTime) /25;
     for (int i = 0; i < 4; i++) {
       w.next(0.25*a);
     }
