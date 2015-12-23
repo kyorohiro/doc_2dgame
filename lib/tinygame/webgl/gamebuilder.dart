@@ -64,6 +64,7 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
   Future<TinyFile> loadFile(String name) async {
     return new TinyWebglFile(name);
   }
+
   Future<List<String>> getFiles() async {
     FileSystem e = await window.requestFileSystem(1024, persistent: true);
     List<Entry> files = await e.root.createReader().readEntries();

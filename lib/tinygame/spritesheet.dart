@@ -5,8 +5,8 @@ class SpriteSheetInfo {
   List<SpriteSheetInfoFrame> frames = [];
 
   SpriteSheetInfoFrame frameFromFileName(String fileName) {
-    for(SpriteSheetInfoFrame f in frames) {
-      if(f.fileName == fileName) {
+    for (SpriteSheetInfoFrame f in frames) {
+      if (f.fileName == fileName) {
         return f;
       }
     }
@@ -51,8 +51,7 @@ class SpriteSheetInfoFrame {
       double h = spriteSourceSize.w;
       return new TinyRect(x, y, w, h);
     } else {
-      return new TinyRect(spriteSourceSize.x, spriteSourceSize.y,
-          spriteSourceSize.w, spriteSourceSize.h);
+      return new TinyRect(spriteSourceSize.x, spriteSourceSize.y, spriteSourceSize.w, spriteSourceSize.h);
     }
   }
 
@@ -65,15 +64,14 @@ class SpriteSheetInfoFrame {
   }
 
   double get angle {
-    if(rotated) {
+    if (rotated) {
       return -1 + math.PI / 2.0;
     } else {
       return 0.0;
     }
   }
 
-  SpriteSheetInfoFrame(this.fileName, this.frame, this.rotated, this.trimmed,
-      this.spriteSourceSize, this.sourceSize, this.pivot) {}
+  SpriteSheetInfoFrame(this.fileName, this.frame, this.rotated, this.trimmed, this.spriteSourceSize, this.sourceSize, this.pivot) {}
 
   SpriteSheetInfoFrame.fromMap(Map frame) {
     this.fileName = frame["filename"];
@@ -84,6 +82,7 @@ class SpriteSheetInfoFrame {
     this.sourceSize = parseSize(frame["sourceSize"]);
     this.pivot = parsePoint(frame["pivot"]);
   }
+
   TinyRect parseRect(Map rect) {
     num x = rect["x"];
     num y = rect["y"];
