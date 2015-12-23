@@ -24,8 +24,9 @@ class TinyWebglCanvasTS extends TinyCanvas {
   Program programShape;
 
   void init() {
-    print("#[A]# ${GL.getParameter(RenderingContext.MAX_VERTEX_TEXTURE_IMAGE_UNITS)}");
-    print("#[B]# ${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
+    print("#[A] MAX_VERTEX_TEXTURE_IMAGE_UNITS # ${GL.getParameter(RenderingContext.MAX_VERTEX_TEXTURE_IMAGE_UNITS)}");
+    print("#[B] ALIASED_POINT_SIZE_RANGE       # ${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
+    print("#[B] ALIASED_POINT_SIZE_RANGE       # ${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
     {
       String vs = [
         "attribute vec3 vp;",
@@ -38,8 +39,8 @@ class TinyWebglCanvasTS extends TinyCanvas {
         "varying vec4 vColor;",
         "",
         "void main() {",
-        "  v_useTex = useTex;"
-            "  gl_Position = u_mat*vec4(vp.x,vp.y,vp.z,1.0);",
+        "  v_useTex = useTex;",
+        "  gl_Position = u_mat*vec4(vp.x,vp.y,vp.z,1.0);",
         "  if(useTex < 0.0){",
         "    vColor = color;",
         "  }",
@@ -53,6 +54,9 @@ class TinyWebglCanvasTS extends TinyCanvas {
       ].join("\n");
       String fs = ["precision mediump float;", "varying vec2 v_tex;", "varying vec4 vColor;", "varying float v_useTex;", "uniform sampler2D u_image;", "void main() {", "  if(v_useTex < 0.0){", "    gl_FragColor = vColor;", "  }", "  else {", "    gl_FragColor = texture2D(u_image, v_tex);", "  }", "}"].join("\n");
       programShape = TinyWebglProgram.compile(GL, vs, fs);
+    }
+    {
+
     }
   }
 
@@ -76,7 +80,11 @@ class TinyWebglCanvasTS extends TinyCanvas {
     GL.clearDepth(1.0);
     GL.clearStencil(0);
     GL.enable(RenderingContext.BLEND);
-    blendMode(-1);
+
+    //
+    GL.blendEquation(RenderingContext.FUNC_ADD);
+    GL.blendFuncSeparate(RenderingContext.SRC_ALPHA, RenderingContext.ONE_MINUS_SRC_ALPHA, RenderingContext.SRC_ALPHA, RenderingContext.ONE_MINUS_CONSTANT_ALPHA);
+
     GL.clear(RenderingContext.COLOR_BUFFER_BIT | RenderingContext.STENCIL_BUFFER_BIT | RenderingContext.DEPTH_BUFFER_BIT);
     flVert.clear();
     flInde.clear();
@@ -474,39 +482,6 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   void updateMatrix() {}
 
-  blendMode(int type) {
-    // http://masuqat.net/programming/csharp/OpenTK01-09.php
-    switch (type) {
-      case -1:
-        GL.blendEquation(RenderingContext.FUNC_ADD);
-        GL.blendFuncSeparate(RenderingContext.SRC_ALPHA, RenderingContext.ONE_MINUS_SRC_ALPHA, RenderingContext.SRC_ALPHA, RenderingContext.ONE_MINUS_CONSTANT_ALPHA);
-        break;
-      case 0: //none
-        GL.blendEquation(RenderingContext.FUNC_ADD);
-        GL.blendFunc(RenderingContext.ONE, RenderingContext.ZERO);
-        break;
-      case 1: // semi transparent
-        GL.blendEquation(RenderingContext.FUNC_ADD);
-        GL.blendFunc(RenderingContext.SRC_ALPHA, RenderingContext.ONE_MINUS_SRC_ALPHA);
-        break;
-      case 2: //add
-        GL.blendEquation(RenderingContext.FUNC_ADD);
-        GL.blendFunc(RenderingContext.SRC_ALPHA, RenderingContext.ONE);
-        break;
-      case 3: //sub
-        GL.blendEquation(RenderingContext.FUNC_REVERSE_SUBTRACT);
-        GL.blendFunc(RenderingContext.SRC_ALPHA, RenderingContext.ONE);
-        break;
-      case 4: //product
-        GL.blendEquation(RenderingContext.FUNC_ADD);
-        GL.blendFunc(RenderingContext.ZERO, RenderingContext.SRC_COLOR);
-        break;
-      case 5: //reverse
-        GL.blendEquation(RenderingContext.FUNC_ADD);
-        GL.blendFunc(RenderingContext.ONE_MINUS_DST_COLOR, RenderingContext.ZERO);
-        break;
-    }
-  }
 
   Matrix4 cacheMatrix = new Matrix4.identity();
   Matrix4 calcMat() {
