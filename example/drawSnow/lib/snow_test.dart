@@ -6,7 +6,7 @@ class SnowTest extends TinyDisplayObject {
   SnowTest(TinyGameBuilder builder) {
     Snows snows = new Snows();
     addChild(snows);
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 100; i++) {
       snows.addIdName("S001.png", 0.4, randomSize: true);
       snows.addIdName("S002.png", 0.4, randomSize: true);
     }

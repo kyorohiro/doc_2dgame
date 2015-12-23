@@ -58,10 +58,10 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   TinyGameBuilder _builder;
   TinyGameBuilder get builder => _builder;
   TinyCanvas canvas;
-  bool isNCanvas = true;// use drawVertex
+  bool useTestCanvas = false;// use drawVertex
   bool tickInPerFrame;
 
-  TinyFlutterStage(this._builder, TinyDisplayObject root,{this.tickInPerFrame:true}) {
+  TinyFlutterStage(this._builder, TinyDisplayObject root,{this.tickInPerFrame:true, this.useTestCanvas:false}) {
     this.root = root;
     this.canvas = null;
     init();
@@ -70,6 +70,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   void init() {}
 
   void start() {
+    print("##useTestCanvas ${useTestCanvas}");
     if (animeIsStart == true) {
       return;
     }
@@ -134,13 +135,13 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   @override
   void paint(PaintingContext context, Offset offset) {
     if(this.canvas == null) {
-      if(this.isNCanvas == false) {
+      if(this.useTestCanvas == true) {
         this.canvas = new TinyFlutterCanvas(context.canvas);
       } else {
         this.canvas = new TinyFlutterNCanvas(context.canvas);
       }
     }
-    if(this.isNCanvas == false) {
+    if(this.useTestCanvas == true) {
        (this.canvas as TinyFlutterCanvas).canvas = context.canvas;
     } else {
        (this.canvas as TinyFlutterNCanvas).canvas = context.canvas;
