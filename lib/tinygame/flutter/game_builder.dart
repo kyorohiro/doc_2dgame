@@ -1,12 +1,12 @@
 part of tinygame_flutter;
 
 class TinyGameBuilderForFlutter extends TinyGameBuilder {
-  String resourceRoot;
+  String assetsRoot;
   bool tickInPerFrame = true;
   bool useTestCanvas = false;
   TinyFlutterAudioManager audioManager = new TinyFlutterAudioManager();
 
-  TinyGameBuilderForFlutter(this.resourceRoot) {}
+  TinyGameBuilderForFlutter({this.assetsRoot:"web/"}) {}
 
   TinyStage createStage(TinyDisplayObject root) {
     return new TinyFlutterStage(this, root,tickInPerFrame:tickInPerFrame, useTestCanvas:useTestCanvas);
@@ -14,15 +14,15 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
 
   Future<TinyImage> loadImageBase(String path) async {
     return new TinyFlutterImage(
-        await ResourceLoader.loadImage("${resourceRoot}${path}"));
+        await ResourceLoader.loadImage("${assetsRoot}${path}"));
   }
 
   Future<TinyAudioSource> loadAudio(String path) async {
-    return await audioManager.loadAudioSource("${resourceRoot}${path}");
+    return await audioManager.loadAudioSource("${assetsRoot}${path}");
   }
 
   Future<String> loadStringBase(String path) async {
-    String a = await ResourceLoader.loadString("${resourceRoot}${path}");
+    String a = await ResourceLoader.loadString("${assetsRoot}${path}");
     return a;
   }
 

@@ -15,7 +15,7 @@ bool isTestMode = false;
 //bool isTestMode = true;
 void main() {
   if(isTestMode == false) {
-    Game game = new Game(new TinyGameBuilderForFlutter("web/"));
+    Game game = new Game(new TinyGameBuilderForFlutter(assetsRoot:"web/"));
     runApp(new GameWidget(game));
   } else {
 //    t001.main();

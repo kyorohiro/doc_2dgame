@@ -1,14 +1,18 @@
 part of tinygame_webgl;
 
 class TinyGameBuilderForWebgl extends TinyGameBuilder {
+  String assetsRoot;
   int width = 600 + 100;
   int height = 400 + 100;
+  TinyGameBuilderForWebgl({this.assetsRoot:""}) {
+
+  }
   TinyStage createStage(TinyDisplayObject root) {
     return new TinyWebglStage(this, root);
   }
 
   Future<TinyImage> loadImageBase(String path) async {
-    ImageElement elm = await TinyWebglLoader.loadImage(path);
+    ImageElement elm = await TinyWebglLoader.loadImage("${assetsRoot}${path}");
     return new TinyWebglImage(elm);
   }
 
@@ -17,7 +21,7 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
     Completer<TinyAudioSource> c = new Completer();
     AudioContext context = new AudioContext();
     HttpRequest request = new HttpRequest();
-    request.open("GET", path);
+    request.open("GET", "${assetsRoot}${path}");
     request.responseType = "arraybuffer";
     request.onLoad.listen((ProgressEvent e) async {
       print("--B--");
@@ -41,7 +45,7 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
   Future<String> loadStringBase(String path) async {
     Completer<String> c = new Completer();
     HttpRequest request = new HttpRequest();
-    request.open("GET", path);
+    request.open("GET", "${assetsRoot}${path}");
     request.responseType = "arraybuffer";
     request.onLoad.listen((ProgressEvent e) async {
       ByteBuffer buffer = request.response;

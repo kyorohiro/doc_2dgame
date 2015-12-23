@@ -16,7 +16,7 @@ void main() {
 class GameWidget extends OneChildRenderObjectWidget {
   GameWidget() {}
   RenderObject createRenderObject() {
-    TinyGameBuilderForFlutter builder = new TinyGameBuilderForFlutter("web/");
+    TinyGameBuilderForFlutter builder = new TinyGameBuilderForFlutter(assetsRoot:"web/");
     TinyStage stage = builder.createStage(new CharaGameRoot(builder));
     stage.start();
     return (stage as TinyFlutterStage);
