@@ -1,6 +1,4 @@
-import 'dart:math' as math;
 import 'package:umiuni2d/tinygame.dart';
-import 'package:vector_math/vector_math_64.dart';
 
 class PrimitiveTest extends TinyDisplayObject {
   TinyGameBuilder builder;

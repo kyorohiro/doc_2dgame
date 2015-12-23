@@ -14,7 +14,6 @@ part 'tinygame/button.dart';
 part 'tinygame/canvas.dart';
 part 'tinygame/stage.dart';
 part 'tinygame/scroll.dart';
-part 'tinygame/circledirection.dart';
 part 'tinygame/seekbar.dart';
 part 'tinygame/sprite.dart';
 part 'tinygame/spritesheet.dart';

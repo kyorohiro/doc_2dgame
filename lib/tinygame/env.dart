@@ -32,10 +32,10 @@ abstract class TinyGameBuilder {
     return null;
   }
 
-  Future clearImageCash() {
+  Future clearImageCash() async {
     cach.clear();
   }
-  Future clearStringCash() {
+  Future clearStringCash() async {
     cachString.clear();
   }
 

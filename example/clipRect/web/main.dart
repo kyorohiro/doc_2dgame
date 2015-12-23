@@ -1,7 +1,5 @@
-import 'dart:math' as  math;
 import 'package:umiuni2d/tinygame.dart';
 import 'package:umiuni2d/tinygame_webgl.dart';
-import 'package:vector_math/vector_math_64.dart';
 import 'package:clip_rect/clip_rect.dart';
 
 void main() {
@@ -13,4 +11,3 @@ void main() {
   PrimitiveTest test = new PrimitiveTest(builder);
   root.addChild(test);
 }
-

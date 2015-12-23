@@ -26,11 +26,11 @@ class SpriteSheetInfo {
   }
 
   draw(double x, double y, SpriteSheetInfoFrame f) {
-    TinyRect srcRect = f.frame;
-    if (f.rotated) {} else {
-      TinyRect dstRect = new TinyRect(x + f.spriteSourceSize.x,
-          y + f.spriteSourceSize.y, f.spriteSourceSize.w, f.spriteSourceSize.h);
-    }
+//    TinyRect srcRect = f.frame;
+//    if (f.rotated) {} else {
+//      TinyRect dstRect = new TinyRect(x + f.spriteSourceSize.x,
+//          y + f.spriteSourceSize.y, f.spriteSourceSize.w, f.spriteSourceSize.h);
+//    }
   }
 }
 

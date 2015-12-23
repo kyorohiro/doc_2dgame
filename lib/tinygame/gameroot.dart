@@ -30,7 +30,7 @@ class TinyGameRoot extends TinyDisplayObject {
 
   bool touch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
     //  stage.pushMulMatrix(mat);
-      super.touch(stage, id, type, x, y);
+      return super.touch(stage, id, type, x, y);
       //stage.popMatrix();
     }
 

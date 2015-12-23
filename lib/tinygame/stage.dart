@@ -44,7 +44,7 @@ abstract class TinyStage {
       root.paint(stage, canvas);
       canvas.popMatrix();
   }
-  bool kickTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
+  void kickTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
     stage.pushMulMatrix(root.mat);
     root.touch(stage, id, type, x, y);
     stage.popMatrix();
@@ -65,7 +65,7 @@ abstract class TinyStage {
   Matrix4 getMatrix() {
     return mats.last;
   }
- 
+
   static String toStringPointerType(TinyStagePointerType type) {
     switch(type) {
       case TinyStagePointerType.CANCEL:
