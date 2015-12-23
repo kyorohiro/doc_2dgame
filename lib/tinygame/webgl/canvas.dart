@@ -1,6 +1,5 @@
 part of tinygame_webgl;
 
-
 class TinyWebglContext {
   RenderingContext GL;
   CanvasElement _canvasElement;
@@ -16,4 +15,3 @@ class TinyWebglContext {
     GL = _canvasElement.getContext3d(stencil: true);
   }
 }
-

@@ -395,16 +395,11 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   //bool a = false;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform: TinyCanvasTransform.NONE, List<Object> cache: null}) {
-    //flush();
-    //
-    //
+
     if (flImg != null && flImg != image) {
       flush();
     }
-
-    //if(flImg == null) {
     flImg = image;
-    //}
 
     double xs = src.x / flImg.w;
     double ys = src.y / flImg.h;

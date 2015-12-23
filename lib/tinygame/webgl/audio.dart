@@ -4,12 +4,10 @@ class TinyWebglAudioSource extends TinyAudioSource {
   AudioContext context;
   AudioBuffer buffer;
   AudioBufferSourceNode s = null;
-  TinyWebglAudioSource(this.context, this.buffer) {
-
-  }
+  TinyWebglAudioSource(this.context, this.buffer) {}
 
   Future prepare() async {}
-  Future start({double volume:1.0, bool looping:false}) async {
+  Future start({double volume: 1.0, bool looping: false}) async {
     await pause();
     s = context.createBufferSource();
     GainNode gain = context.createGain();
@@ -32,7 +30,9 @@ class TinyWebglAudioSource extends TinyAudioSource {
 
   double _volume = 0.5;
   double get volume => _volume;
-  void set volume(double v) {_volume = v;}
+  void set volume(double v) {
+    _volume = v;
+  }
 }
 
 class TinyWebglImage extends TinyImage {
@@ -44,8 +44,7 @@ class TinyWebglImage extends TinyImage {
     if (_tex == null) {
       _tex = GL.createTexture();
       GL.bindTexture(RenderingContext.TEXTURE_2D, _tex);
-      GL.texImage2D(RenderingContext.TEXTURE_2D, 0, RenderingContext.RGBA,
-          RenderingContext.RGBA, RenderingContext.UNSIGNED_BYTE, elm);
+      GL.texImage2D(RenderingContext.TEXTURE_2D, 0, RenderingContext.RGBA, RenderingContext.RGBA, RenderingContext.UNSIGNED_BYTE, elm);
       GL.bindTexture(RenderingContext.TEXTURE_2D, null);
     }
     return _tex;
