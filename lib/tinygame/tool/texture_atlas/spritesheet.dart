@@ -42,12 +42,12 @@ class BitmapFont extends SpriteSheet {
 }
 
 class BitmapFontData extends SpriteSheetData {
-  BitmapFontData(this.name, this.elm, this.imageWidth, this.imageHeigh) {}
+  BitmapFontData(this.name, this.elm, this.imageWidth, this.imageHeight) {}
   String name;
   BitmapFontInfoElem elm;
   double imageWidth;
   double imageHeight;
   TinyRect get dstRect => elm.dstRect(imageWidth, imageHeight);
   TinyRect get srcRect => elm.srcRect(imageWidth, imageHeight);
-  double get angle;
+  double get angle => 0.0;
 }
