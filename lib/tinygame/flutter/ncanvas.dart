@@ -26,7 +26,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     }
   }
 
-  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null}) {
     if (curImage != null) {
       flush();
     }
@@ -134,7 +134,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
   }
 
-  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {
+  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint, {List<Object>cache:null}) {
     if (curImage != null) {
       flush();
     }
@@ -167,7 +167,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
   }
 
-  void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
+  void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null}) {
     if (curImage != null) {
       flush();
     }
@@ -220,7 +220,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
   }
 
-  void clearClip(TinyStage stage) {
+  void clearClip(TinyStage stage, {List<Object>cache:null}) {
     flush();
     canvas.restore();
     canvas.save();
@@ -269,7 +269,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
   TinyImage curImage = null;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
-      TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform:TinyCanvasTransform.NONE}) {
+      TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform:TinyCanvasTransform.NONE, List<Object>cache:null}) {
         if(curImage == null && indicies.length > 0) {
           flush();
         }

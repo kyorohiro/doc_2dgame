@@ -12,13 +12,13 @@ enum TinyCanvasTransform {
 }
 
 abstract class TinyCanvas {
-  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint);
-  void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint);
-  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint);
+  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null});
+  void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null});
+  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint, {List<Object>cache:null});
   void clipRect(TinyStage stage, TinyRect rect);
   void clearClip(TinyStage stage);
   void drawImageRect(TinyStage stage,
-    TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform});
+    TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform, List<Object>cache:null});
 
   List<Matrix4> mats = [new Matrix4.identity()];
   List<TinyRect> clip = [];

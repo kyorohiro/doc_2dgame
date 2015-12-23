@@ -76,7 +76,20 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     animeId = Scheduler.instance.addFrameCallback(_innerTick);
   }
 
+  int timeCount = 0;
+  int timeEpoc = 0;
   void _innerTick(Duration timeStamp) {
+    if(timeEpoc == 0) {
+      timeEpoc = new DateTime.now().millisecondsSinceEpoch;
+      timeCount =0;
+    }
+    if(timeCount > 40) {
+      int cTimeEpoc = new DateTime.now().millisecondsSinceEpoch;
+      print("fps[A]? : ${(cTimeEpoc-timeEpoc)/timeCount}");
+      timeCount = 0;
+      timeEpoc = cTimeEpoc;
+    }
+    timeCount++;
     if (startable) {
       kick(timeStamp.inMilliseconds);
     }

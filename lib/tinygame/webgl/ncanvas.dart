@@ -100,7 +100,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flImg = null;
     }
   }
-  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
+  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null}) {
     if (paint.style == TinyPaintStyle.fill) {
       drawFillOval(stage, rect, paint);
     } else {
@@ -206,7 +206,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
       flZ += 0.0001;
     }
   }
-  void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
+  void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null}) {
     if (paint.style == TinyPaintStyle.fill) {
       drawFillRect(stage, rect, paint);
     } else {
@@ -356,7 +356,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
     GL.useProgram(null);
   }
 
-  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint) {
+  void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint, {List<Object>cache:null}) {
 
 
     Matrix4 m = calcMat();
@@ -389,7 +389,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
     GL.clearStencil(0);
   }
 
-  void clipRect(TinyStage stage, TinyRect rect) {
+  void clipRect(TinyStage stage, TinyRect rect, {List<Object>cache:null}) {
     flush();
     GL.colorMask(false, false, false, false);
     GL.depthMask(false);
@@ -419,7 +419,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
   //bool a = false;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
-      TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform:TinyCanvasTransform.NONE}) {
+      TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform:TinyCanvasTransform.NONE, List<Object>cache:null}) {
     //flush();
     //
     //
