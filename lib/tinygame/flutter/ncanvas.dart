@@ -12,7 +12,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   int _numOfCircleElm;
   int get numOfCircleElm => _numOfCircleElm;
   TinyFlutterNCanvas(this.canvas) {
-    numOfCircleElm = 25;
+    numOfCircleElm = 12;
   }
   List<double> circleCash = [];
   void set numOfCircleElm(int v) {
@@ -48,7 +48,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     double c = (rect.w-paint.strokeWidth)/ 2;
     double d = (rect.h-paint.strokeWidth)/ 2;
 
-    Matrix4 m = calcMat();
+    Matrix4 m = getMatrix();
     Vector3 s1 = v1;
     Vector3 s2 = v2;
     Vector3 s3 = v3;
@@ -86,6 +86,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     }
   }
 
+  Vector3 s = new Vector3(0.0, 0.0, 0.0);
   void drawFillOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
     if (curImage != null) {
       flush();
@@ -94,9 +95,11 @@ class TinyFlutterNCanvas extends TinyCanvas {
     double cy = rect.y + rect.h / 2.0;
     double a = rect.w / 2;
     double b = rect.h / 2;
-    Matrix4 m = calcMat();
-    Vector3 s = new Vector3(0.0, 0.0, 0.0);
+    Matrix4 m = getMatrix();
     double flZ = 0.0;
+    s.x = 0.0;
+    s.y = 0.0;
+    s.z = 0.0;
     Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
     for (int i = 0; i < numOfCircleElm; i++) {
       //
@@ -107,7 +110,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
       s.y = cy;
       s.z = flZ;
       s = m * s;
-      _vertices.addAll([new Point(s.x, s.y)]);
+      _vertices.add(new Point(s.x, s.y));
       _colors.add(c);
 
       //
@@ -115,7 +118,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
       s.y = cy + circleCash[i*2+1] * b;
       s.z = flZ;
       s = m * s;
-      _vertices.addAll([new Point(s.x, s.y)]);
+      _vertices.add(new Point(s.x, s.y));
       _colors.add(c);
 
       //
@@ -123,9 +126,8 @@ class TinyFlutterNCanvas extends TinyCanvas {
       s.y = cy + circleCash[i*2+3] * b;
       s.z = flZ;
       s = m * s;
-      _vertices.addAll([new Point(s.x, s.y)]);
+      _vertices.add(new Point(s.x, s.y));
       _colors.add(c);
-//      textureCoordinates.addAll([new Point(-1.0, -1.0),
 
       _indicies.addAll([bbb + 0, bbb + 1, bbb + 2]);
 
@@ -143,7 +145,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
       flush();
     }
     int bi = _vertices.length;
-    Matrix4 m = calcMat();
+    Matrix4 m = getMatrix();
     double d = math.sqrt(math.pow(p1.x-p2.x, 2)+ math.pow(p1.y-p2.y, 2));
     double dy = -1*paint.strokeWidth*(p2.x-p1.x)/(d*2);
     double dx = paint.strokeWidth*(p2.y-p1.y)/(d*2);
@@ -244,7 +246,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
   void clipRect(TinyStage stage, TinyRect rect) {
     flush();
-    Matrix4 m = calcMat();
+    Matrix4 m = getMatrix();
     Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
     Vector3 v2 = new Vector3(rect.x, rect.y + rect.h, 0.0);
     Vector3 v3 = new Vector3(rect.x +rect.w, rect.y + rect.h, 0.0);
@@ -259,7 +261,6 @@ class TinyFlutterNCanvas extends TinyCanvas {
     path.lineTo(v3.x, v3.y);
     path.lineTo(v4.x, v4.y);
     canvas.clipPath(path);
-//    canvas.clipRect(new Rect.fromLTRB(v1.x, v1.y, v2.x, v2.y));
   }
 
   clear() {
@@ -384,12 +385,4 @@ class TinyFlutterNCanvas extends TinyCanvas {
     //canvas.setMatrix(this.getMatrix().storage);
   }
 
-  Matrix4 cacheMatrix = new Matrix4.identity();
-  Matrix4 calcMat() {
-    cacheMatrix.setIdentity();
-    //cacheMatrix = cacheMatrix.translate(-1.0, 1.0, 0.0);
-    //cacheMatrix = cacheMatrix.scale(2.0 / glContext.widht, -2.0 / glContext.height, 1.0);
-    cacheMatrix = cacheMatrix * getMatrix();
-    return cacheMatrix;
-  }
 }
