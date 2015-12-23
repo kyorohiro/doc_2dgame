@@ -59,7 +59,9 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   TinyGameBuilder get builder => _builder;
   TinyCanvas canvas;
   bool isNCanvas = true;// use drawVertex
-  TinyFlutterStage(this._builder, TinyDisplayObject root) {
+  bool tickInPerFrame;
+
+  TinyFlutterStage(this._builder, TinyDisplayObject root,{this.tickInPerFrame:true}) {
     this.root = root;
     this.canvas = null;
     init();
@@ -73,18 +75,30 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     }
     animeIsStart = true;
     isInit = false;
-    animeId = Scheduler.instance.addFrameCallback(_innerTick);
+    if(tickInPerFrame == true) {
+      animeId = Scheduler.instance.addFrameCallback(_innerTick);
+    } else {
+      _innerTickWithOwn();
+    }
+//    Scheduler.instance.addPersistentFrameCallback(_innerTick);
+  }
+  _innerTickWithOwn() async{
+    print("#####AAAA");
+    while (animeIsStart == true) {
+      _innerTick(new Duration(milliseconds: new DateTime.now().millisecondsSinceEpoch));
+      await new Future.delayed(new Duration(milliseconds: 10));
+    }
   }
 
   int timeCount = 0;
   int timeEpoc = 0;
   void _innerTick(Duration timeStamp) {
     if(timeEpoc == 0) {
-      timeEpoc = new DateTime.now().millisecondsSinceEpoch;
+      timeEpoc = timeStamp.inMilliseconds;
       timeCount =0;
     }
     if(timeCount > 40) {
-      int cTimeEpoc = new DateTime.now().millisecondsSinceEpoch;
+      int cTimeEpoc = timeStamp.inMilliseconds;
       print("fps[A]? : ${(cTimeEpoc-timeEpoc)/timeCount}");
       timeCount = 0;
       timeEpoc = cTimeEpoc;
@@ -93,7 +107,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     if (startable) {
       kick(timeStamp.inMilliseconds);
     }
-    if (animeIsStart == true) {
+    if (animeIsStart == true && tickInPerFrame == true) {
       animeId = Scheduler.instance.addFrameCallback(_innerTick);
     }
   }

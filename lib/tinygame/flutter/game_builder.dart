@@ -2,12 +2,13 @@ part of tinygame_flutter;
 
 class TinyGameBuilderForFlutter extends TinyGameBuilder {
   String resourceRoot;
+  bool tickInPerFrame = true;
   TinyFlutterAudioManager audioManager = new TinyFlutterAudioManager();
 
   TinyGameBuilderForFlutter(this.resourceRoot) {}
 
   TinyStage createStage(TinyDisplayObject root) {
-    return new TinyFlutterStage(this, root);
+    return new TinyFlutterStage(this, root,tickInPerFrame:tickInPerFrame);
   }
 
   Future<TinyImage> loadImageBase(String path) async {
