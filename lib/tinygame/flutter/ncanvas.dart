@@ -49,10 +49,10 @@ class TinyFlutterNCanvas extends TinyCanvas {
     double d = (rect.h-paint.strokeWidth)/ 2;
 
     Matrix4 m = calcMat();
-    Vector3 s1 = new Vector3(0.0, 0.0, 0.0);
-    Vector3 s2 = new Vector3(0.0, 0.0, 0.0);
-    Vector3 s3 = new Vector3(0.0, 0.0, 0.0);
-    Vector3 s4 = new Vector3(0.0, 0.0, 0.0);
+    Vector3 s1 = v1;
+    Vector3 s2 = v2;
+    Vector3 s3 = v3;
+    Vector3 s4 = v4;
     Color color = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
     for (int i = 0; i < numOfCircleElm; i++) {
       //
@@ -175,6 +175,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     if (curImage != null) {
       flush();
     }
+    //this.canvas.drawRect(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h), new Paint()..color = new Color(paint.color.value));
     if(paint.style == TinyPaintStyle.fill) {
       drawFillRect(stage, rect, paint);
     } else {
@@ -204,15 +205,26 @@ class TinyFlutterNCanvas extends TinyCanvas {
       flush();
     }
     int bi = _vertices.length;
-    Matrix4 m = calcMat();
-    Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
-    Vector3 v2 = new Vector3(rect.x, rect.y + rect.h, 0.0);
-    Vector3 v3 = new Vector3(rect.x + rect.w, rect.y + rect.h, 0.0);
-    Vector3 v4 = new Vector3(rect.x + rect.w, rect.y, 0.0);
+    Matrix4 m = getMatrix();
+
+    v1.x = rect.x;
+    v1.y = rect.y;
+    v1.z = 0.0;
+    v2.x = rect.x;
+    v2.y = rect.y + rect.h;
+    v2.z = 0.0;
+    v3.x = rect.x + rect.w;
+    v3.y = rect.y + rect.h;
+    v3.z = 0.0;
+    v4.x = rect.x + rect.w;
+    v4.y = rect.y;
+    v4.z = 0.0;
+
     v1 = m * v1;
     v2 = m * v2;
     v3 = m * v3;
     v4 = m * v4;
+
     _vertices.addAll([
       new Point(v1.x, v1.y),
       new Point(v2.x, v2.y),
