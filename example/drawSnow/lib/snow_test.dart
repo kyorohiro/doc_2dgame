@@ -11,7 +11,7 @@ class SnowTest extends TinyDisplayObject {
     snows.addIdName("S002.png", 0.4,randomSize: true);
     }
 
-    
+
     builder.loadImage("assets/se_play.png").then((TinyImage i) {
       snows.bgimg = i;
     });

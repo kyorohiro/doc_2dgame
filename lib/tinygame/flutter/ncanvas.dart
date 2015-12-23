@@ -8,7 +8,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   List<Point> textureCoordinates = [];
   List<Color> colors = [];
   List<int> indicies = [];
-  int numOfCircleElm = 50;
+  int numOfCircleElm = 12;
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
     if (curImage != null) {
       flush();

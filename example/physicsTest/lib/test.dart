@@ -17,8 +17,8 @@ class PhysicsTest extends TinyDisplayObject {
       double size = rand.nextDouble() * 12.0 + 5.0;
       w.primitives.add(new CirclePrimitive()
         ..move(200.0, 200.0)
-        ..dxy.y = rand.nextDouble() * 5.0
-        ..dxy.x = rand.nextDouble() * 5.0
+        ..dxy.y = rand.nextDouble() * 1.0
+        ..dxy.x = rand.nextDouble() * 1.0
         ..radius = size
         ..mass = size / 10.0);
     }
