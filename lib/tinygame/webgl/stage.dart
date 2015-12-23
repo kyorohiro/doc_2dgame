@@ -17,12 +17,12 @@ class TinyWebglStage extends Object with TinyStage {
   int tappedEventTime = 0;
   bool animeIsStart = false;
   int animeId = 0;
-
+  int paintInterval;
   TinyGameBuilder _builder;
   TinyGameBuilder get builder => _builder;
 
   TinyWebglStage(this._builder, TinyDisplayObject root,
-      {width: 600.0, height: 400.0}) {
+      {width: 600.0, height: 400.0, this.paintInterval:40}) {
     glContext = new TinyWebglContext(width: width, height: height);
     this.root = root;
     mouseTest();
@@ -71,10 +71,12 @@ class TinyWebglStage extends Object with TinyStage {
       count++;
       prevTime = currentTime;
       markNeedsPaint();
-      if (isPaint && sum_a > 40.0) {
-        c.clear();
-        kickPaint(this, c);
-        c.flush();
+      if (isPaint && sum_a > paintInterval) {
+        new Future((){
+          c.clear();
+          kickPaint(this, c);
+          c.flush();
+        });
         isPaint = false;
         sum_a = 0.0;
       }
