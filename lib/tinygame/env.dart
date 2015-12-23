@@ -14,8 +14,8 @@ abstract class TinyGameBuilder {
   }
 
   Future<TinyAudioSource> loadAudio(String path);
-
   Future<String> loadStringBase(String path);
+
   Future<String> loadString(String path) async {
     if (cachString.containsKey(path)) {
       return cachString[path];
@@ -32,9 +32,23 @@ abstract class TinyGameBuilder {
     return null;
   }
 
-  Future clearImageCash() async {
+  Future clearImageCash({bool callDispose: true, List<String> excepts: null}) async {
+    Map<String, TinyImage> nextImageCach = {};
+    excepts = (excepts == null ? [] : excepts);
+    if (callDispose == true) {
+      for (String k in cach.keys) {
+        if (false == excepts.contains(k)) {
+          TinyImage i = cach[k];
+          i.dispose();
+        } else {
+          nextImageCach[k] = cach[k];
+        }
+      }
+    }
     cach.clear();
+    cach = nextImageCach;
   }
+
   Future clearStringCash() async {
     cachString.clear();
   }
@@ -49,7 +63,6 @@ abstract class TinyFile {
   Future<int> getLength();
   Future<int> truncate(int fileSize);
 }
-
 
 class TinyRect {
   double x;
@@ -152,4 +165,5 @@ class TinyColor {
 abstract class TinyImage {
   int get h;
   int get w;
+  void dispose();
 }

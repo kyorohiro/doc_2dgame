@@ -1,5 +1,4 @@
 import 'package:umiuni2d/tinygame.dart';
-import 'package:vector_math/vector_math_64.dart';
 import 'dart:math' as math;
 
 class SnowTest extends TinyDisplayObject {

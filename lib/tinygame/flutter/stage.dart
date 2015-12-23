@@ -7,6 +7,8 @@ class TinyFlutterImage implements TinyImage {
   TinyFlutterImage(this.rawImage) {}
   int get w => rawImage.width;
   int get h => rawImage.height;
+  @override
+  void dispose() {;}
 }
 
 class ResourceLoader {

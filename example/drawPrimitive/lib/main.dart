@@ -8,7 +8,6 @@ import 'package:flutter/rendering.dart';
 import 'package:umiuni2d/tinygame.dart';
 import 'package:umiuni2d/tinygame_flutter.dart';
 import 'package:draw_primitive/primitive_test.dart';
-import 'dart:async';
 
 void main() {
   runApp(new GameWidget());
