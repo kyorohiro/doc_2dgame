@@ -16,31 +16,85 @@ abstract class SpriteSheet {
 
   TinyPaint p = new TinyPaint();
   void drawImage(TinyStage stage, TinyCanvas canvas, TinyImage image, String name) {
-    if(this[name] != null) {
+    if (this[name] != null) {
       canvas.drawImageRect(stage, image, this[name].srcRect, this[name].dstRect, p);
     }
   }
 
-  void drawText(TinyStage stage, TinyCanvas canvas, TinyImage image, String text,
-    double size,
-    {TinyRect rect:null,BitmapFontInfoType orientation: BitmapFontInfoType.horizontal, double margine:5.0}) {
-    double x = 0.0;
-    double y = 0.0;
-    for(int i=0;i<text.length;i++) {
+  void drawText(TinyStage stage, TinyCanvas canvas, TinyImage image, String text, double size, {TinyRect rect: null, BitmapFontInfoType orientation: BitmapFontInfoType.horizontal, double margine: 5.0}) {
+    if(orientation == BitmapFontInfoType.horizontal) {
+      drawTextHorizontal(stage, canvas, image, text, size, rect: rect, margine: margine);
+    } else {
+      drawTextVertical(stage, canvas, image, text, size, rect: rect, margine: margine);
+    }
+  }
+
+  void drawTextHorizontal(TinyStage stage, TinyCanvas canvas, TinyImage image, String text, double size, {TinyRect rect: null, double margine: 5.0}) {
+    if(rect == null) {
+      rect = new TinyRect(0.0,0.0,10000.0,10000.0);
+    }
+    double x = rect.x;
+    double y = rect.y;
+    for (int i = 0; i < text.length; i++) {
       SpriteSheetData d = this[text[i]];
-      if(d == null) {x+=10;continue;}
+      if (d == null) {
+        continue;
+      }
       TinyRect dstRect = d.dstRect;
-      dstRect.x += x;
-      dstRect.y += y;
+      dstRect.x = x;
+      dstRect.y = y;
       dstRect.w = size * d.srcRect.w / d.srcRect.h;
       dstRect.h = size;
+      if (rect != null) {
+          if(rect.w < (dstRect.x + dstRect.w)){
+              x = rect.x;
+              y += dstRect.h + margine;
+              dstRect.x = x;
+              dstRect.y = y;
+          }
+      }
       canvas.drawImageRect(stage, image, d.srcRect, dstRect, p);
-      if(orientation == BitmapFontInfoType.horizontal) {
-        x += dstRect.w/2.0 + margine* d.srcRect.w / d.srcRect.h;
-      } else {
+        x += dstRect.w / 2.0 + margine * d.srcRect.w / d.srcRect.h;
+    }
+  }
+
+  //
+  void drawTextVertical(TinyStage stage, TinyCanvas canvas, TinyImage image, String text, double size, {TinyRect rect: null, double margine: 5.0}) {
+    if(rect == null) {
+      rect = new TinyRect(0.0,0.0,10000.0,10000.0);
+    }
+    double x = 0.0;
+    double y = 0.0;
+
+    x = rect.x+rect.w;
+    y = rect.y;
+    double s = 0.0;
+    for (int i = 0; i < text.length; i++) {
+      SpriteSheetData d = this[text[i]];
+      if (d == null) {
+        continue;
+      }
+      TinyRect dstRect = d.dstRect;
+      if(s <(size * d.srcRect.w / d.srcRect.h)) {
+        s = size * d.srcRect.w / d.srcRect.h;
+      }
+      dstRect.w = size * d.srcRect.w / d.srcRect.h;
+      dstRect.h = size;
+      dstRect.x = x-dstRect.w;
+      dstRect.y = y;
+
+      if (rect != null) {
+          if(rect.h < (dstRect.y + dstRect.h)){
+            y = rect.y;
+            x -= s;
+            s = 0.0;
+            dstRect.x = x-dstRect.w;
+            dstRect.y = y;
+          }
+      }
+      canvas.drawImageRect(stage, image, d.srcRect, dstRect, p);
         y += dstRect.h + margine;
       }
-    }
   }
 }
 
