@@ -46,7 +46,7 @@ abstract class SpriteSheet {
       dstRect.w = size * d.srcRect.w / d.srcRect.h;
       dstRect.h = size;
       if (rect != null) {
-          if(rect.w < (dstRect.x + dstRect.w)){
+          if((rect.x+rect.w) < (dstRect.x + dstRect.w)){
               x = rect.x;
               y += dstRect.h + margine;
               dstRect.x = x;
@@ -54,7 +54,7 @@ abstract class SpriteSheet {
           }
       }
       canvas.drawImageRect(stage, image, d.srcRect, dstRect, p);
-        x += dstRect.w / 2.0 + margine * d.srcRect.w / d.srcRect.h;
+        x += dstRect.w + margine * d.srcRect.w / d.srcRect.h;
     }
   }
 
@@ -84,7 +84,7 @@ abstract class SpriteSheet {
       dstRect.y = y;
 
       if (rect != null) {
-          if(rect.h < (dstRect.y + dstRect.h)){
+          if((rect.y+rect.h) < (dstRect.y + dstRect.h)){
             y = rect.y;
             x -= s;
             s = 0.0;
