@@ -37,6 +37,7 @@ class Snow {
   double getWidth(double baseW) => baseW * size;
   double getHeight(double baseH) => baseH * size;
   TinyRect tmp = new TinyRect(0.0, 0.0, 0.0, 0.0);
+  List<Object> cache = [];
   Snow(this.type, this.baseSize, {this.randomSize: false}) {
     reset();
   }
@@ -73,7 +74,7 @@ class Snows extends TinyDisplayObject {
         se.tmp.y = se.y;
         se.tmp.w = se.getWidth(s.w);
         se.tmp.h = se.getHeight(s.h);
-        canvas.drawImageRect(stage, bgimg, info.frameFromFileName(se.type).srcRect, se.tmp, p);
+        canvas.drawImageRect(stage, bgimg, info.frameFromFileName(se.type).srcRect, se.tmp, p, cache:se.cache);
         se.x += se.dx;
         se.y += se.dy;
         se.dy += 0.001;

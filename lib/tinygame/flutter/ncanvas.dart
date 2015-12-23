@@ -4,10 +4,10 @@ class TinyFlutterNCanvas extends TinyCanvas {
   Canvas canvas;
 
 
-  List<Point> vertices = [];
-  List<Point> textureCoordinates = [];
-  List<Color> colors = [];
-  List<int> indicies = [];
+  List<Point> _vertices = [];
+  List<Point> _textureCoordinates = [];
+  List<Color> _colors = [];
+  List<int> _indicies = [];
 
   int _numOfCircleElm;
   int get numOfCircleElm => _numOfCircleElm;
@@ -56,7 +56,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     Color color = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
     for (int i = 0; i < numOfCircleElm; i++) {
       //
-      int bbb = vertices.length;
+      int bbb = _vertices.length;
 
       //
       s1.x = cx + circleCash[i*2+0] * c;
@@ -79,10 +79,10 @@ class TinyFlutterNCanvas extends TinyCanvas {
       s1.z = 0.0;
       s4 = m * s4;
 
-      vertices.addAll([new Point(s1.x, s1.y),new Point(s2.x, s2.y),new Point(s3.x, s3.y),new Point(s4.x, s4.y)]);
-      colors.addAll([color,color,color,color]);
-      indicies.addAll([bbb + 0, bbb + 1, bbb + 2]);
-      indicies.addAll([bbb + 0, bbb + 2, bbb + 3]);
+      _vertices.addAll([new Point(s1.x, s1.y),new Point(s2.x, s2.y),new Point(s3.x, s3.y),new Point(s4.x, s4.y)]);
+      _colors.addAll([color,color,color,color]);
+      _indicies.addAll([bbb + 0, bbb + 1, bbb + 2]);
+      _indicies.addAll([bbb + 0, bbb + 2, bbb + 3]);
     }
   }
 
@@ -100,45 +100,49 @@ class TinyFlutterNCanvas extends TinyCanvas {
     Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
     for (int i = 0; i < numOfCircleElm; i++) {
       //
-      int bbb = vertices.length;
+      int bbb = _vertices.length;
 
       //
       s.x = cx;
       s.y = cy;
       s.z = flZ;
       s = m * s;
-      vertices.addAll([new Point(s.x, s.y)]);
-      colors.add(c);
+      _vertices.addAll([new Point(s.x, s.y)]);
+      _colors.add(c);
 
       //
       s.x = cx + circleCash[i*2] * a;
       s.y = cy + circleCash[i*2+1] * b;
       s.z = flZ;
       s = m * s;
-      vertices.addAll([new Point(s.x, s.y)]);
-      colors.add(c);
+      _vertices.addAll([new Point(s.x, s.y)]);
+      _colors.add(c);
 
       //
       s.x = cx + circleCash[i*2+2] * a;
       s.y = cy + circleCash[i*2+3] * b;
       s.z = flZ;
       s = m * s;
-      vertices.addAll([new Point(s.x, s.y)]);
-      colors.add(c);
+      _vertices.addAll([new Point(s.x, s.y)]);
+      _colors.add(c);
 //      textureCoordinates.addAll([new Point(-1.0, -1.0),
 
-      indicies.addAll([bbb + 0, bbb + 1, bbb + 2]);
+      _indicies.addAll([bbb + 0, bbb + 1, bbb + 2]);
 
       flZ += 0.0001;
     }
 
   }
 
+  Vector3 v1 = new Vector3(0.0, 0.0, 0.0);
+  Vector3 v2 = new Vector3(0.0, 0.0, 0.0);
+  Vector3 v3 = new Vector3(0.0, 0.0, 0.0);
+  Vector3 v4 = new Vector3(0.0, 0.0, 0.0);
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint, {List<Object>cache:null}) {
     if (curImage != null) {
       flush();
     }
-    int bi = vertices.length;
+    int bi = _vertices.length;
     Matrix4 m = calcMat();
     double d = math.sqrt(math.pow(p1.x-p2.x, 2)+ math.pow(p1.y-p2.y, 2));
     double dy = -1*paint.strokeWidth*(p2.x-p1.x)/(d*2);
@@ -148,23 +152,23 @@ class TinyFlutterNCanvas extends TinyCanvas {
     double ex = p2.x;
     double ey = p2.y;
 
-    Vector3 v1 = new Vector3(sx-dx, sy-dy, 0.0);
-    Vector3 v2 = new Vector3(sx+dx, sy+dy, 0.0);
-    Vector3 v3 = new Vector3(ex+dx, ey+dy, 0.0);
-    Vector3 v4 = new Vector3(ex-dx, ey-dy, 0.0);
+    v1.x= sx-dx; v1.y =sy-dy; v1.z =0.0;
+    v2.x= sx+dx; v2.y=sy+dy;v2.z= 0.0;
+    v3.x=ex+dx; v3.y=ey+dy; v3.z=0.0;
+    v4.x=ex-dx;v4.y=ey-dy;v4.z=0.0;
     v1 = m * v1;
     v2 = m * v2;
     v3 = m * v3;
     v4 = m * v4;
-    vertices.addAll([
+    _vertices.addAll([
       new Point(v1.x, v1.y),
       new Point(v2.x, v2.y),
       new Point(v3.x, v3.y),
       new Point(v4.x, v4.y)
     ]);
     Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
-    colors.addAll([c, c, c, c]);
-    indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
+    _colors.addAll([c, c, c, c]);
+    _indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
   }
 
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null}) {
@@ -199,7 +203,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     if (curImage != null) {
       flush();
     }
-    int bi = vertices.length;
+    int bi = _vertices.length;
     Matrix4 m = calcMat();
     Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
     Vector3 v2 = new Vector3(rect.x, rect.y + rect.h, 0.0);
@@ -209,15 +213,15 @@ class TinyFlutterNCanvas extends TinyCanvas {
     v2 = m * v2;
     v3 = m * v3;
     v4 = m * v4;
-    vertices.addAll([
+    _vertices.addAll([
       new Point(v1.x, v1.y),
       new Point(v2.x, v2.y),
       new Point(v3.x, v3.y),
       new Point(v4.x, v4.y)
     ]);
     Color c = new Color.fromARGB(paint.color.a,paint.color.r,paint.color.g,paint.color.b);
-    colors.addAll([c, c, c, c]);
-    indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
+    _colors.addAll([c, c, c, c]);
+    _indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
   }
 
   void clearClip(TinyStage stage, {List<Object>cache:null}) {
@@ -258,46 +262,54 @@ class TinyFlutterNCanvas extends TinyCanvas {
       sky.ImageShader imgShader = new sky.ImageShader((curImage as TinyFlutterImage).rawImage, tmx, tmy, matrix4);
       p.shader = imgShader;
     }
-    canvas.drawVertices(sky.VertexMode.triangles, vertices, textureCoordinates,
-        colors, sky.TransferMode.color, indicies, p);
-    vertices.clear();
-    textureCoordinates.clear();
-    colors.clear();
-    indicies.clear();
+    canvas.drawVertices(sky.VertexMode.triangles, _vertices, _textureCoordinates,
+        _colors, sky.TransferMode.color, _indicies, p);
+    _vertices.clear();
+    _textureCoordinates.clear();
+    _colors.clear();
+    _indicies.clear();
     curImage = null;
   }
 
   TinyImage curImage = null;
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src,
       TinyRect dst, TinyPaint paint,{TinyCanvasTransform transform:TinyCanvasTransform.NONE, List<Object>cache:null}) {
-        if(curImage == null && indicies.length > 0) {
+
+        if(curImage == null && _indicies.length > 0) {
           flush();
         }
+
         if(curImage == null) {
           curImage = image;
         }
         if(curImage != null && curImage != image) {
           flush();
         }
-        int bi = vertices.length;
-        Matrix4 m = calcMat();
-        Vector3 v1 = new Vector3(dst.x, dst.y, 0.0);
-        Vector3 v2 = new Vector3(dst.x, dst.y + dst.h, 0.0);
-        Vector3 v3 = new Vector3(dst.x + dst.w, dst.y, 0.0);
-        Vector3 v4 = new Vector3(dst.x + dst.w, dst.y + dst.h, 0.0);
+        int bi = _vertices.length;
+        List primiveVertics = null;
+        List primitveColors = null;
+        List primitveTexInf = null;
+
+
+        Matrix4 m = this.getMatrix();
+        v1.x= dst.x; v1.y =dst.y; v1.z =0.0;
+        v2.x= dst.x; v2.y=dst.y + dst.h;v2.z= 0.0;
+        v3.x=dst.x + dst.w; v3.y=dst.y; v3.z=0.0;
+        v4.x=dst.x + dst.w; v4.y=dst.y + dst.h;v4.z=0.0;
 
         v1 = m * v1;
         v2 = m * v2;
         v3 = m * v3;
         v4 = m * v4;
-        vertices.addAll([
+        primiveVertics = [
           new Point(v1.x, v1.y),
           new Point(v2.x, v2.y),
           new Point(v3.x, v3.y),
           new Point(v4.x, v4.y)
-        ]);
+        ];
         Color c = new Color.fromARGB(0x00, 0x00, 0x00, 0x00);
-        colors.addAll([c,c,c,c]);
+        primitveColors = [c,c,c,c];
+
         {
           double xs = src.x;
           double ys = src.y;
@@ -305,52 +317,55 @@ class TinyFlutterNCanvas extends TinyCanvas {
           double ye = src.y+src.h;
           switch(transform) {
             case TinyCanvasTransform.NONE:
-              textureCoordinates.addAll(
+              primitveTexInf =
                 [new Point(xs, ys),new Point(xs, ye),
-                 new Point(xe, ys),new Point(xe, ye)]);
+                 new Point(xe, ys),new Point(xe, ye)];
             break;
             case TinyCanvasTransform.ROT90:
-              textureCoordinates.addAll(
+              primitveTexInf =
               [new Point(xs, ye),new Point(xe, ye),
-               new Point(xs, ys),new Point(xe, ys)]);
+               new Point(xs, ys),new Point(xe, ys)];
             break;
             case TinyCanvasTransform.ROT180:
-              textureCoordinates.addAll(
+              primitveTexInf =
               [new Point(xe, ye),new Point(xe, ys),
-               new Point(xs, ye),new Point(xs, ys)]);
+               new Point(xs, ye),new Point(xs, ys)];
             break;
             case TinyCanvasTransform.ROT270:
-              textureCoordinates.addAll(
+              primitveTexInf =
               [new Point(xe, ys),new Point(xs, ys),
-               new Point(xe, ye),new Point(xs, ye)]);
+               new Point(xe, ye),new Point(xs, ye)];
             break;
             case TinyCanvasTransform.MIRROR:
-              textureCoordinates.addAll(
+              primitveTexInf =
               [new Point(xe, ys),new Point(xe, ye),
-               new Point(xs, ys),new Point(xs, ye)]);
+               new Point(xs, ys),new Point(xs, ye)];
             break;
             case TinyCanvasTransform.MIRROR_ROT90:
-              textureCoordinates.addAll(
+              primitveTexInf =
               [new Point(xs, ys),new Point(xe, ys),
-               new Point(xs, ye),new Point(xe, ye)]);
+               new Point(xs, ye),new Point(xe, ye)];
             break;
             case TinyCanvasTransform.MIRROR_ROT180:
-              textureCoordinates.addAll(
+              primitveTexInf =
               [new Point(xs, ye),new Point(xs, ys),
-               new Point(xe, ye),new Point(xe, ys)]);
+               new Point(xe, ye),new Point(xe, ys)];
             break;
             case TinyCanvasTransform.MIRROR_ROT270:
-              textureCoordinates.addAll(
+              primitveTexInf =
               [new Point(xe, ye),new Point(xs, ye),
-               new Point(xe, ys),new Point(xs, ys)]);
+               new Point(xe, ys),new Point(xs, ys)];
             break;
             default:
-              textureCoordinates.addAll(
+              primitveTexInf =
                 [new Point(xs, ys),new Point(xs, ye),
-                 new Point(xe, ys),new Point(xe, ye)]);
+                 new Point(xe, ys),new Point(xe, ye)];
           }
         }
-        indicies.addAll([bi+0,bi+1,bi+2, bi+2,bi+1,bi+3]);
+        _vertices.addAll(primiveVertics);
+        _colors.addAll(primitveColors);
+        _textureCoordinates.addAll(primitveTexInf);
+        _indicies.addAll([bi+0,bi+1,bi+2, bi+2,bi+1,bi+3]);
   }
 
   void updateMatrix() {
