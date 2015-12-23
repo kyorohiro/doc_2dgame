@@ -13,6 +13,11 @@ abstract class SpriteSheet {
   factory SpriteSheet.bitmapfont(String json, int w, int h) {
     return new BitmapFont(json, w, h);
   }
+
+  TinyPaint p = new TinyPaint();
+  drawImage(TinyStage stage, TinyCanvas canvas, TinyImage image, String name) {
+    canvas.drawImageRect(stage, image, this[name].srcRect, this[name].dstRect, p);
+  }
 }
 
 abstract class SpriteSheetData {
@@ -28,7 +33,7 @@ class BitmapFont extends SpriteSheet {
   int imageHeight;
   BitmapFont(String json, this.imageWidth, this.imageHeight) {
     BitmapFontInfo info = new BitmapFontInfo.fromJson(json);
-    for (int key in info.r) {
+    for (int key in info.r.keys) {
       String name = new String.fromCharCode(key);
       BitmapFontData v = new BitmapFontData(name, info.r[key], imageWidth.toDouble(), imageHeight.toDouble());
       d[key] = v;
