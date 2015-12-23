@@ -29,7 +29,8 @@ class BitmapFontTest extends TinyDisplayObject {
     if(sheet == null) {
       return;
     }
-    sheet.drawImage(stage, canvas, image, "a");
+    sheet.drawText(stage, canvas, image, "abcdefghijklmn", 25.0, orientation: BitmapFontInfoType.horizontal);
+    sheet.drawText(stage, canvas, image, "abcdefghijklmn", 25.0, orientation: BitmapFontInfoType.vertical);
   }
 
 }

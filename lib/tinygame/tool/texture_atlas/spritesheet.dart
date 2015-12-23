@@ -15,8 +15,32 @@ abstract class SpriteSheet {
   }
 
   TinyPaint p = new TinyPaint();
-  drawImage(TinyStage stage, TinyCanvas canvas, TinyImage image, String name) {
-    canvas.drawImageRect(stage, image, this[name].srcRect, this[name].dstRect, p);
+  void drawImage(TinyStage stage, TinyCanvas canvas, TinyImage image, String name) {
+    if(this[name] != null) {
+      canvas.drawImageRect(stage, image, this[name].srcRect, this[name].dstRect, p);
+    }
+  }
+
+  void drawText(TinyStage stage, TinyCanvas canvas, TinyImage image, String text,
+    double size,
+    {TinyRect rect:null,BitmapFontInfoType orientation: BitmapFontInfoType.horizontal, double margine:5.0}) {
+    double x = 0.0;
+    double y = 0.0;
+    for(int i=0;i<text.length;i++) {
+      SpriteSheetData d = this[text[i]];
+      if(d == null) {x+=10;continue;}
+      TinyRect dstRect = d.dstRect;
+      dstRect.x += x;
+      dstRect.y += y;
+      dstRect.w = size * d.srcRect.w / d.srcRect.h;
+      dstRect.h = size;
+      canvas.drawImageRect(stage, image, d.srcRect, dstRect, p);
+      if(orientation == BitmapFontInfoType.horizontal) {
+        x += dstRect.w/2.0 + margine* d.srcRect.w / d.srcRect.h;
+      } else {
+        y += dstRect.h + margine;
+      }
+    }
   }
 }
 
