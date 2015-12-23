@@ -1,31 +1,29 @@
 part of tinygame_webgl;
 
 class TinyWebglLoader {
-
   static Future<ImageElement> loadImage(String path) async {
     Completer<ImageElement> c = new Completer();
-    ImageElement elm = new ImageElement(src:path);
-    elm.onLoad.listen((_){c.complete(elm);});
-    elm.onError.listen((_){c.completeError("failed to load image ${path}");});
+    ImageElement elm = new ImageElement(src: path);
+    elm.onLoad.listen((_) {
+      c.complete(elm);
+    });
+    elm.onError.listen((_) {
+      c.completeError("failed to load image ${path}");
+    });
     return c.future;
   }
 
   static Future<String> loadString(String path) async {
     return await HttpRequest.getString(path);
   }
-
 }
 
-
 class TinyWebglProgram {
-
   static Program compile(RenderingContext GL, String vs, String fs) {
     // setup shader
-    Shader vertexShader = loadShader(
-        GL, RenderingContext.VERTEX_SHADER, vs);
+    Shader vertexShader = loadShader(GL, RenderingContext.VERTEX_SHADER, vs);
 
-    Shader fragmentShader = loadShader(
-        GL, RenderingContext.FRAGMENT_SHADER, fs);
+    Shader fragmentShader = loadShader(GL, RenderingContext.FRAGMENT_SHADER, fs);
 
     Program shaderProgram = GL.createProgram();
     GL.attachShader(shaderProgram, fragmentShader);
@@ -51,8 +49,7 @@ class TinyWebglProgram {
   static Buffer createArrayBuffer(RenderingContext context, List data) {
     Buffer ret = context.createBuffer();
     context.bindBuffer(RenderingContext.ARRAY_BUFFER, ret);
-    context.bufferData(RenderingContext.ARRAY_BUFFER,
-        new Float32List.fromList(data), RenderingContext.STATIC_DRAW);
+    context.bufferData(RenderingContext.ARRAY_BUFFER, new Float32List.fromList(data), RenderingContext.STATIC_DRAW);
     context.bindBuffer(RenderingContext.ARRAY_BUFFER, null);
     return ret;
   }
@@ -60,8 +57,7 @@ class TinyWebglProgram {
   static Buffer createElementArrayBuffer(RenderingContext context, List data) {
     Buffer ret = context.createBuffer();
     context.bindBuffer(RenderingContext.ELEMENT_ARRAY_BUFFER, ret);
-    context.bufferDataTyped(RenderingContext.ELEMENT_ARRAY_BUFFER, new Uint16List.fromList(data),
-        RenderingContext.STATIC_DRAW);
+    context.bufferDataTyped(RenderingContext.ELEMENT_ARRAY_BUFFER, new Uint16List.fromList(data), RenderingContext.STATIC_DRAW);
     context.bindBuffer(RenderingContext.ELEMENT_ARRAY_BUFFER, null);
     return ret;
   }
@@ -80,5 +76,4 @@ class TinyWebglProgram {
     var location = context.getUniformLocation(program, name);
     context.uniformMatrix4fv(location, false, new Float32List.fromList(v.storage));
   }
-
 }

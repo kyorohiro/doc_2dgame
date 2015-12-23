@@ -1,6 +1,5 @@
 part of tinygame_webgl;
 
-
 class TinyWebglStage extends Object with TinyStage {
   TinyWebglContext glContext;
   double get x => 0.0;
@@ -18,11 +17,11 @@ class TinyWebglStage extends Object with TinyStage {
   bool animeIsStart = false;
   int animeId = 0;
   int paintInterval;
+  int tickInterval;
   TinyGameBuilder _builder;
   TinyGameBuilder get builder => _builder;
 
-  TinyWebglStage(this._builder, TinyDisplayObject root,
-      {width: 600.0, height: 400.0, this.paintInterval:40}) {
+  TinyWebglStage(this._builder, TinyDisplayObject root, {width: 600.0, height: 400.0, this.tickInterval: 15, this.paintInterval: 40}) {
     glContext = new TinyWebglContext(width: width, height: height);
     this.root = root;
     mouseTest();
@@ -53,18 +52,18 @@ class TinyWebglStage extends Object with TinyStage {
     TinyCanvas c = null;
     //if(isTMode==false)
     {
-    //  c = new TinyWebglCanvas(glContext);
-    //} else {
+      //  c = new TinyWebglCanvas(glContext);
+      //} else {
       c = new TinyWebglCanvasTS(glContext);
     }
     while (animeIsStart) {
-      await new Future.delayed(new Duration(milliseconds: 15));
+      await new Future.delayed(new Duration(milliseconds: tickInterval));
       num currentTime = new DateTime.now().millisecondsSinceEpoch;
       lastUpdateTime = currentTime;
 
       num s = (currentTime - prevTime);
       kick((prevTime + s).toInt());
-     // kick((prevTime + s).toInt());
+      // kick((prevTime + s).toInt());
       sum += s;
       sum_a += s;
       if (s < 0) {}
@@ -72,7 +71,7 @@ class TinyWebglStage extends Object with TinyStage {
       prevTime = currentTime;
       markNeedsPaint();
       if (isPaint && sum_a > paintInterval) {
-        new Future((){
+        new Future(() {
           c.clear();
           kickPaint(this, c);
           c.flush();
@@ -98,31 +97,25 @@ class TinyWebglStage extends Object with TinyStage {
     oStu(TouchEvent e) {
       tappedEventTime = lastUpdateTime;
       for (Touch t in e.changedTouches) {
-        int x = t.page.x-glContext._canvasElement.offsetLeft;
-        int y = t.page.y-glContext._canvasElement.offsetTop;
-          if (touchs.containsKey(t.identifier)) {
-            kickTouch(this, t.identifier+1, TinyStagePointerType.MOVE,
-                x.toDouble(),
-                y.toDouble());
-          } else {
-            touchs[t.identifier] = t;
-            kickTouch(this, t.identifier+1, TinyStagePointerType.DOWN,
-                x.toDouble(),
-                y.toDouble());
-          }
+        int x = t.page.x - glContext._canvasElement.offsetLeft;
+        int y = t.page.y - glContext._canvasElement.offsetTop;
+        if (touchs.containsKey(t.identifier)) {
+          kickTouch(this, t.identifier + 1, TinyStagePointerType.MOVE, x.toDouble(), y.toDouble());
+        } else {
+          touchs[t.identifier] = t;
+          kickTouch(this, t.identifier + 1, TinyStagePointerType.DOWN, x.toDouble(), y.toDouble());
+        }
       }
     }
     oEnd(TouchEvent e) {
       tappedEventTime = lastUpdateTime;
       for (Touch t in e.changedTouches) {
-          if (touchs.containsKey(t.identifier)) {
-            int x = t.page.x-glContext._canvasElement.offsetLeft;
-            int y = t.page.y-glContext._canvasElement.offsetTop;
-            touchs.remove(t.identifier);
-            kickTouch(this, t.identifier+1, TinyStagePointerType.UP,
-                x.toDouble(),
-                y.toDouble());
-          }
+        if (touchs.containsKey(t.identifier)) {
+          int x = t.page.x - glContext._canvasElement.offsetLeft;
+          int y = t.page.y - glContext._canvasElement.offsetTop;
+          touchs.remove(t.identifier);
+          kickTouch(this, t.identifier + 1, TinyStagePointerType.UP, x.toDouble(), y.toDouble());
+        }
       }
     }
     glContext._canvasElement.onTouchCancel.listen(oEnd);
@@ -136,62 +129,64 @@ class TinyWebglStage extends Object with TinyStage {
   void mouseTest() {
     bool isTap = false;
     glContext.canvasElement.onMouseDown.listen((MouseEvent e) {
-      if(tappedEventTime + 500 < lastUpdateTime) {
-       //print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
-      isTap = true;
-      kickTouch(
-          this, 0, TinyStagePointerType.DOWN, e.offset.x.toDouble(), e.offset.y.toDouble());
-    }});
+      if (tappedEventTime + 500 < lastUpdateTime) {
+        //print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        isTap = true;
+        kickTouch(this, 0, TinyStagePointerType.DOWN, e.offset.x.toDouble(), e.offset.y.toDouble());
+      }
+    });
     glContext.canvasElement.onMouseUp.listen((MouseEvent e) {
-      if(tappedEventTime + 500 < lastUpdateTime) {
-      //print("up offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
-      if (isTap == true) {
-        kickTouch(
-            this, 0, TinyStagePointerType.UP, e.offset.x.toDouble(), e.offset.y.toDouble());
-        isTap = false;
+      if (tappedEventTime + 500 < lastUpdateTime) {
+        //print("up offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        if (isTap == true) {
+          kickTouch(this, 0, TinyStagePointerType.UP, e.offset.x.toDouble(), e.offset.y.toDouble());
+          isTap = false;
+        }
       }
-    }});
+    });
     glContext.canvasElement.onMouseEnter.listen((MouseEvent e) {
-      if(tappedEventTime + 500 < lastUpdateTime) {
-      // print("enter offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
-      if (isTap == true) {
-        //root.touch(this, 0, "pointercancel", e.offsetX.toDouble(), e.offsetY.toDouble());
+      if (tappedEventTime + 500 < lastUpdateTime) {
+        // print("enter offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        if (isTap == true) {
+          //root.touch(this, 0, "pointercancel", e.offsetX.toDouble(), e.offsetY.toDouble());
+        }
       }
-    }});
+    });
     glContext.canvasElement.onMouseLeave.listen((MouseEvent e) {
-      if(tappedEventTime + 500 < lastUpdateTime) {
-     //  print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
-      if (isTap == true) {
-        kickTouch(this, 0, TinyStagePointerType.CANCEL, e.offset.x.toDouble(),
-            e.offset.y.toDouble());
-        isTap = false;
+      if (tappedEventTime + 500 < lastUpdateTime) {
+        //  print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        if (isTap == true) {
+          kickTouch(this, 0, TinyStagePointerType.CANCEL, e.offset.x.toDouble(), e.offset.y.toDouble());
+          isTap = false;
+        }
       }
-    }});
+    });
     glContext.canvasElement.onMouseMove.listen((MouseEvent e) {
-      if(tappedEventTime + 500 < lastUpdateTime) {
-      //print("move offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
-      if (isTap == true) {
-        kickTouch(this, 0, TinyStagePointerType.MOVE, e.offset.x.toDouble(),
-            e.offset.y.toDouble());
+      if (tappedEventTime + 500 < lastUpdateTime) {
+        //print("move offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        if (isTap == true) {
+          kickTouch(this, 0, TinyStagePointerType.MOVE, e.offset.x.toDouble(), e.offset.y.toDouble());
+        }
       }
-    }});
+    });
 
     glContext.canvasElement.onMouseOut.listen((MouseEvent e) {
-      if(tappedEventTime + 500 < lastUpdateTime) {
-     // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
-      if (isTap == true) {
-        kickTouch(this, 0, TinyStagePointerType.CANCEL, e.offset.x.toDouble(),
-            e.offset.y.toDouble());
-        isTap = false;
+      if (tappedEventTime + 500 < lastUpdateTime) {
+        // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        if (isTap == true) {
+          kickTouch(this, 0, TinyStagePointerType.CANCEL, e.offset.x.toDouble(), e.offset.y.toDouble());
+          isTap = false;
+        }
       }
-    }});
+    });
 
     glContext.canvasElement.onMouseOver.listen((MouseEvent e) {
-      if(tappedEventTime + 500 < lastUpdateTime) {
-      // print("over offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
-      if (isTap == true) {
-        // root.touch(this, 0, event.type, e.offsetX.toDouble(), e.offsetY.toDouble());
+      if (tappedEventTime + 500 < lastUpdateTime) {
+        // print("over offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        if (isTap == true) {
+          // root.touch(this, 0, event.type, e.offsetX.toDouble(), e.offsetY.toDouble());
+        }
       }
-    }});
+    });
   }
 }
