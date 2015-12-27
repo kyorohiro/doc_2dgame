@@ -4,12 +4,13 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
   String assetsRoot;
   bool tickInPerFrame = true;
   bool useTestCanvas = false;
+  bool useDrawVertexForPrimtive = false;
   TinyFlutterAudioManager audioManager = new TinyFlutterAudioManager();
 
   TinyGameBuilderForFlutter({this.assetsRoot:"web/"}) {}
 
   TinyStage createStage(TinyDisplayObject root) {
-    return new TinyFlutterStage(this, root,tickInPerFrame:tickInPerFrame, useTestCanvas:useTestCanvas);
+    return new TinyFlutterStage(this, root,tickInPerFrame:tickInPerFrame, useTestCanvas:useTestCanvas, useDrawVertexForPrimtive:useDrawVertexForPrimtive);
   }
 
   Future<TinyImage> loadImageBase(String path) async {

@@ -81,7 +81,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
 //      if (count > 10) {
       if (count > 40) {
-        print("###fps  ${sum~/count}");
+        print("###fps  ${1000~/(sum~/count)}");
         sum = 0.0;
         count = 0;
       }

@@ -4,11 +4,6 @@ class TinyFlutterCanvas extends TinyCanvas {
   Canvas canvas;
   TinyFlutterCanvas(this.canvas) {}
 
-  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint,{List<Object>cache:null}) {
-    Paint p = toPaint(paint);
-    canvas.drawOval(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h), p);
-  }
-
   Paint toPaint(TinyPaint p) {
     Paint pp = new Paint();
     pp.color = new Color(p.color.value);
@@ -32,6 +27,11 @@ class TinyFlutterCanvas extends TinyCanvas {
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object>cache:null}) {
     canvas.drawRect(
         new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h), toPaint(paint));
+  }
+
+  void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint,{List<Object>cache:null}) {
+    Paint p = toPaint(paint);
+    canvas.drawOval(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h), p);
   }
 
   void clipRect(TinyStage stage, TinyRect rect, {List<Object>cache:null}) {
