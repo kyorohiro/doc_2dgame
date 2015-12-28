@@ -53,6 +53,10 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
     }
     return ret;
   }
+
+  Future<String> getLocale() async {
+    return "en";
+  }
 }
 
 class TinyFlutterFile extends TinyFile {

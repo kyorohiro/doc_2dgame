@@ -55,6 +55,7 @@ abstract class TinyGameBuilder {
 
   Future<TinyFile> loadFile(String name);
   Future<List<String>> getFiles();
+  Future<String> getLocale();
 }
 
 abstract class TinyFile {

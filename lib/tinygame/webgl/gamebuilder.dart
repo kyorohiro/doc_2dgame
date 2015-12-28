@@ -76,4 +76,8 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
     }
     return ret;
   }
+
+  Future<String> getLocale() async {
+    return window.navigator.language;
+  }
 }
