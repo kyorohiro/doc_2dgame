@@ -7,7 +7,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   List<Point> _textureCoordinates = [];
   List<Color> _colors = [];
   List<int> _indicies = [];
-
+  TinyImage _curImage = null;
   int _numOfCircleElm;
   int get numOfCircleElm => _numOfCircleElm;
   bool useDrawVertexForPrimtive;
@@ -27,7 +27,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   }
 
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object> cache: null}) {
-    if (curImage != null) {
+    if (_curImage != null) {
       flush();
     }
     if (useDrawVertexForPrimtive) {
@@ -49,7 +49,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   }
 
   void drawStrokeOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
-    if (curImage != null) {
+    if (_curImage != null) {
       flush();
     }
     double cx = rect.x + rect.w / 2.0;
@@ -99,7 +99,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
   Vector3 s = new Vector3(0.0, 0.0, 0.0);
   void drawFillOval(TinyStage stage, TinyRect rect, TinyPaint paint) {
-    if (curImage != null) {
+    if (_curImage != null) {
       flush();
     }
     double cx = rect.x + rect.w / 2.0;
@@ -151,7 +151,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   Vector3 v3 = new Vector3(0.0, 0.0, 0.0);
   Vector3 v4 = new Vector3(0.0, 0.0, 0.0);
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint, {List<Object> cache: null}) {
-    if (curImage != null) {
+    if (_curImage != null) {
       flush();
     }
     int bi = _vertices.length;
@@ -187,7 +187,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   }
 
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object> cache: null}) {
-    if (curImage != null) {
+    if (_curImage != null) {
       flush();
     }
     if (useDrawVertexForPrimtive) {
@@ -224,7 +224,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   }
 
   void drawStrokeRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
-    if (curImage != null) {
+    if (_curImage != null) {
       flush();
     }
     double sx = rect.x;
@@ -240,7 +240,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   }
 
   void drawFillRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
-    if (curImage != null) {
+    if (_curImage != null) {
       flush();
     }
     int bi = _vertices.length;
@@ -301,11 +301,11 @@ class TinyFlutterNCanvas extends TinyCanvas {
 
   flush() {
     Paint p = new Paint()..style = sky.PaintingStyle.fill;
-    if (curImage != null) {
+    if (_curImage != null) {
       sky.TileMode tmx = sky.TileMode.clamp;
       sky.TileMode tmy = sky.TileMode.clamp;
       data.Float64List matrix4 = new Matrix4.identity().storage;
-      sky.ImageShader imgShader = new sky.ImageShader((curImage as TinyFlutterImage).rawImage, tmx, tmy, matrix4);
+      sky.ImageShader imgShader = new sky.ImageShader((_curImage as TinyFlutterImage).rawImage, tmx, tmy, matrix4);
       p.shader = imgShader;
     }
     canvas.drawVertices(sky.VertexMode.triangles, _vertices, _textureCoordinates, _colors, sky.TransferMode.color, _indicies, p);
@@ -313,21 +313,21 @@ class TinyFlutterNCanvas extends TinyCanvas {
     _textureCoordinates.clear();
     _colors.clear();
     _indicies.clear();
-    curImage = null;
+    _curImage = null;
   }
 
-  TinyImage curImage = null;
+
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform: TinyCanvasTransform.NONE, List<Object> cache: null}) {
-    if (curImage == null && _indicies.length > 0) {
+    if (_curImage == null && _indicies.length > 0) {
+      flush();
+    } else if (_curImage != null && _curImage != image) {
       flush();
     }
 
-    if (curImage == null) {
-      curImage = image;
+    if (_curImage == null) {
+      _curImage = image;
     }
-    if (curImage != null && curImage != image) {
-      flush();
-    }
+
     int bi = _vertices.length;
     List primiveVertics = null;
     List primitveColors = null;
