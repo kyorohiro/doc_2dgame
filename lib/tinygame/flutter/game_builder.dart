@@ -55,6 +55,6 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
   }
 
   Future<String> getLocale() async {
-    return "en";
+    return sky.window.locale.languageCode;
   }
 }
