@@ -9,7 +9,7 @@ class StartScene extends TinyDisplayObject {
   Snows snows = new Snows();
   TinyButton sound = null;
   StartScene(this.builder, this.root) {
-    builder.loadImage("assets/se_start.gif").then((v) {
+    builder.loadImage("assets/se_start.png").then((v) {
       bgimg = v;
       snows.bgimg = bgimg;
     });
