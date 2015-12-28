@@ -14,7 +14,7 @@ class PrepareScene extends TinyDisplayObject {
   ScoreUI no3;
 
   PrepareScene(this.builder, this.root) {
-    builder.loadImage("assets/se_setting.gif").then((v){
+    builder.loadImage("assets/se_setting.png").then((v){
       bgimg = v;
       srcRect = new TinyRect(0.0, 0.0, bgimg.w.toDouble(), bgimg.h.toDouble());
       dstRect = new TinyRect(0.0, 0.0, 400.0, 300.0);
@@ -22,7 +22,7 @@ class PrepareScene extends TinyDisplayObject {
       no2.image = v;
       no3.image = v;
     });
- 
+
     builder.loadStringBase("assets/se_setting.json").then((String x) {
       spriteInfo = new SpriteSheetInfo.fronmJson(x);
       no1.spriteInfo = spriteInfo;
@@ -33,7 +33,7 @@ class PrepareScene extends TinyDisplayObject {
     TinyButton level1 = new TinyButton("L01", 45.0, 45.0, onLevelButton);
     level1.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     level1.mat.translate(50+20.0,50.0,0.0);
-    
+
     TinyButton level2 = new TinyButton("L02", 45.0, 45.0, onLevelButton);
     level2.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     level2.mat.translate(50+70.0,50.0,0.0);
@@ -76,7 +76,7 @@ class PrepareScene extends TinyDisplayObject {
     startB.bgcolorOff = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     addChild(startB);
   }
-  
+
   double chX = 0.0;
   double chY = 0.0;
   onLevelButton(String id){
@@ -110,7 +110,7 @@ class PrepareScene extends TinyDisplayObject {
       case "BACK":
         this.root.clearChild().then((_){
           root.game.start();
-          this.root.addChild(root.startScene);        
+          this.root.addChild(root.startScene);
         });
         break;
     }
@@ -121,7 +121,7 @@ class PrepareScene extends TinyDisplayObject {
     this.root.clearChild().then((_){
       print("### level =  ${level}");
       root.game.start();
-      this.root.addChild(root.playScene.initFromLevel(level));//new PlayScene(builder,root, root.game, level:level));        
+      this.root.addChild(root.playScene.initFromLevel(level));//new PlayScene(builder,root, root.game, level:level));
     });
   }
 
@@ -130,12 +130,12 @@ class PrepareScene extends TinyDisplayObject {
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
-      if(bgimg != null&& spriteInfo != null) {       
-        canvas.drawImageRect(stage, bgimg, 
+      if(bgimg != null&& spriteInfo != null) {
+        canvas.drawImageRect(stage, bgimg,
             spriteInfo.frameFromFileName("BG001.png").srcRect,
             //srcRect,
             dstRect, p);
-        canvas.drawImageRect(stage, bgimg, 
+        canvas.drawImageRect(stage, bgimg,
             spriteInfo.frameFromFileName("CH001.png").srcRect,
             //srcRect,
             new TinyRect(chX, chY,35.0,35.0), p);
