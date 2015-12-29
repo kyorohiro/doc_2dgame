@@ -21,6 +21,8 @@ class TinyWebglStage extends Object with TinyStage {
   TinyGameBuilder _builder;
   TinyGameBuilder get builder => _builder;
 
+  int countKickMv = 0;
+
   TinyWebglStage(this._builder, TinyDisplayObject root, {width: 600.0, height: 400.0, this.tickInterval: 15, this.paintInterval: 40}) {
     glContext = new TinyWebglContext(width: width, height: height);
     this.root = root;
@@ -48,25 +50,27 @@ class TinyWebglStage extends Object with TinyStage {
     double sum_a = 0.0;
     int count = 0;
 
-    num prevTime = new DateTime.now().millisecond;
-    TinyCanvas c = null;
-    //if(isTMode==false)
-    {
-      //  c = new TinyWebglCanvas(glContext);
-      //} else {
-      c = new TinyWebglCanvasTS(glContext);
-    }
+    num prevTime = new DateTime.now().millisecondsSinceEpoch;
+    TinyCanvas c = new TinyWebglCanvasTS(glContext);
+    int interval = tickInterval;
+    int prevInterval = tickInterval;
     while (animeIsStart) {
-      await new Future.delayed(new Duration(milliseconds: tickInterval));
+      {
+       int t = tickInterval-(interval-prevInterval);
+       if(t < 5) {
+         t = 5;
+       }
+       prevInterval = t;
+        await new Future.delayed(new Duration(milliseconds: t));
+        countKickMv = 0;
+      }
       num currentTime = new DateTime.now().millisecondsSinceEpoch;
       lastUpdateTime = currentTime;
 
-      num s = (currentTime - prevTime);
-      kick((prevTime + s).toInt());
-      // kick((prevTime + s).toInt());
-      sum += s;
-      sum_a += s;
-      if (s < 0) {}
+      interval = (currentTime - prevTime);
+      kick((prevTime + interval).toInt());
+      sum += interval;
+      sum_a += interval;
       count++;
       prevTime = currentTime;
       markNeedsPaint();
@@ -79,8 +83,7 @@ class TinyWebglStage extends Object with TinyStage {
         isPaint = false;
         sum_a = 0.0;
       }
-//      if (count > 10) {
-      if (count > 40) {
+      if (count > 60) {
         print("###fps  ${1000~/(sum~/count)}");
         sum = 0.0;
         count = 0;
@@ -95,12 +98,16 @@ class TinyWebglStage extends Object with TinyStage {
   void touchTtest() {
     Map touchs = {};
     oStu(TouchEvent e) {
+      e.preventDefault();
       tappedEventTime = lastUpdateTime;
       for (Touch t in e.changedTouches) {
         int x = t.page.x - glContext._canvasElement.offsetLeft;
         int y = t.page.y - glContext._canvasElement.offsetTop;
         if (touchs.containsKey(t.identifier)) {
+          countKickMv++;
+          //if(countKickMv < 3) {
           kickTouch(this, t.identifier + 1, TinyStagePointerType.MOVE, x.toDouble(), y.toDouble());
+          //}
         } else {
           touchs[t.identifier] = t;
           kickTouch(this, t.identifier + 1, TinyStagePointerType.DOWN, x.toDouble(), y.toDouble());
@@ -108,6 +115,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
     }
     oEnd(TouchEvent e) {
+      e.preventDefault();
       tappedEventTime = lastUpdateTime;
       for (Touch t in e.changedTouches) {
         if (touchs.containsKey(t.identifier)) {
@@ -129,6 +137,7 @@ class TinyWebglStage extends Object with TinyStage {
   void mouseTest() {
     bool isTap = false;
     glContext.canvasElement.onMouseDown.listen((MouseEvent e) {
+      e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         //print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         isTap = true;
@@ -136,6 +145,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
     });
     glContext.canvasElement.onMouseUp.listen((MouseEvent e) {
+      e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         //print("up offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         if (isTap == true) {
@@ -145,6 +155,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
     });
     glContext.canvasElement.onMouseEnter.listen((MouseEvent e) {
+      e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         // print("enter offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         if (isTap == true) {
@@ -153,6 +164,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
     });
     glContext.canvasElement.onMouseLeave.listen((MouseEvent e) {
+      e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         //  print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         if (isTap == true) {
@@ -162,6 +174,7 @@ class TinyWebglStage extends Object with TinyStage {
       }
     });
     glContext.canvasElement.onMouseMove.listen((MouseEvent e) {
+      e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         //print("move offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         if (isTap == true) {
@@ -171,6 +184,7 @@ class TinyWebglStage extends Object with TinyStage {
     });
 
     glContext.canvasElement.onMouseOut.listen((MouseEvent e) {
+      e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         // print("out offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         if (isTap == true) {
@@ -181,6 +195,7 @@ class TinyWebglStage extends Object with TinyStage {
     });
 
     glContext.canvasElement.onMouseOver.listen((MouseEvent e) {
+      e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         // print("over offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         if (isTap == true) {

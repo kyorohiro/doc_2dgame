@@ -63,8 +63,8 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   bool useTestCanvas = false;// use drawVertex
   bool tickInPerFrame;
   bool useDrawVertexForPrimtive;
-
-  TinyFlutterStage(this._builder, TinyDisplayObject root,{this.tickInPerFrame:true, this.useTestCanvas:false,this.useDrawVertexForPrimtive:false}) {
+  int tickInterval;
+  TinyFlutterStage(this._builder, TinyDisplayObject root,{this.tickInPerFrame:true, this.useTestCanvas:false,this.useDrawVertexForPrimtive:false,this.tickInterval:15}) {
     this.root = root;
     this.canvas = null;
     init();
@@ -92,11 +92,15 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     while (animeIsStart == true) {
       int a2 = new DateTime.now().millisecondsSinceEpoch;
       _innerTick(new Duration(milliseconds: new DateTime.now().millisecondsSinceEpoch));
-      int t = 20-(a2-a1);
-      a1 = a2;
+      int t = this.tickInterval+(this.tickInterval-(a2-a1));
+
       if(t < 5) {
         t = 5;
+      } else if(t > this.tickInterval) {
+        t = this.tickInterval;
       }
+      //print("## ${t} ${(a2-a1)}");
+     a1 = a2;
       await new Future.delayed(new Duration(milliseconds: t));
     }
   }
@@ -110,7 +114,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     }
     if(timeCount > 60) {
       int cTimeEpoc = timeStamp.inMilliseconds;
-      print("fps[A]? : ${1000~/((cTimeEpoc-timeEpoc)/timeCount)}");
+      print("fps[A]? : ${1000~/((cTimeEpoc-timeEpoc)/timeCount)} ${timeCount} ${(cTimeEpoc-timeEpoc)/timeCount}");
       timeCount = 0;
       timeEpoc = cTimeEpoc;
     }
