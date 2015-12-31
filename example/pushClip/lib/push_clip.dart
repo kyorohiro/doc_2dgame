@@ -7,21 +7,28 @@ class PrimitiveTest extends TinyDisplayObject {
   TinyImage image = null;
   PrimitiveTest(this.builder) {}
 
+  double i = 1.0;
   void onPaint(TinyStage stage, TinyCanvas canvas) {
+    i+=0.1;
     TinyPaint p = new TinyPaint();
     p.color = new TinyColor.argb(0x55, 0xff, 0x44, 0x44);
     canvas.drawRect(null, new TinyRect(0.0, 0.0, 400.0, 300.0), p);
-    canvas.pushMulMatrix(
-      new Matrix4.identity()
-      ..translate(200.0, 150.0, 0.0)
-      ..rotateZ(3.14/4)
-      ..translate(-50.0, -50.0, 0.0)
-    );
-//    canvas.pushMulMatrix(new Matrix4.translationValues(200.0, 100.0, 0.0));
-    canvas.pushClipRect(stage, new TinyRect(0.0, 0.0, 50.0, 200.0));
-    canvas.drawRect(null, new TinyRect(0.0, 0.0, 100.0, 100.0), p);
-    canvas.popMatrix();
-    canvas.popClipRect(stage);
 
+    Matrix4 m = new Matrix4.identity()
+    ..translate(200.0, 150.0, 0.0)
+    ..rotateZ(i*3.14/4)
+    ..translate(-50.0, -50.0, 0.0);
+
+    canvas.pushMulMatrix(m);
+    canvas.pushClipRect(stage, new TinyRect(0.0, 0.0, 100.0, 100.0));
+    canvas.popMatrix();
+    canvas.drawRect(null, new TinyRect(0.0, 0.0, 400.0, 300.0), p);
+    canvas.pushMulMatrix(m);
+
+    canvas.pushClipRect(stage, new TinyRect(0.0, 0.0, 50.0, 50.0));
+    canvas.popMatrix();
+    canvas.drawRect(null, new TinyRect(0.0, 0.0, 400.0, 300.0), p);
+    canvas.popClipRect(stage);
+    canvas.popClipRect(stage);
   }
 }

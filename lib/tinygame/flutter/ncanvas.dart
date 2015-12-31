@@ -294,6 +294,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     path.lineTo(v2.x, v2.y);
     path.lineTo(v3.x, v3.y);
     path.lineTo(v4.x, v4.y);
+    //print("v1:${v1.x} ${v1.y}, v2:${v2.x} ${v2.y}, v3:${v3.x} ${v3.y}, v4:${v4.x} ${v4.y}");
     canvas.clipPath(path);
   }
 
