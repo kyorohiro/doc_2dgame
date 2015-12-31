@@ -216,8 +216,10 @@ class TinyWebglCanvasTS extends TinyCanvas {
     }
   }
 
-  void drawFillRect(TinyStage stage, TinyRect rect, TinyPaint paint) {
-    Matrix4 m = calcMat();
+  void drawFillRect(TinyStage stage, TinyRect rect, TinyPaint paint,{Matrix4 m:null}) {
+    if(m == null) {
+      m = calcMat();
+    }
     double sx = rect.x;
     double sy = rect.y;
     double ex = rect.x + rect.w;
@@ -387,7 +389,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
 
     TinyPaint p = new TinyPaint();
     p.color = new TinyColor.argb(0xff, 0xff, 0xff, 0xff);
-    drawRect(null, rect, p);
+    drawFillRect(null, rect, p, m:m);
     flush();
     //
 
