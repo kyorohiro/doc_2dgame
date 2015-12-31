@@ -10,13 +10,14 @@ part 'tinygame/displayobject.dart';
 part 'tinygame/env.dart';
 part 'tinygame/util.dart';
 part 'tinygame/gameroot.dart';
-part 'tinygame/button.dart';
+
 part 'tinygame/canvas.dart';
 part 'tinygame/stage.dart';
 part 'tinygame/sprite.dart';
-part 'tinygame/joystick.dart';
-part 'tinygame/audio.dart';
 
+part 'tinygame/audio.dart';
+part 'tinygame/tool/controller/button.dart';
+part 'tinygame/tool/controller/joystick.dart';
 part 'tinygame/tool/scroll.dart';
 part 'tinygame/tool/seekbar.dart';
 part 'tinygame/tool/texture_atlas/spritesheet.dart';
