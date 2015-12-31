@@ -11,8 +11,8 @@ abstract class TinyCanvas {
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform, List<Object> cache: null});
 
   List<Matrix4> mats = [new Matrix4.identity()];
-  List<TinyRect> clip = [];
-
+  List<TinyRect> stockClipRect = [];
+  List<Matrix4> stockClipMat = [];
   clear() {
     ;
   }
@@ -38,17 +38,17 @@ abstract class TinyCanvas {
   void updateMatrix();
 
   void pushClipRect(TinyStage stage, TinyRect rect) {
-    clip.add(rect);
+    stockClipRect.add(rect);
+    stockClipMat.add(getMatrix());
     clipRect(stage, rect);
   }
 
   void popClipRect(TinyStage stage) {
-    clip.removeLast();
-    if (clip.length > 0) {
-      clipRect(stage, clip.last);
+    stockClipRect.removeLast();
+    if (stockClipRect.length > 0) {
+      clipRect(stage, stockClipRect.last, m:stockClipMat.last);
     } else {
-      TinyRect r = new TinyRect(0.0, 0.0, stage.w, stage.h);
-      clipRect(stage, r);
+      clearClip(stage);
     }
   }
   //
