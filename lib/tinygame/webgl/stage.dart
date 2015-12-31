@@ -23,8 +23,8 @@ class TinyWebglStage extends Object with TinyStage {
 
   int countKickMv = 0;
 
-  TinyWebglStage(this._builder, TinyDisplayObject root, {width: 600.0, height: 400.0, this.tickInterval: 15, this.paintInterval: 40}) {
-    glContext = new TinyWebglContext(width: width, height: height);
+  TinyWebglStage(this._builder, TinyDisplayObject root, {width: 600.0, height: 400.0, String selectors:null, this.tickInterval: 15, this.paintInterval: 40}) {
+    glContext = new TinyWebglContext(width: width, height: height,selectors: selectors);
     this.root = root;
     mouseTest();
     touchTtest();

@@ -376,7 +376,7 @@ class TinyWebglCanvasTS extends TinyCanvas {
     GL.clearStencil(0);
   }
 
-  void clipRect(TinyStage stage, TinyRect rect, {List<Object> cache: null}) {
+  void clipRect(TinyStage stage, TinyRect rect, {Matrix4 m:null}) {
     flush();
     GL.colorMask(false, false, false, false);
     GL.depthMask(false);

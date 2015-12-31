@@ -6,12 +6,13 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
   int height = 400;
   int paintInterval = 40;
   int tickInterval = 15;
+  String selectors = null;
   TinyGameBuilderForWebgl({this.assetsRoot:""}) {
 
   }
 
   TinyStage createStage(TinyDisplayObject root) {
-    return new TinyWebglStage(this, root, width:width, height:height, tickInterval:tickInterval, paintInterval:paintInterval);
+    return new TinyWebglStage(this, root, width:width, height:height, selectors:selectors, tickInterval:tickInterval, paintInterval:paintInterval);
   }
 
   Future<TinyImage> loadImageBase(String path) async {
