@@ -22,9 +22,10 @@ class TinyWebglStage extends Object with TinyStage {
   TinyGameBuilder get builder => _builder;
 
   int countKickMv = 0;
+  num prevTime = 0;
 
-  TinyWebglStage(this._builder, TinyDisplayObject root, {width: 600.0, height: 400.0, String selectors:null, this.tickInterval: 15, this.paintInterval: 40}) {
-    glContext = new TinyWebglContext(width: width, height: height,selectors: selectors);
+  TinyWebglStage(this._builder, TinyDisplayObject root, {width: 600.0, height: 400.0, String selectors: null, this.tickInterval: 15, this.paintInterval: 40}) {
+    glContext = new TinyWebglContext(width: width, height: height, selectors: selectors);
     this.root = root;
     mouseTest();
     touchTtest();
@@ -33,61 +34,74 @@ class TinyWebglStage extends Object with TinyStage {
   bool isPaint = false;
   void markNeedsPaint() {
     isPaint = true;
+    start(oneshot: true);
   }
 
   void init() {}
 
-  void start() {
-    if (animeIsStart == false) {
+  void start({oneshot:false}) {
+    if (oneshot == false && animeIsStart == false) {
       animeIsStart = true;
+    }
+    if(_animeIsOn == false) {
       _anime();
     }
   }
 
   bool isTMode = false;
+  bool _animeIsOn = false;
   Future _anime() async {
-    double sum = 0.0;
-    double sum_a = 0.0;
-    int count = 0;
+    _animeIsOn = true;
+    try {
+      double sum = 0.0;
+      double sum_a = 0.0;
+      int count = 0;
+      TinyCanvas c = new TinyWebglCanvasTS(glContext);
+      int interval = tickInterval;
+      int prevInterval = tickInterval;
+      if (prevTime == null || prevTime == 0) {
+        prevTime = new DateTime.now().millisecondsSinceEpoch;
+      }
+      do {
+        {
+          int t = tickInterval - (interval - prevInterval);
+          if (t < 5) {
+            t = 5;
+          } else if (t > tickInterval) {
+            t = tickInterval;
+          }
+          prevInterval = t;
+          await new Future.delayed(new Duration(milliseconds: t));
+          countKickMv = 0;
+        }
+        num currentTime = new DateTime.now().millisecondsSinceEpoch;
+        lastUpdateTime = currentTime;
 
-    num prevTime = new DateTime.now().millisecondsSinceEpoch;
-    TinyCanvas c = new TinyWebglCanvasTS(glContext);
-    int interval = tickInterval;
-    int prevInterval = tickInterval;
-    while (animeIsStart) {
-      {
-       int t = tickInterval-(interval-prevInterval);
-       if(t < 5) {
-         t = 5;
-       }
-       prevInterval = t;
-        await new Future.delayed(new Duration(milliseconds: t));
-        countKickMv = 0;
-      }
-      num currentTime = new DateTime.now().millisecondsSinceEpoch;
-      lastUpdateTime = currentTime;
-
-      interval = (currentTime - prevTime);
-      kick((prevTime + interval).toInt());
-      sum += interval;
-      sum_a += interval;
-      count++;
-      prevTime = currentTime;
-      markNeedsPaint();
-      if (isPaint && sum_a > paintInterval) {
-        new Future(() {
-          c.clear();
-          kickPaint(this, c);
-          c.flush();
-        });
-        isPaint = false;
-        sum_a = 0.0;
-      }
-      if (count > 60) {
-        print("###fps  ${1000~/(sum~/count)}");
-        sum = 0.0;
-        count = 0;
-      }
+        interval = (currentTime - prevTime);
+        kick((prevTime + interval).toInt());
+        sum += interval;
+        sum_a += interval;
+        count++;
+        prevTime = currentTime;
+        markNeedsPaint();
+        if (isPaint && sum_a > paintInterval) {
+          new Future(() {
+            c.clear();
+            kickPaint(this, c);
+            c.flush();
+            (c as TinyWebglCanvasTS).flushraw();
+          });
+          isPaint = false;
+          sum_a = 0.0;
+        }
+        if (count > 60) {
+          print("###fps  ${1000~/(sum~/count)}");
+          sum = 0.0;
+          count = 0;
+        }
+      } while (animeIsStart);
+    } catch (e) {} finally {
+      _animeIsOn = false;
     }
   }
 
