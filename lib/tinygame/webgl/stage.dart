@@ -50,20 +50,23 @@ class TinyWebglStage extends Object with TinyStage {
 
   bool isTMode = false;
   bool _animeIsOn = false;
+  TinyCanvas c = null;
   Future _anime() async {
     _animeIsOn = true;
     try {
       double sum = 0.0;
       double sum_a = 0.0;
       int count = 0;
-      TinyCanvas c = new TinyWebglCanvasTS(glContext);
+      if(c == null) {
+        c = new TinyWebglCanvasTS(glContext);
+      }
       int interval = tickInterval;
       int prevInterval = tickInterval;
       if (prevTime == null || prevTime == 0) {
         prevTime = new DateTime.now().millisecondsSinceEpoch;
       }
       do {
-        {
+        if(animeIsStart){
           int t = tickInterval - (interval - prevInterval);
           if (t < 5) {
             t = 5;
@@ -89,7 +92,7 @@ class TinyWebglStage extends Object with TinyStage {
             c.clear();
             kickPaint(this, c);
             c.flush();
-            (c as TinyWebglCanvasTS).flushraw();
+            //(c as TinyWebglCanvasTS).flushraw();
           });
           isPaint = false;
           sum_a = 0.0;

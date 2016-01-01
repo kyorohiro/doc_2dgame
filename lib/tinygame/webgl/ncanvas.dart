@@ -102,9 +102,6 @@ class TinyWebglCanvasTS extends TinyCanvas {
     }
   }
 
-  void flushraw() {
-    GL.flush();
-  }
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object> cache: null}) {
     if (paint.style == TinyPaintStyle.fill) {
       drawFillOval(stage, rect, paint);

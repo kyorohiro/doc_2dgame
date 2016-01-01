@@ -12,8 +12,9 @@ class PrimitiveTest extends TinyDisplayObject {
   }
 
   tic() async {
+    //stage.kick(0);
     while(true) {
-      await new Future.delayed(new Duration(milliseconds:100));
+      await new Future.delayed(new Duration(milliseconds:50));
       stage.markNeedsPaint();
     }
   }
