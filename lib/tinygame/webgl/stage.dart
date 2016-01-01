@@ -66,7 +66,8 @@ class TinyWebglStage extends Object with TinyStage {
         prevTime = new DateTime.now().millisecondsSinceEpoch;
       }
       do {
-        if(animeIsStart){
+        //if(animeIsStart)
+        {
           int t = tickInterval - (interval - prevInterval);
           if (t < 5) {
             t = 5;
