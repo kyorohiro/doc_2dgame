@@ -1,6 +1,11 @@
 # Warning
 Umiuni2d use master branch now!!
 
+* 2016/1/9
+umiuni2d is not executable on flutter
+https://github.com/flutter/flutter/issues/1159
+
+
 # Memo: 2d game math x physics (pre now making)
 
 This Book write about 2dgame physics and math. I am making a 2d game library to get this knowledge now.
