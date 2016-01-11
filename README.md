@@ -5,6 +5,13 @@ Umiuni2d use master branch now!!
 umiuni2d is not executable on flutter
 https://github.com/flutter/flutter/issues/1159
 
+but testcanvas mode is executable
+
+```
+  TinyGameBuilderForFlutter builder = new TinyGameBuilderForFlutter(assetsRoot:"web/");
+  builder.tickInPerFrame = false;
+  builder.useTestCanvas = true;
+```
 
 # Memo: 2d game math x physics (pre now making)
 
