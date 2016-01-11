@@ -33,7 +33,7 @@ class TinyFlutterCanvas extends TinyCanvas {
   }
 
   void clipRect(TinyStage stage, TinyRect rect, {Matrix4 m: null}) {
-    if(m != null) {
+    if (m != null) {
       data.Float64List d = canvas.getTotalMatrix();
       canvas.setMatrix(m.storage);
       canvas.clipRect(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h));
@@ -41,7 +41,6 @@ class TinyFlutterCanvas extends TinyCanvas {
     } else {
       canvas.clipRect(new Rect.fromLTWH(rect.x, rect.y, rect.w, rect.h));
     }
-
   }
 
   void clearClip(TinyStage stage, {List<Object> cache: null}) {
@@ -53,26 +52,69 @@ class TinyFlutterCanvas extends TinyCanvas {
 
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform: TinyCanvasTransform.NONE, List<Object> cache: null}) {
     Rect s = new Rect.fromLTWH(src.x, src.y, src.w, src.h);
-    Rect d = new Rect.fromLTWH(dst.x, dst.y, dst.w, dst.h);
+    Rect d = new Rect.fromLTWH(0.0, 0.0, dst.w, dst.h);
 
     sky.Image i = (image as TinyFlutterImage).rawImage;
     data.Float64List dd = canvas.getTotalMatrix();
     switch (transform) {
       case TinyCanvasTransform.NONE:
+        canvas.translate(dst.x, dst.y);
         break;
       case TinyCanvasTransform.ROT90:
+        canvas.translate(dst.x, dst.y);
+        canvas.translate(dst.w / 2, dst.h / 2);
+        canvas.rotate(math.PI / 2);
+        canvas.translate(-dst.w / 2, -dst.h / 2);
         break;
       case TinyCanvasTransform.ROT180:
+        canvas.translate(dst.x, dst.y);
+        canvas.translate(dst.w / 2, dst.h / 2);
+        canvas.rotate(math.PI);
+        canvas.translate(-dst.w / 2, -dst.h / 2);
         break;
       case TinyCanvasTransform.ROT270:
+        canvas.translate(dst.x, dst.y);
+        canvas.translate(dst.w / 2, dst.h / 2);
+        canvas.rotate(-math.PI / 2);
+        canvas.translate(-dst.w / 2, -dst.h / 2);
         break;
       case TinyCanvasTransform.MIRROR:
+        canvas.translate(dst.x, dst.y);
+        canvas.translate(dst.w / 2, dst.h / 2);
+        Matrix4 t = new Matrix4.fromFloat64List(canvas.getTotalMatrix());
+        t = t * new Matrix4(-1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+        canvas.setMatrix(t.storage);
+        canvas.translate(-dst.w / 2, -dst.h / 2);
         break;
       case TinyCanvasTransform.MIRROR_ROT90:
+        canvas.translate(dst.x, dst.y);
+        canvas.translate(dst.w / 2, dst.h / 2);
+
+        Matrix4 t = new Matrix4.fromFloat64List(canvas.getTotalMatrix());
+        t = t * new Matrix4(-1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+        canvas.setMatrix(t.storage);
+        canvas.rotate(math.PI / 2);
+        canvas.translate(-dst.w / 2, -dst.h / 2);
         break;
       case TinyCanvasTransform.MIRROR_ROT180:
+        canvas.translate(dst.x, dst.y);
+        canvas.translate(dst.w / 2, dst.h / 2);
+
+        Matrix4 t = new Matrix4.fromFloat64List(canvas.getTotalMatrix());
+        t = t * new Matrix4(-1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+        canvas.setMatrix(t.storage);
+        canvas.rotate(math.PI);
+        canvas.translate(-dst.w / 2, -dst.h / 2);
         break;
       case TinyCanvasTransform.MIRROR_ROT270:
+        canvas.translate(dst.x, dst.y);
+        canvas.translate(dst.w / 2, dst.h / 2);
+
+        Matrix4 t = new Matrix4.fromFloat64List(canvas.getTotalMatrix());
+        t = t * new Matrix4(-1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+        canvas.setMatrix(t.storage);
+        canvas.rotate(-math.PI / 2);
+        canvas.translate(-dst.w / 2, -dst.h / 2);
         break;
       default:
     }
