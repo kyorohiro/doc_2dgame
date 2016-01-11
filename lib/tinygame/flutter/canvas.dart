@@ -45,8 +45,10 @@ class TinyFlutterCanvas extends TinyCanvas {
   }
 
   void clearClip(TinyStage stage, {List<Object> cache: null}) {
+    data.Float64List dd = canvas.getTotalMatrix();
     canvas.restore();
     canvas.save();
+    canvas.setMatrix(dd);
   }
 
   void drawImageRect(TinyStage stage, TinyImage image, TinyRect src, TinyRect dst, TinyPaint paint, {TinyCanvasTransform transform: TinyCanvasTransform.NONE, List<Object> cache: null}) {
@@ -54,12 +56,37 @@ class TinyFlutterCanvas extends TinyCanvas {
     Rect d = new Rect.fromLTWH(dst.x, dst.y, dst.w, dst.h);
 
     sky.Image i = (image as TinyFlutterImage).rawImage;
+    data.Float64List dd = canvas.getTotalMatrix();
+    switch (transform) {
+      case TinyCanvasTransform.NONE:
+        break;
+      case TinyCanvasTransform.ROT90:
+        break;
+      case TinyCanvasTransform.ROT180:
+        break;
+      case TinyCanvasTransform.ROT270:
+        break;
+      case TinyCanvasTransform.MIRROR:
+        break;
+      case TinyCanvasTransform.MIRROR_ROT90:
+        break;
+      case TinyCanvasTransform.MIRROR_ROT180:
+        break;
+      case TinyCanvasTransform.MIRROR_ROT270:
+        break;
+      default:
+    }
     canvas.drawImageRect(
         i,
         s,
         d,
 //      new Paint());
         toPaint(paint));
+    canvas.setMatrix(dd);
+  }
+
+  clear() {
+    canvas.save();
   }
 
   void updateMatrix() {
