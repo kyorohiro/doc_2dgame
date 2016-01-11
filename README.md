@@ -13,6 +13,12 @@ but testcanvas mode is executable
   builder.useTestCanvas = true;
 ```
 
+* 2016/1/12
+--> current default builder property
+builder.useTestCanvas = true;
+so, umiuni2d is executable on current flutter.
+
+
 # Memo: 2d game math x physics (pre now making)
 
 This Book write about 2dgame physics and math. I am making a 2d game library to get this knowledge now.
