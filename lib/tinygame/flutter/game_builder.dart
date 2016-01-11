@@ -3,7 +3,7 @@ part of tinygame_flutter;
 class TinyGameBuilderForFlutter extends TinyGameBuilder {
   String assetsRoot;
   bool tickInPerFrame = true;
-  bool useTestCanvas = false;
+  bool useTestCanvas = true;//false;
   bool useDrawVertexForPrimtive = false;
   TinyFlutterAudioManager audioManager = new TinyFlutterAudioManager();
 
